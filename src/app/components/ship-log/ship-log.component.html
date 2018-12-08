@@ -1,1 +1,8 @@
-<div><h1>Ship log</h1></div>
+<div>
+	<h1>Ship log</h1>
+	<p>Latest log entries:</p>
+	<p *ngFor="let entry of logs">
+		<span class="{{ entry.type }}">&nbsp;</span>[{{ entry.created_at }}]
+		{{ entry.message }}
+	</p>
+</div>

@@ -18,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { StateService } from '@app/services/state.service';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { MessagingService } from '@app/services/messaging.service';
+import { PersonnelDetailsComponent } from './components/personnel-details/personnel-details.component';
 
 @NgModule({
 	declarations: [
@@ -30,6 +31,7 @@ import { MessagingService } from '@app/services/messaging.service';
 		ShipLogComponent,
 		VoteDetailsComponent,
 		SidebarComponent,
+		PersonnelDetailsComponent,
 	],
 	imports: [
 		BrowserModule,

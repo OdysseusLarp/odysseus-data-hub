@@ -1,0 +1,67 @@
+<div>
+	<div *ngIf="person">
+		<h1>{{ person.full_name }}</h1>
+		<div class="person-container">
+			<div>
+				<h2>Details</h2>
+				<p>Current ship: {{ person.current_ship }}</p>
+				<p *ngIf="person.previous_ship">
+					Previous ship: {{ person.previous_ship }}
+				</p>
+				<p *ngIf="person.title">Title: {{ person.title }}</p>
+				<p>Status: {{ person.status }}</p>
+				<p>Occupation: {{ person.occupation }}</p>
+				<p>Home planet: {{ person.home_planet }}</p>
+				<p>Dynasty: {{ person.dynasty }} (Rank {{ person.dynasty_rank }})</p>
+				<p>Birth year: {{ person.birth_year }}</p>
+			</div>
+
+			<div>
+				<h2>Medical data</h2>
+				<p>Blood type: {{ person.medical_data.blood_type }}</p>
+				<p>Surgeries: {{ person.medical_data.surgeries }}</p>
+				<p>Medication: {{ person.medical_data.medication }}</p>
+				<p>Immunization: {{ person.medical_data.immunization }}</p>
+				<p>Allergies: {{ person.medical_data.allergies }}</p>
+				<p>Medical history: {{ person.medical_data.medical_history }}</p>
+			</div>
+
+			<div>
+				<h2>Military record</h2>
+				<p>Rank: {{ person.military_data.rank }}</p>
+				<p>Unit: {{ person.military_data.unit }}</p>
+				<p *ngIf="person.military_data.remarks">
+					Remarks: {{ person.military_data.remarks }}
+				</p>
+				<p *ngIf="person.military_data.service_history">
+					Service history: {{ person.military_data.service_history }}
+				</p>
+			</div>
+
+			<div *ngFor="let medicalEntry of person.medical_entries">
+				<h2>Medical entries</h2>
+				<p>[{{ medicalEntry.time }}] {{ medicalEntry.details }}</p>
+			</div>
+
+			<div>
+				<h2>Family members</h2>
+				<ul>
+					<li *ngFor="let familyMember of person.family">
+						<a routerLink="/personnel/{{ familyMember.id }}">{{
+							familyMember.full_name
+						}}</a>
+						(status {{ familyMember.status }})
+					</li>
+				</ul>
+			</div>
+
+			<div>
+				<p>
+					<a routerLink="/communications/private/{{ person.id }}"
+						>Send a private message
+					</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

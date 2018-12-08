@@ -12,7 +12,11 @@
 		</thead>
 		<tbody>
 			<tr *ngFor="let person of persons">
-				<td>{{ person.first_name }} {{ person.last_name }}</td>
+				<td>
+					<a routerLink="/personnel/{{ person.id }}"
+						>{{ person.first_name }} {{ person.last_name }}</a
+					>
+				</td>
 				<td>{{ person.dynasty }}</td>
 				<td>{{ person.home_planet }}</td>
 				<td>{{ person.current_ship }}</td>

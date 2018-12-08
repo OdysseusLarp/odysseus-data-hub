@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { getLog } from '@api/Log';
 
 @Component({
 	selector: 'app-ship-log',
@@ -6,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./ship-log.component.scss'],
 })
 export class ShipLogComponent implements OnInit {
+	logs: api.LogEntry[];
+
 	constructor() {}
 
-	ngOnInit() {}
+	ngOnInit() {
+		getLog().then((res: api.Response<any>) => (this.logs = res.data));
+	}
 }

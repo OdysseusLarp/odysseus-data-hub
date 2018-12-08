@@ -1,0 +1,9 @@
+.person-container {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+
+	div {
+		min-width: 400px;
+	}
+}

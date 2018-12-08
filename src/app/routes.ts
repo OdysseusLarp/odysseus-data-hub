@@ -13,6 +13,7 @@ export const routes: Routes = [
 	{ path: 'personnel', component: PersonnelComponent },
 	{ path: 'vote', component: VoteComponent },
 	{ path: 'vote/:id', component: VoteDetailsComponent },
-	{ path: 'messages', component: MessagesComponent },
+	{ path: 'communications', component: MessagesComponent },
+	{ path: 'communications/:type/:target', component: MessagesComponent },
 	{ path: 'ship-log', component: ShipLogComponent },
 ];

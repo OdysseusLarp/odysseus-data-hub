@@ -17,6 +17,7 @@ import { VoteDetailsComponent } from './components/vote-details/vote-details.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { StateService } from '@app/services/state.service';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { MessagingService } from '@app/services/messaging.service';
 
 @NgModule({
 	declarations: [
@@ -37,7 +38,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 		RouterModule.forRoot(routes),
 		ReactiveFormsModule,
 	],
-	providers: [StateService],
+	providers: [StateService, MessagingService],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

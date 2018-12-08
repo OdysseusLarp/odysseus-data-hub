@@ -1,0 +1,54 @@
+:host {
+	display: block;
+}
+
+.com-wrapper {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	grid-template-columns: 75% 25%;
+	grid-row-gap: 0px;
+
+	h2:first-of-type {
+		margin-top: 0;
+		padding-top: 0;
+	}
+
+	.messages {
+		// TODO: better way for doing this
+		height: calc(100vh - 130px);
+	}
+
+	.user-list {
+		margin-right: 15px;
+		input {
+			margin-bottom: 10px;
+			box-sizing: border-box;
+			width: 100%;
+		}
+		ul {
+			margin: 0;
+			padding: 0;
+		}
+		li {
+			list-style: none;
+			padding: 6px;
+		}
+		li:nth-child(odd) {
+			background: #eee;
+		}
+	}
+
+	.message-box {
+		width: 100%;
+		form {
+			display: flex;
+			flex-direction: row;
+			input {
+				width: 100%;
+			}
+		}
+	}
+}

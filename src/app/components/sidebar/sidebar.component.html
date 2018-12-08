@@ -1,11 +1,11 @@
 <div class="sidebar">
-	<a routerLink="news">News</a> <a routerLink="messages">Communications</a>
+	<a routerLink="news">News</a>
+	<a routerLink="communications">Communications</a>
 	<a routerLink="vote">Influence</a> <a routerLink="ship-log">Ship log</a>
 	<a routerLink="personnel">Personnel database</a>
 	<a routerLink="/">Star Map (?)</a> <a routerLink="/">Data request</a>
 	<a routerLink="/">Research</a> <a routerLink="/">Fleet information</a>
-	<p>
-		Logged in as {{ (user$ | async).full_name }}
-		<button (click)="onLogout()" type="button">Log out</button>
-	</p>
+	<hr />
+	<p>User: {{ (user$ | async).full_name }}</p>
+	<button (click)="onLogout()" type="button">Log out</button>
 </div>

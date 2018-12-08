@@ -1,1 +1,40 @@
-<div><h1>Communications</h1></div>
+<h1>Communications</h1>
+<div class="com-wrapper">
+	<div class="messages">
+		<h2>#general</h2>
+		<p *ngFor="let message of (message$ | async)">
+			[{{ formatTimestamp(message.created_at) }}]
+			<strong>{{ message.sender.full_name }}</strong
+			>: {{ message.message }}
+		</p>
+	</div>
+	<div class="user-list">
+		<h2>Channels</h2>
+		<ul>
+			<li><a routerLink="/communications/channel/general">#general</a></li>
+			<li><a routerLink="/communications/channel/engineers">#engineers</a></li>
+			<li><a routerLink="/communications/channel/medics">#medics</a></li>
+		</ul>
+		<h2>Users</h2>
+		<form [formGroup]="filterForm">
+			<input
+				type="text"
+				placeholder="Filter users"
+				formControlName="userFilter"
+			/>
+		</form>
+		<ul>
+			<li *ngFor="let user of (users$ | async)">
+				<a routerLink="/communications/private/{{ user.id }}">
+					{{ user.full_name }}<span *ngIf="user.is_online"> (online)</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div class="message-box">
+		<form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
+			<input type="text" placeholder="Type here..." formControlName="message" />
+			<button>Say</button>
+		</form>
+	</div>
+</div>

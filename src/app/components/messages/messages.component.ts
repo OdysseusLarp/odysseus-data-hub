@@ -1,36 +1,55 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MessagingService, Message } from '@app/services/messaging.service';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { MessagingService } from '@app/services/messaging.service';
+import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { get } from 'lodash';
 import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
+import { StateService } from '@app/services/state.service';
+
+export interface ChatView {
+	type: 'channel' | 'private';
+	target: string;
+	targetPerson?: api.Person;
+}
 
 @Component({
 	selector: 'app-messages',
 	templateUrl: './messages.component.html',
 	styleUrls: ['./messages.component.scss'],
 })
-export class MessagesComponent implements OnInit {
+export class MessagesComponent implements OnInit, OnDestroy {
 	messageForm: FormGroup;
 	filterForm: FormGroup;
-	message$: BehaviorSubject<Message[]>;
+	message$: BehaviorSubject<any[]>;
 	users$: Observable<api.Person[]>;
-	chatView: 'channel' | 'private';
-	chatTarget: string;
+	currentUser: api.Person;
+	currentUser$: Subscription;
+	chatView: ChatView;
 
 	constructor(
 		private messaging: MessagingService,
+		private state: StateService,
 		private route: ActivatedRoute
 	) {}
 
 	ngOnInit() {
 		this.buildForm();
 		this.message$ = this.messaging.messages;
+		this.currentUser$ = this.state.user.subscribe(
+			user => (this.currentUser = user)
+		);
 
-		this.route.params.subscribe(params => {
-			console.log('params updated', params);
+		this.route.params.subscribe((params: ChatView) => {
+			const chatView = { ...params };
+			if (params.type === 'private') {
+				chatView.targetPerson = this.messaging.users
+					.getValue()
+					.find(user => user.id === chatView.target);
+			}
+			this.chatView = chatView;
+			this.messaging.chatViewChanged(chatView);
 		});
 
 		// Users that show up in users list
@@ -49,9 +68,14 @@ export class MessagesComponent implements OnInit {
 		);
 	}
 
+	ngOnDestroy() {
+		this.currentUser$.unsubscribe();
+	}
+
 	onSubmit() {
-		const { message } = this.messageForm.value;
-		this.messaging.sendMessage({ message });
+		const { message } = this.messageForm.value,
+			{ target, type } = this.chatView;
+		this.messaging.sendMessage({ message, target, type });
 		this.messageForm.patchValue({ message: '' });
 	}
 

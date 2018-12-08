@@ -1,28 +1,27 @@
 import { Injectable } from '@angular/core';
 import { StateService } from '@app/services/state.service';
-import {
-	filter,
-	distinctUntilKeyChanged,
-	distinctUntilChanged,
-} from 'rxjs/operators';
+import { distinctUntilChanged } from 'rxjs/operators';
 import { environment } from '@env/environment';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import * as io from 'socket.io-client/dist/socket.io';
 import { get, isEqual } from 'lodash';
+import { ChatView } from '@app/components/messages/messages.component';
 
-export interface Message {
-	message: string;
-	sender: api.Person;
+export interface TargetMessages {
+	target: string;
+	messages: api.ComMessage[];
 }
 
 @Injectable({
 	providedIn: 'root',
 })
 export class MessagingService {
+	private messageCache = new Map<string, api.ComMessage[]>();
 	user: api.Person;
 	socket: any;
-	messages: BehaviorSubject<Message[]> = new BehaviorSubject([]);
+	messages: BehaviorSubject<api.ComMessage[]> = new BehaviorSubject([]);
 	users: BehaviorSubject<api.Person[]> = new BehaviorSubject([]);
+	chatView: ChatView;
 
 	constructor(private state: StateService) {
 		state.user.pipe(distinctUntilChanged(isEqual)).subscribe(user => {
@@ -30,11 +29,16 @@ export class MessagingService {
 			this.createSocket();
 		});
 		state.logout.subscribe(() => this.removeSocket());
-		// TODO: Fetch initial messages
 	}
 
 	sendMessage(message) {
 		this.socket.emit('message', message);
+	}
+
+	chatViewChanged(chatView: ChatView) {
+		this.chatView = chatView;
+		if (!this.messageCache.has(chatView.target)) this.fetchHistory(chatView);
+		else this.messages.next(this.messageCache.get(chatView.target));
 	}
 
 	private createSocket() {
@@ -65,20 +69,52 @@ export class MessagingService {
 		]);
 	}
 
+	private fetchHistory(chatView: ChatView) {
+		if (!this.socket) return;
+		this.socket.emit('fetchHistory', {
+			type: chatView.type,
+			target: chatView.target,
+		});
+	}
+
 	private onMessageReceived(message) {
-		this.messages.next([...this.messages.getValue(), message]);
+		// Figure out what "conversation" the received message is part of
+		let target, type;
+		if (message.target_person === this.user.id) {
+			// Private messages sent to current user => goes under sender person id
+			(target = message.person_id), (type = 'private');
+		} else if (message.person_id === this.user.id && message.target_person) {
+			// Private messages sent by current user => goes under target person id
+			(target = message.target_person), (type = 'private');
+		} else {
+			// Otherwise it should be a channel message => goes under target channel id
+			(target = message.target_channel), (type = 'channel');
+		}
+
+		const messages = this.messageCache.get(target) || [];
+		// If we receive a message and have no prior history, fetch the full history
+		// and ditch this message as it will be included in that response anyway
+		if (messages.length < 1) {
+			this.fetchHistory({ target, type });
+		} else {
+			messages.push(message);
+			this.messageCache.set(target, messages);
+			if (target === this.chatView.target) this.messages.next(messages);
+		}
 	}
 
 	private onUserListReceived(userList) {
 		this.users.next(userList);
 	}
 
-	private onLatestMessagesReceived(messages) {
-		this.messages.next(messages);
+	private onLatestMessagesReceived(response) {
+		const { type, target, messages } = response;
+		this.messageCache.set(target, messages);
+		if (this.chatView.type === type && this.chatView.target === target)
+			this.messages.next(messages);
 	}
 
 	private removeSocket() {
-		console.log('removing socket');
 		this.socket.close();
 	}
 }

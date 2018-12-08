@@ -1,7 +1,13 @@
 <h1>Communications</h1>
 <div class="com-wrapper">
 	<div class="messages">
-		<h2>#general</h2>
+		<h2>
+			{{
+				chatView.type === 'private'
+					? chatView?.targetPerson?.full_name
+					: '#' + chatView?.target
+			}}
+		</h2>
 		<p *ngFor="let message of (message$ | async)">
 			[{{ formatTimestamp(message.created_at) }}]
 			<strong>{{ message.sender.full_name }}</strong
@@ -11,9 +17,25 @@
 	<div class="user-list">
 		<h2>Channels</h2>
 		<ul>
-			<li><a routerLink="/communications/channel/general">#general</a></li>
-			<li><a routerLink="/communications/channel/engineers">#engineers</a></li>
-			<li><a routerLink="/communications/channel/medics">#medics</a></li>
+			<li>
+				<a
+					routerLink="/communications/channel/general"
+					routerLinkActive="active"
+					>#general</a
+				>
+			</li>
+			<li>
+				<a
+					routerLink="/communications/channel/engineers"
+					routerLinkActive="active"
+					>#engineers</a
+				>
+			</li>
+			<li>
+				<a routerLink="/communications/channel/medics" routerLinkActive="active"
+					>#medics</a
+				>
+			</li>
 		</ul>
 		<h2>Users</h2>
 		<form [formGroup]="filterForm">
@@ -25,7 +47,10 @@
 		</form>
 		<ul>
 			<li *ngFor="let user of (users$ | async)">
-				<a routerLink="/communications/private/{{ user.id }}">
+				<a
+					routerLink="/communications/private/{{ user.id }}"
+					routerLinkActive="active"
+				>
 					{{ user.full_name }}<span *ngIf="user.is_online"> (online)</span>
 				</a>
 			</li>

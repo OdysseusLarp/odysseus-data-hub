@@ -19,6 +19,7 @@ import { StateService } from '@app/services/state.service';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { MessagingService } from '@app/services/messaging.service';
 import { PersonnelDetailsComponent } from './components/personnel-details/personnel-details.component';
+import { NgxAutoScrollModule } from 'ngx-auto-scroll';
 
 @NgModule({
 	declarations: [
@@ -39,6 +40,7 @@ import { PersonnelDetailsComponent } from './components/personnel-details/person
 		InputTrimModule,
 		RouterModule.forRoot(routes),
 		ReactiveFormsModule,
+		NgxAutoScrollModule,
 	],
 	providers: [StateService, MessagingService],
 	bootstrap: [AppComponent],

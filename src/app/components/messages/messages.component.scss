@@ -15,18 +15,14 @@
 	grid-template-columns: 75% 25%;
 	grid-row-gap: 0px;
 
-	h2:first-of-type {
-		margin-top: 0;
-		padding-top: 0;
-	}
-
 	.messages {
 		// TODO: better way for doing this
-		height: calc(100vh - 130px);
+		height: calc(100vh - 180px);
+		overflow-y: auto;
 	}
 
 	.user-list {
-		margin-right: 15px;
+		margin: 0 15px;
 		input {
 			margin-bottom: 10px;
 			box-sizing: border-box;

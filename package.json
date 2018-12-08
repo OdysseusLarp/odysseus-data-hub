@@ -27,6 +27,7 @@
 		"lodash": "^4.17.11",
 		"moment": "^2.22.2",
 		"ng2-trim-directive": "^2.3.0",
+		"ngx-auto-scroll": "^1.1.0",
 		"pluralize": "^7.0.0",
 		"rxjs": "~6.3.3",
 		"socket.io-client": "^2.2.0",

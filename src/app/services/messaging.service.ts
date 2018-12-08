@@ -28,7 +28,11 @@ export class MessagingService {
 			this.user = user;
 			this.createSocket();
 		});
-		state.logout.subscribe(() => this.removeSocket());
+		state.logout.subscribe(() => {
+			this.removeSocket();
+			// Wipe message cache on logout
+			this.messageCache = new Map<string, api.ComMessage[]>();
+		});
 	}
 
 	sendMessage(message) {

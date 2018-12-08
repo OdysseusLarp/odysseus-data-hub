@@ -1,13 +1,15 @@
-<h1>Communications</h1>
+<div>
+	<h1>Communications</h1>
+	<h2>
+		{{
+			chatView.type === 'private'
+				? chatView?.targetPerson?.full_name
+				: '#' + chatView?.target
+		}}
+	</h2>
+</div>
 <div class="com-wrapper">
-	<div class="messages">
-		<h2>
-			{{
-				chatView.type === 'private'
-					? chatView?.targetPerson?.full_name
-					: '#' + chatView?.target
-			}}
-		</h2>
+	<div class="messages" ngx-auto-scroll>
 		<p *ngFor="let message of (message$ | async)">
 			[{{ formatTimestamp(message.created_at) }}]
 			<strong>{{ message.sender.full_name }}</strong

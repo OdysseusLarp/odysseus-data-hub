@@ -1,0 +1,11 @@
+table {
+	width: 60%;
+}
+
+tbody > tr:nth-child(odd) {
+	background: #eee;
+}
+
+td {
+	padding: 6px;
+}

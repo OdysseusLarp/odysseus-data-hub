@@ -1,0 +1,14 @@
+<div>
+	<h1>Influence</h1>
+	<div>
+		Here you can vote on stuff.
+	</div>
+	<div *ngFor="let vote of votes">
+		<h2>
+			<a [routerLink]="vote.id">{{ vote.title }}</a>
+		</h2>
+		<p>
+			{{ vote.description }}
+		</p>
+	</div>
+</div>

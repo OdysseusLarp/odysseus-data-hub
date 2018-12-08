@@ -1,0 +1,31 @@
+<div>
+	<h1>Personnel database</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Dynasty</th>
+				<th>Home planet</th>
+				<th>Current ship</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let person of persons">
+					<td>{{ person.first_name }} {{ person.last_name }}</td>
+					<td>{{ person.dynasty }}</td>
+					<td>{{ person.home_planet }}</td>
+					<td>{{ person.current_ship }}</td>
+					<td>{{ person.status }}</td>
+			</tr>
+	</table>
+	<!-- <div>
+		<h2>Person search</h2>
+		<select>
+			<option>Name</option>
+			<option>Ship</option>
+			<option>Dynasty</option>
+		</select>
+	</div>
+	<input type="text"> -->
+</div>

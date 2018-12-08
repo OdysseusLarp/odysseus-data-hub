@@ -10,7 +10,7 @@ import { get } from 'lodash';
 @Component({
 	selector: 'app-vote-details',
 	templateUrl: './vote-details.component.html',
-	styleUrls: ['./vote-details.component.scss']
+	styleUrls: ['./vote-details.component.scss'],
 })
 export class VoteDetailsComponent implements OnInit, OnDestroy {
 	vote: api.Vote;
@@ -21,7 +21,7 @@ export class VoteDetailsComponent implements OnInit, OnDestroy {
 	userVoteEntry: any;
 	submitting = false;
 
-	constructor(private route: ActivatedRoute, private state: StateService) { }
+	constructor(private route: ActivatedRoute, private state: StateService) {}
 
 	ngOnInit() {
 		this.params$ = this.route.params.subscribe(params => {
@@ -50,7 +50,8 @@ export class VoteDetailsComponent implements OnInit, OnDestroy {
 
 	getVoteCount(voteId: number) {
 		// @ts-ignore
-		return this.vote.entries.filter(vote => vote.vote_option_id === voteId).length;
+		return this.vote.entries.filter(vote => vote.vote_option_id === voteId)
+			.length;
 	}
 
 	private fetchVote(id: number) {
@@ -58,8 +59,9 @@ export class VoteDetailsComponent implements OnInit, OnDestroy {
 			this.vote = res.data;
 			// Check if current user has already voted
 			// @ts-ignore
-			this.userVoteEntry = this.vote.entries.find(entry =>
-				entry.person_id === get(this.state.user.getValue(), 'id'));
+			this.userVoteEntry = this.vote.entries.find(
+				entry => entry.person_id === get(this.state.user.getValue(), 'id')
+			);
 			this.buildForm();
 		});
 	}
@@ -67,7 +69,10 @@ export class VoteDetailsComponent implements OnInit, OnDestroy {
 	private buildForm() {
 		const optionId = get(this.userVoteEntry, 'vote_option_id', null);
 		this.voteForm = new FormGroup({
-			option: new FormControl({ value: optionId, disabled: !!optionId }, Validators.required)
+			option: new FormControl(
+				{ value: optionId, disabled: !!optionId },
+				Validators.required
+			),
 		});
 	}
 }

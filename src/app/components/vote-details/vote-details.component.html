@@ -2,10 +2,11 @@
 	<h1>Vote details</h1>
 	<div *ngIf="vote">
 		<h2>{{ vote.title }}</h2>
-		<p>
-			{{ vote.description }}
-		</p>
-		<h3>Vote ({{ vote.entries.length }} total {{ pluralize('vote', vote.entries.length) }} so far)</h3>
+		<p>{{ vote.description }}</p>
+		<h3>
+			Vote ({{ vote.entries.length }} total
+			{{ pluralize('vote', vote.entries.length) }} so far)
+		</h3>
 		<form [formGroup]="voteForm" (ngSubmit)="onSubmit()">
 			<ul>
 				<li *ngFor="let option of vote.options">
@@ -13,11 +14,16 @@
 						type="radio"
 						[value]="option.id"
 						id="option-{{ option.id }}"
-						formControlName="option">
-					<label for="option-{{ option.id }}">{{ option.text }} ({{ getVoteCount(option.id) }})</label>
+						formControlName="option"
+					/>
+					<label for="option-{{ option.id }}"
+						>{{ option.text }} ({{ getVoteCount(option.id) }})</label
+					>
 				</li>
 			</ul>
-			<button [disabled]="!voteForm.valid || submitting">{{ userVoteEntry ? 'You have already voted' : 'Vote' }}</button>
+			<button [disabled]="!voteForm.valid || submitting">
+				{{ userVoteEntry ? 'You have already voted' : 'Vote' }}
+			</button>
 		</form>
 	</div>
 </div>

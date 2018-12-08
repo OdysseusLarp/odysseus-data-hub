@@ -6,12 +6,12 @@ import { Router } from '@angular/router';
 @Component({
 	selector: 'app-sidebar',
 	templateUrl: './sidebar.component.html',
-	styleUrls: ['./sidebar.component.scss']
+	styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
 	user$: Observable<api.Person>;
 
-	constructor(private state: StateService, private router: Router) { }
+	constructor(private state: StateService, private router: Router) {}
 
 	ngOnInit() {
 		this.user$ = this.state.user;
@@ -21,5 +21,4 @@ export class SidebarComponent implements OnInit {
 		this.state.logout();
 		this.router.navigate(['/']);
 	}
-
 }

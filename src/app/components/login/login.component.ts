@@ -8,18 +8,19 @@ import { Router } from '@angular/router';
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
-	styleUrls: ['./login.component.scss']
+	styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
 	user$: Subscription;
 	loginForm: FormGroup;
 	submitting = false;
 
-	constructor(private state: StateService, private router: Router) { }
+	constructor(private state: StateService, private router: Router) {}
 
 	ngOnInit() {
 		if (this.state.user.getValue()) this.router.navigate(['news']);
-		this.user$ = this.state.user.pipe(first(Boolean))
+		this.user$ = this.state.user
+			.pipe(first(Boolean))
 			.subscribe(() => this.router.navigate(['news']));
 		this.buildForm();
 	}
@@ -30,7 +31,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 	onSubmit() {
 		this.submitting = true;
-		this.state.login(this.loginForm.value.personId)
+		this.state
+			.login(this.loginForm.value.personId)
 			.then(user => {
 				this.submitting = false;
 				if (!user) throw new Error('User not found');
@@ -43,7 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 	private buildForm() {
 		this.loginForm = new FormGroup({
-			personId: new FormControl('', Validators.required)
+			personId: new FormControl('', Validators.required),
 		});
 	}
 }

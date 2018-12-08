@@ -2,7 +2,7 @@
 	<h1>Welcome to Odysseus Social Hub</h1>
 	<h2>Log in using your Social ID</h2>
 	<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-		<input type="text" formControlName="personId" trim="blur">
+		<input type="text" formControlName="personId" trim="blur" />
 		<button [disabled]="!loginForm.valid || submitting">Log in!</button>
 	</form>
 </div>

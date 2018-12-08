@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { getPersonId } from '@api/Person';
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: 'root',
 })
 export class StateService {
 	user: BehaviorSubject<api.Person> = new BehaviorSubject(null);

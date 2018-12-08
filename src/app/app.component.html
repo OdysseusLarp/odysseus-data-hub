@@ -1,7 +1,3 @@
 <app-sidebar *ngIf="user; else empty"></app-sidebar>
-<ng-template #empty>
-	<div></div>
-</ng-template>
-<div class="main-container">
-	<router-outlet></router-outlet>
-</div>
+<ng-template #empty> <div></div> </ng-template>
+<div class="main-container"><router-outlet></router-outlet></div>

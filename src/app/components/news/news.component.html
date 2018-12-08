@@ -1,6 +1,9 @@
 <h1>News</h1>
 <div *ngFor="let post of posts">
 	<h2>{{ post.title }} ({{ post.type }})</h2>
-	<span>{{ post.author.first_name }} {{ post.author.last_name }} | {{ post.created_at }}</span>
+	<span
+		>{{ post.author.first_name }} {{ post.author.last_name }} |
+		{{ post.created_at }}</span
+	>
 	<p>{{ post.body }}</p>
 </div>

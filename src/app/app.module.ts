@@ -28,16 +28,16 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 		MessagesComponent,
 		ShipLogComponent,
 		VoteDetailsComponent,
-		SidebarComponent
+		SidebarComponent,
 	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
 		InputTrimModule,
 		RouterModule.forRoot(routes),
-		ReactiveFormsModule
+		ReactiveFormsModule,
 	],
 	providers: [StateService],
-	bootstrap: [AppComponent]
+	bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

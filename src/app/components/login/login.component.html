@@ -5,4 +5,5 @@
 		<input type="text" formControlName="personId" trim="blur" />
 		<button [disabled]="!loginForm.valid || submitting">Log in!</button>
 	</form>
+	<p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
 </div>

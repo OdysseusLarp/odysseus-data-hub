@@ -23,8 +23,8 @@ export class StateService {
 	}
 
 	login(id): Promise<api.Person> {
-		console.log('loggin in', id);
 		return getPersonId(id).then((res: api.Response<any>) => {
+			if (!res.data) throw new Error('User not found');
 			this.user.next(res.data);
 			this.sessionStorage.setItem('previousUserId', res.data.id);
 			return res.data;

@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 	user$: Subscription;
 	loginForm: FormGroup;
 	submitting = false;
+	errorMessage = '';
 
 	constructor(private state: StateService, private router: Router) {}
 
@@ -31,14 +32,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 	onSubmit() {
 		this.submitting = true;
+		this.errorMessage = '';
 		this.state
 			.login(this.loginForm.value.personId)
-			.then(user => {
+			.then(() => {
 				this.submitting = false;
-				if (!user) throw new Error('User not found');
 			})
-			.catch(err => {
-				console.error(err);
+			.catch((err: Error) => {
+				this.errorMessage = err.message;
 				this.submitting = false;
 			});
 	}

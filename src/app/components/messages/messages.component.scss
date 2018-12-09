@@ -19,6 +19,7 @@
 		// TODO: better way for doing this
 		height: calc(100vh - 180px);
 		overflow-y: auto;
+		overflow-x: hidden;
 	}
 
 	.user-list {

@@ -9,7 +9,7 @@
 	</h2>
 </div>
 <div class="com-wrapper">
-	<div class="messages" ngx-auto-scroll>
+	<div class="messages" ngx-auto-scroll #chatMessages>
 		<p *ngFor="let message of (message$ | async)">
 			[{{ formatTimestamp(message.created_at) }}]
 			<strong>{{ message.sender.full_name }}</strong

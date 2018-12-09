@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { StateService } from '@app/services/state.service';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, first } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { BehaviorSubject } from 'rxjs';
 import * as io from 'socket.io-client/dist/socket.io';
@@ -17,11 +17,12 @@ export interface TargetMessages {
 })
 export class MessagingService {
 	private messageCache = new Map<string, api.ComMessage[]>();
-	user: api.Person;
+	private hasInitialized = new BehaviorSubject<boolean>(false);
+	private chatView: ChatView;
+	private user: api.Person;
 	socket: any;
-	messages: BehaviorSubject<api.ComMessage[]> = new BehaviorSubject([]);
+	messages = new BehaviorSubject<api.ComMessage[]>([]);
 	users: BehaviorSubject<api.Person[]> = new BehaviorSubject([]);
-	chatView: ChatView;
 
 	constructor(private state: StateService) {
 		state.user.pipe(distinctUntilChanged(isEqual)).subscribe(user => {
@@ -59,6 +60,7 @@ export class MessagingService {
 		);
 		socket.on('status', status => this.onStatusReceived(status));
 		this.socket = socket;
+		this.hasInitialized.next(true);
 	}
 
 	private onStatusReceived(status) {
@@ -74,10 +76,11 @@ export class MessagingService {
 	}
 
 	private fetchHistory(chatView: ChatView) {
-		if (!this.socket) return;
-		this.socket.emit('fetchHistory', {
-			type: chatView.type,
-			target: chatView.target,
+		this.hasInitialized.pipe(first(Boolean)).subscribe(() => {
+			this.socket.emit('fetchHistory', {
+				type: chatView.type,
+				target: chatView.target,
+			});
 		});
 	}
 

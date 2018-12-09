@@ -1,11 +1,17 @@
 <div>
 	<h1>Vote details</h1>
 	<div *ngIf="vote">
-		<h2>{{ vote.title }}</h2>
+		<h2>
+			{{ vote.title }} ({{ vote.is_active ? 'voting active' : 'voting ended' }})
+		</h2>
+		<p *ngIf="vote.active_until">
+			Voting is active until {{ vote.active_until }}
+		</p>
 		<p>{{ vote.description }}</p>
 		<h3>
 			Vote ({{ vote.entries.length }} total
-			{{ pluralize('vote', vote.entries.length) }} so far)
+			{{ pluralize('vote', vote.entries.length)
+			}}<span *ngIf="vote.is_active"> so far</span>)
 		</h3>
 		<form [formGroup]="voteForm" (ngSubmit)="onSubmit()">
 			<ul>
@@ -21,7 +27,7 @@
 					>
 				</li>
 			</ul>
-			<button [disabled]="!voteForm.valid || submitting">
+			<button [disabled]="!voteForm.valid || submitting" *ngIf="vote.is_active">
 				{{ userVoteEntry ? 'You have already voted' : 'Vote' }}
 			</button>
 		</form>

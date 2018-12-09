@@ -3,7 +3,9 @@
 	<div>Here you can vote on stuff.</div>
 	<div *ngFor="let vote of votes">
 		<h2>
-			<a [routerLink]="vote.id">{{ vote.title }}</a>
+			<a [routerLink]="vote.id">{{ vote.title }}</a> ({{
+				vote.is_active ? 'voting active' : 'voting ended'
+			}})
 		</h2>
 		<p>{{ vote.description }}</p>
 	</div>

@@ -4,6 +4,7 @@ import {
 	OnDestroy,
 	ViewChild,
 	ElementRef,
+	AfterViewInit,
 } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessagingService } from '@app/services/messaging.service';
@@ -25,8 +26,8 @@ export interface ChatView {
 	templateUrl: './messages.component.html',
 	styleUrls: ['./messages.component.scss'],
 })
-export class MessagesComponent implements OnInit, OnDestroy {
-	@ViewChild('chatMessages') private ChatMessages: ElementRef;
+export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
+	@ViewChild('chatMessages') private chatMessages: ElementRef;
 	messageForm: FormGroup;
 	filterForm: FormGroup;
 	message$: BehaviorSubject<any[]>;
@@ -73,9 +74,11 @@ export class MessagesComponent implements OnInit, OnDestroy {
 				);
 			})
 		);
+	}
 
-		// Scroll chat to bottom on initial load
-		this.ChatMessages.nativeElement.scrollTop = this.ChatMessages.nativeElement.scrollHeight;
+	ngAfterViewInit() {
+		// Scroll chat to bottom on initial page load
+		this.chatMessages.nativeElement.scrollTop = this.chatMessages.nativeElement.scrollHeight;
 	}
 
 	ngOnDestroy() {

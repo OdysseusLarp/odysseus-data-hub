@@ -134,9 +134,11 @@ export class MessagingService {
 			(target = message.target_channel), (type = 'channel');
 		}
 
-		// Up the unseen count
-		const currentlyUnseen = this.unseenMessages.get(target) || 0;
-		this.unseenMessages.set(target, currentlyUnseen + 1);
+		// Up the unseen count unless current user is the sender
+		if (message.person_id !== this.user.id) {
+			const currentlyUnseen = this.unseenMessages.get(target) || 0;
+			this.unseenMessages.set(target, currentlyUnseen + 1);
+		}
 
 		const messages = this.messageCache.get(target) || [];
 		// If we receive a message and have no prior history, fetch the full history
@@ -163,7 +165,9 @@ export class MessagingService {
 		const { type, target, messages } = response;
 		this.messageCache.set(target, messages);
 
-		const unseenMessageCount = messages.filter(msg => !msg.seen).length;
+		const unseenMessageCount = messages.filter(
+			msg => !msg.seen && msg.person_id !== this.user.id
+		).length;
 		if (unseenMessageCount) this.unseenMessages.set(target, unseenMessageCount);
 		this.emitUnseenMessages();
 

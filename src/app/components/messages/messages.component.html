@@ -1,12 +1,9 @@
 <div>
 	<h1>Communications</h1>
-	<h2>
-		{{
-			chatView.type === 'private'
-				? chatView?.targetPerson?.full_name
-				: '#' + chatView?.target
-		}}
+	<h2 *ngIf="chatView.type === 'private'">
+		{{ chatView?.targetPerson?.full_name }}
 	</h2>
+	<h2 *ngIf="chatView.type === 'channel'">#{{ chatView?.target }}</h2>
 </div>
 <div class="com-wrapper">
 	<div class="messages" ngx-auto-scroll #chatMessages>
@@ -49,12 +46,21 @@
 		</form>
 		<ul>
 			<li *ngFor="let user of (users$ | async)">
+				<span class="status-circle" [ngClass]="{ online: user.is_online }"
+					>&nbsp;</span
+				>
 				<a
 					routerLink="/communications/private/{{ user.id }}"
 					routerLinkActive="active"
 				>
-					{{ user.full_name }}<span *ngIf="user.is_online"> (online)</span>
+					{{ user.full_name }}
 				</a>
+				<span
+					class="status-circle unseen-message-count"
+					*ngIf="user.unseen_message_count"
+				>
+					{{ user.unseen_message_count }}
+				</span>
 			</li>
 		</ul>
 	</div>

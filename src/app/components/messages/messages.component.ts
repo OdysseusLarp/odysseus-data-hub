@@ -21,6 +21,12 @@ export interface ChatView {
 	targetPerson?: api.Person;
 }
 
+export interface OutgoingMessage {
+	target: string;
+	message: string;
+	type: ChatView['type'];
+}
+
 @Component({
 	selector: 'app-messages',
 	templateUrl: './messages.component.html',
@@ -63,17 +69,31 @@ export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 		// Users that show up in users list
 		this.users$ = combineLatest(
 			this.messaging.users,
-			this.filterForm.valueChanges
+			this.filterForm.valueChanges,
+			this.messaging.unseenMessagesUpdated
 		).pipe(
-			map(([users, { userFilter }]) => {
+			map(([users, { userFilter }, unseenMessages]) => {
 				const filter = userFilter.toLowerCase().trim();
-				return users.filter(user =>
-					get(user, 'full_name', '')
-						.toLowerCase()
-						.includes(filter)
-				);
+				return users
+					.filter(user =>
+						get(user, 'full_name', '')
+							.toLowerCase()
+							.includes(filter)
+					)
+					.map(user => {
+						// add unseen message counts to user list
+						if (unseenMessages.has(user.id)) {
+							// @ts-ignore
+							user.unseen_message_count = unseenMessages.get(user.id);
+						} else {
+							// @ts-ignore
+							user.unseen_message_count = 0;
+						}
+						return user;
+					});
 			})
 		);
+		this.messaging.unseenMessagesUpdated.next(new Map<string, number>());
 	}
 
 	ngAfterViewInit() {
@@ -110,6 +130,7 @@ export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 		// function will run. Can be removed once I figure out how to use RXJS.
 		setTimeout(() => {
 			this.filterForm.controls['userFilter'].setValue('', { emitEvent: true });
+			this.messaging.emitUnseenMessages();
 		}, 0);
 	}
 }

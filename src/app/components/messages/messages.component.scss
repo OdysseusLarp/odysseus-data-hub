@@ -36,9 +36,41 @@
 		li {
 			list-style: none;
 			padding: 6px;
+			vertical-align: middle;
+		}
+		li:nth-child(even) {
+			background: rgb(250, 250, 250);
 		}
 		li:nth-child(odd) {
 			background: #eee;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		.status-circle {
+			width: 18px;
+			height: 18px;
+			line-height: 18px;
+			box-sizing: border-box;
+			border-radius: 50%;
+			display: inline-block;
+			margin-right: 5px;
+			background: #ccc;
+			text-align: center;
+			vertical-align: middle;
+		}
+		.online {
+			background: #34df00;
+		}
+		.unseen-message-count {
+			float: right;
+			background: #f00;
+			color: #fff;
+			font-size: 0.9em;
+			font-weight: bold;
+			border-radius: 10%;
 		}
 	}
 

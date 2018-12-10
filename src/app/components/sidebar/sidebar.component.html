@@ -3,7 +3,7 @@
 	<a routerLink="communications/channel/general">Communications</a>
 	<a routerLink="vote">Influence</a> <a routerLink="ship-log">Ship log</a>
 	<a routerLink="personnel">Personnel database</a> <span>Star Map (?)</span>
-	<span>Data request</span> <span>Research</span> <span>Fleet information</span>
+	<span>Research</span> <span>Fleet information</span>
 	<hr />
 	<p>User: {{ (user$ | async).full_name }}</p>
 	<button (click)="onLogout()" type="button">Log out</button>

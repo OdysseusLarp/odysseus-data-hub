@@ -4,8 +4,9 @@
 	"scripts": {
 		"ng": "ng",
 		"start": "npm run apigen && ng serve",
-		"apigen": "openapi -s http://localhost:8888/api-docs.json -o ./src/app/api -l ts --semicolon",
-		"build": "ng build",
+		"apigen": "openapi -s https://odysseus.nicou.me/api-docs.json -o ./src/app/api -l ts --semicolon",
+		"apigen:dev": "openapi -s https://odysseus.nicou.me/api-docs.json -o ./src/app/api -l ts --semicolon",
+		"build": "ng build --base-href /social/ --prod",
 		"test": "ng test",
 		"lint": "ng lint",
 		"e2e": "ng e2e"

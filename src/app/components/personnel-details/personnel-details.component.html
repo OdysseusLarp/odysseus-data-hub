@@ -16,7 +16,7 @@
 				<p>Birth year: {{ person.birth_year }}</p>
 			</div>
 
-			<div>
+			<div *ngIf="(user$ | async)?.groups.includes('role:medic')">
 				<h2>Medical data</h2>
 				<p>Blood type: {{ person.medical_data.blood_type }}</p>
 				<p>Surgeries: {{ person.medical_data.surgeries }}</p>
@@ -38,9 +38,11 @@
 				</p>
 			</div>
 
-			<div *ngFor="let medicalEntry of person.medical_entries">
-				<h2>Medical entries</h2>
-				<p>[{{ medicalEntry.time }}] {{ medicalEntry.details }}</p>
+			<div *ngIf="(user$ | async)?.groups.includes('role:medic')">
+				<div *ngFor="let medicalEntry of person.medical_entries">
+					<h2>Medical entries</h2>
+					<p>[{{ medicalEntry.time }}] {{ medicalEntry.details }}</p>
+				</div>
 			</div>
 
 			<div>

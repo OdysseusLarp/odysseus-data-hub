@@ -1,0 +1,23 @@
+<div>
+	<h1>Fleet database</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Ship</th>
+				<th>Status</th>
+				<th>Type</th>
+				<th>Souls on board</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let ship of fleet">
+				<td>
+					<a routerLink="/fleet/{{ ship.id }}">{{ ship.name }}</a>
+				</td>
+				<td>{{ ship.status }}</td>
+				<td>{{ ship.type }}</td>
+				<td>{{ ship.person_count || 0 }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

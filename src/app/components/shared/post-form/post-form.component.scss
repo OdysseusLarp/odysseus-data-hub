@@ -1,0 +1,22 @@
+form {
+	display: flex;
+	flex-direction: column;
+	max-width: 600px;
+
+	label {
+		font-weight: bold;
+		margin-top: 8px;
+	}
+
+	input {
+		display: block;
+	}
+
+	textarea {
+		height: 200px;
+	}
+
+	button {
+		margin-top: 8px;
+	}
+}

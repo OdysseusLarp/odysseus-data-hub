@@ -1,0 +1,25 @@
+<div>
+	<h1>Artifact details</h1>
+	<div *ngIf="artifact">
+		<h2>{{ artifact.name }}</h2>
+		<p *ngFor="let r of research" class="research-entry">
+			<strong
+				>Discovered
+				<span *ngIf="r.discoverer?.full_name"
+					>by {{ r.discoverer.full_name }}</span
+				>
+				<span *ngIf="r.discovered_by">
+					using {{ formatDiscoveredBy(r.discovered_by) }}
+				</span>
+				({{ r.discovered_ago }} ago):</strong
+			><br />
+			{{ r.text }}
+		</p>
+		<div>
+			<h3>Add finding</h3>
+			<p>Add a new finding about this artifact</p>
+			<textarea #findingsTextArea></textarea>
+			<button type="submit" (click)="onAddFindingsSubmit()">Submit</button>
+		</div>
+	</div>
+</div>

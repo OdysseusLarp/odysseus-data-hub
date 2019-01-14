@@ -1,0 +1,25 @@
+<div>
+	<h1>Artifact database</h1>
+	<p>
+		Discovered Alien Artifacts show up here. Details gathered manually and by
+		performing HANSCA scans can be seen by selecting an artifact from the table
+		below.
+	</p>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Research updated</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let artifact of artifacts">
+				<td>
+					<a routerLink="/artifact/{{ artifact.id }}">{{ artifact.name }}</a>
+				</td>
+				<td>{{ artifact.last_update + ' ago' || 'never' }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

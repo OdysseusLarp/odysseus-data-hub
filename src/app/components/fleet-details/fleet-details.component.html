@@ -1,0 +1,13 @@
+<div>
+	<h1>Ship details</h1>
+	<div *ngIf="ship">
+		<h2>{{ ship.name }}</h2>
+		<p>Status: {{ ship.status }}</p>
+		<p>Class: {{ ship.class }}</p>
+		<p>Type: {{ ship.type }}</p>
+		<p>
+			Current position: Sector {{ ship.position.sector }} (subsector
+			{{ ship.position.sub_sector }}) in {{ ship.position.quadrant }} quadrant
+		</p>
+	</div>
+</div>

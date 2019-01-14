@@ -7,15 +7,25 @@ import { MessagesComponent } from '@app/components/messages/messages.component';
 import { ShipLogComponent } from '@app/components/ship-log/ship-log.component';
 import { VoteDetailsComponent } from '@app/components/vote-details/vote-details.component';
 import { PersonnelDetailsComponent } from '@app/components/personnel-details/personnel-details.component';
+import { ArtifactsComponent } from '@app/components/artifacts/artifacts.component';
+import { ArtifactDetailsComponent } from '@app/components/artifact-details/artifact-details.component';
+import { CaptainsLogComponent } from '@app/components/captains-log/captains-log.component';
+import { FleetComponent } from '@app/components/fleet/fleet.component';
+import { FleetDetailsComponent } from '@app/components/fleet-details/fleet-details.component';
 
 export const routes: Routes = [
 	{ path: '', component: LoginComponent },
 	{ path: 'news', component: NewsComponent },
 	{ path: 'personnel', component: PersonnelComponent },
 	{ path: 'personnel/:id', component: PersonnelDetailsComponent },
+	{ path: 'artifact', component: ArtifactsComponent },
+	{ path: 'artifact/:id', component: ArtifactDetailsComponent },
+	{ path: 'fleet', component: FleetComponent },
+	{ path: 'fleet/:id', component: FleetDetailsComponent },
 	{ path: 'vote', component: VoteComponent },
 	{ path: 'vote/:id', component: VoteDetailsComponent },
 	{ path: 'communications', component: MessagesComponent },
 	{ path: 'communications/:type/:target', component: MessagesComponent },
 	{ path: 'ship-log', component: ShipLogComponent },
+	{ path: 'captains-log', component: CaptainsLogComponent },
 ];

@@ -1,0 +1,9 @@
+<div>
+	<h1>Captain's log</h1>
+	<app-post-item *ngFor="let post of posts" [post]="post"></app-post-item>
+	<app-post-form
+		[postTypes]="postTypes"
+		[onSubmit]="onSubmit"
+		title="Add captain's log entry"
+	></app-post-form>
+</div>

@@ -5,23 +5,18 @@ import { get } from 'lodash';
 import { autobind } from 'core-decorators';
 
 @Component({
-	selector: 'app-news',
-	templateUrl: './news.component.html',
-	styleUrls: ['./news.component.scss'],
+	selector: 'app-captains-log',
+	templateUrl: './captains-log.component.html',
+	styleUrls: ['./captains-log.component.scss'],
 })
-export class NewsComponent implements OnInit {
-	posts: api.Post;
+export class CaptainsLogComponent implements OnInit {
+	posts: api.Post[];
 	postTypes: PostType[] = [
 		{
-			value: 'NEWS',
-			text: 'News',
-		},
-		{
-			value: 'OPINION',
-			text: 'Opinion',
+			value: 'CAPTAINS_LOG',
+			text: `Captain's log`,
 		},
 	];
-
 	constructor() {}
 
 	ngOnInit() {
@@ -30,15 +25,17 @@ export class NewsComponent implements OnInit {
 
 	private fetchPosts() {
 		PostApi.getPost().then((res: api.Response<any>) => {
+			// TODO: Filter in API
 			this.posts = get(res, 'data', []).filter(
-				post => post.type !== 'CAPTAINS_LOG'
+				post => post.type === 'CAPTAINS_LOG'
 			);
 		});
 	}
 
 	@autobind
-	onSubmit(post) {
-		return PostApi.putPost(post).then(async res => {
+	onSubmit(values) {
+		return PostApi.putPost(values).then(async res => {
+			console.log(this);
 			this.fetchPosts();
 			return res;
 		});

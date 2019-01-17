@@ -5,6 +5,7 @@
 			<tr>
 				<th>Name</th>
 				<th>Dynasty</th>
+				<th>Dynasty rank</th>
 				<th>Home planet</th>
 				<th>Current ship</th>
 				<th>Status</th>
@@ -18,8 +19,13 @@
 					>
 				</td>
 				<td>{{ person.dynasty }}</td>
+				<td>{{ person.dynasty_rank }}</td>
 				<td>{{ person.home_planet }}</td>
-				<td>{{ person.current_ship }}</td>
+				<td>
+					<a [routerLink]="['../fleet', person.ship.id]">{{
+						person.ship?.name
+					}}</a>
+				</td>
 				<td>{{ person.status }}</td>
 			</tr>
 		</tbody>

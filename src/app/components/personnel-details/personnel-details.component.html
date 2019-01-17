@@ -4,10 +4,7 @@
 		<div class="person-container">
 			<div>
 				<h2>Details</h2>
-				<p>Current ship: {{ person.current_ship }}</p>
-				<p *ngIf="person.previous_ship">
-					Previous ship: {{ person.previous_ship }}
-				</p>
+				<p>Current ship: {{ person.ship.name }}</p>
 				<p *ngIf="person.title">Title: {{ person.title }}</p>
 				<p>Status: {{ person.status }}</p>
 				<p>Occupation: {{ person.occupation }}</p>

@@ -18,7 +18,12 @@
 				<td>
 					<a routerLink="/artifact/{{ artifact.id }}">{{ artifact.name }}</a>
 				</td>
-				<td>{{ artifact.last_update + ' ago' || 'never' }}</td>
+				<td>
+					{{ artifact.latest_research.last_update + ' ago' || 'never' }}
+					<span *ngIf="artifact.latest_research?.discoverer"
+						>by {{ artifact.latest_research.discoverer.full_name }}
+					</span>
+				</td>
 			</tr>
 		</tbody>
 	</table>

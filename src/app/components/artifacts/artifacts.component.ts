@@ -17,16 +17,24 @@ export class ArtifactsComponent implements OnInit {
 		ArtifactApi.getScienceArtifact().then((res: api.Response<any>) => {
 			this.artifacts = get(res, 'data', []).map(artifact => {
 				// Figure out the latest research update time and convert to human readable form
-				const latestUpdate = artifact.research.reduce((prev, cur) => {
-					if (!cur.is_visible) return prev;
-					const updatedAt = moment(cur.updated_at);
-					return updatedAt.isSameOrAfter(prev) ? updatedAt : prev;
-				}, moment(0));
+				const latestResearch = artifact.research.reduce(
+					(prev, cur) => {
+						if (!cur.is_visible) return prev;
+						const last_update = moment(cur.updated_at);
+						return last_update.isSameOrAfter(prev.last_update)
+							? { ...cur, last_update }
+							: prev;
+					},
+					{ last_update: moment(0) }
+				);
+				if (latestResearch) {
+					latestResearch.last_update = moment
+						.duration(latestResearch.last_update.diff(moment()))
+						.humanize();
+				}
 				return {
 					...artifact,
-					last_update: latestUpdate
-						? moment.duration(latestUpdate.diff(moment())).humanize()
-						: undefined,
+					latest_research: latestResearch,
 				};
 			});
 		});

@@ -12,6 +12,7 @@ import { ArtifactDetailsComponent } from '@app/components/artifact-details/artif
 import { CaptainsLogComponent } from '@app/components/captains-log/captains-log.component';
 import { FleetComponent } from '@app/components/fleet/fleet.component';
 import { FleetDetailsComponent } from '@app/components/fleet-details/fleet-details.component';
+import { VoteCreateComponent } from '@app/components/vote-create/vote-create.component';
 
 export const routes: Routes = [
 	{ path: '', component: LoginComponent },
@@ -23,6 +24,7 @@ export const routes: Routes = [
 	{ path: 'fleet', component: FleetComponent },
 	{ path: 'fleet/:id', component: FleetDetailsComponent },
 	{ path: 'vote', component: VoteComponent },
+	{ path: 'vote/new', component: VoteCreateComponent },
 	{ path: 'vote/:id', component: VoteDetailsComponent },
 	{ path: 'communications', component: MessagesComponent },
 	{ path: 'communications/:type/:target', component: MessagesComponent },

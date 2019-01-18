@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import * as PersonApi from '@api/Person';
 
 @Component({
@@ -7,7 +7,11 @@ import * as PersonApi from '@api/Person';
 	styleUrls: ['./personnel.component.scss'],
 })
 export class PersonnelComponent implements OnInit {
-	persons: api.Person[];
+	@ViewChild('nameTemplate') nameTemplate: TemplateRef<any>;
+	@ViewChild('shipTemplate') shipTemplate: TemplateRef<any>;
+	persons: api.Person[] = [];
+	columns: any[];
+	filterFunction: Function;
 
 	constructor() {}
 
@@ -15,5 +19,19 @@ export class PersonnelComponent implements OnInit {
 		PersonApi.getPerson().then((res: api.Response<any>) => {
 			this.persons = res.data;
 		});
+		this.columns = [
+			{ prop: 'full_name', name: 'Name', cellTemplate: this.nameTemplate },
+			{ prop: 'dynasty', name: 'Dynasty' },
+			{ prop: 'dynasty_rank', name: 'Dynasty rank' },
+			{ prop: 'home_planet', name: 'Home planet' },
+			{
+				prop: 'ship.name',
+				name: 'Current ship',
+				cellTemplate: this.shipTemplate,
+			},
+			{ prop: 'status', name: 'Status' },
+		];
+		this.filterFunction = (rows, value) =>
+			rows.filter(r => r.full_name.toLowerCase().includes(value));
 	}
 }

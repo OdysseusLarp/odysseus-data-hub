@@ -1,0 +1,16 @@
+<div>
+	<input
+		type="text"
+		placeholder="Search"
+		*ngIf="this.filterFunction"
+		(keyup)="onFilterChange($event)"
+		#filterInput
+	/>
+	<ngx-datatable
+		[rows]="filteredRows"
+		[columns]="columns"
+		[limit]="limit"
+		class="material"
+	>
+	</ngx-datatable>
+</div>

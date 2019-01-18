@@ -35,7 +35,6 @@ export class CaptainsLogComponent implements OnInit {
 	@autobind
 	onSubmit(values) {
 		return PostApi.putPost(values).then(async res => {
-			console.log(this);
 			this.fetchPosts();
 			return res;
 		});

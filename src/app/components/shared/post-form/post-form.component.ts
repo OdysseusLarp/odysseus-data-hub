@@ -25,7 +25,6 @@ export class PostFormComponent implements OnInit, OnDestroy {
 	constructor(private state: StateService) {}
 
 	onFormSubmit() {
-		console.log(this.postForm.value);
 		if (!this.postForm.valid || !isFunction(this.onSubmit)) return;
 		const formData = {
 			...this.postForm.value,

@@ -1,0 +1,31 @@
+<div>
+	<h1>New vote</h1>
+	<div>
+		<form [formGroup]="voteForm" (ngSubmit)="onFormSubmit()">
+			<label>Title</label>
+			<input type="text" placeholder="Title" formControlName="title" />
+			<label>Active time</label>
+			<select formControlName="activeTime">
+				<option value="30">30 minutes</option>
+				<option value="60">1 hour</option>
+				<option value="120">2 hours</option>
+			</select>
+			<label>Description</label>
+			<textarea formControlName="description"></textarea>
+
+			<div
+				*ngFor="let option of voteForm.controls.options.controls; let i = index"
+			>
+				<label>Vote option #{{ i + 1 }} </label>
+				<input
+					type="text"
+					[formControl]="option"
+					placeholder="Vote option #{{ i + 1 }}"
+				/><button type="button" (click)="removeOption(i)">[x]</button>
+			</div>
+
+			<button type="button" (click)="addOption()">Add option</button>
+			<button type="submit">Create vote</button>
+		</form>
+	</div>
+</div>

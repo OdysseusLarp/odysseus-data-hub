@@ -1,0 +1,12 @@
+form {
+	* {
+		display: block;
+	}
+	input,
+	textarea {
+		min-width: 600px;
+	}
+	textarea {
+		min-height: 160px;
+	}
+}

@@ -1,43 +1,18 @@
+<ng-template let-row="row" let-value="value" #nameTemplate
+	><a [routerLink]="row.id"
+		><strong>{{ value }}</strong></a
+	></ng-template
+>
+<ng-template let-row="row" let-value="value" #shipTemplate
+	><a [routerLink]="['../fleet', row.ship.id]"
+		><strong>{{ value }}</strong></a
+	></ng-template
+>
 <div>
 	<h1>Personnel database</h1>
-	<table>
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Dynasty</th>
-				<th>Dynasty rank</th>
-				<th>Home planet</th>
-				<th>Current ship</th>
-				<th>Status</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let person of persons">
-				<td>
-					<a routerLink="/personnel/{{ person.id }}"
-						>{{ person.first_name }} {{ person.last_name }}</a
-					>
-				</td>
-				<td>{{ person.dynasty }}</td>
-				<td>{{ person.dynasty_rank }}</td>
-				<td>{{ person.home_planet }}</td>
-				<td>
-					<a [routerLink]="['../fleet', person.ship.id]">{{
-						person.ship?.name
-					}}</a>
-				</td>
-				<td>{{ person.status }}</td>
-			</tr>
-		</tbody>
-	</table>
-
-	<!-- <div>
-		<h2>Person search</h2>
-		<select>
-			<option>Name</option>
-			<option>Ship</option>
-			<option>Dynasty</option>
-		</select>
-	</div>
-	<input type="text"> -->
+	<app-table
+		[rows]="persons"
+		[columns]="columns"
+		[filterFunction]="filterFunction"
+	></app-table>
 </div>

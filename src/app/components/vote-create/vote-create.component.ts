@@ -39,12 +39,12 @@ export class VoteCreateComponent implements OnInit {
 	}
 
 	addOption() {
-		const options = <FormArray>this.voteForm.controls.options;
+		const options = this.voteForm.get('options') as FormArray;
 		options.push(this.getNewOption());
 	}
 
 	removeOption(index) {
-		const options = <FormArray>this.voteForm.controls.options;
+		const options = this.voteForm.get('options') as FormArray;
 		options.removeAt(index);
 	}
 

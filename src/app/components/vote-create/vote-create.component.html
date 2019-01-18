@@ -14,7 +14,10 @@
 			<textarea formControlName="description"></textarea>
 
 			<div
-				*ngFor="let option of voteForm.controls.options.controls; let i = index"
+				*ngFor="
+					let option of voteForm.get('options')['controls'];
+					let i = index
+				"
 			>
 				<label>Vote option #{{ i + 1 }} </label>
 				<input

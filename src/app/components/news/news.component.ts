@@ -29,10 +29,10 @@ export class NewsComponent implements OnInit {
 	}
 
 	private fetchPosts() {
-		PostApi.getPost().then((res: api.Response<any>) => {
-			this.posts = get(res, 'data', []).filter(
-				post => post.type !== 'CAPTAINS_LOG'
-			);
+		PostApi.getPost({ status: 'APPROVED' }).then((res: api.Response<any>) => {
+			this.posts = get(res, 'data', [])
+				.filter(post => post.type !== 'CAPTAINS_LOG')
+				.sort((a, b) => a.updated_at < b.updated_at);
 		});
 	}
 

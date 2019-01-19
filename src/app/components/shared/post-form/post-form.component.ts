@@ -24,16 +24,15 @@ export class PostFormComponent implements OnInit, OnDestroy {
 
 	constructor(private state: StateService) {}
 
-	onFormSubmit() {
+	async onFormSubmit() {
 		if (!this.postForm.valid || !isFunction(this.onSubmit)) return;
 		const formData = {
 			...this.postForm.value,
 			is_visible: true,
 			person_id: this.currentUser.id,
 		};
-		const submitted = this.onSubmit(formData);
-		if (!isFunction(get(submitted, 'then'))) return;
-		submitted.then(() => this.clearForm);
+		await this.onSubmit(formData);
+		this.clearForm();
 	}
 
 	ngOnInit() {

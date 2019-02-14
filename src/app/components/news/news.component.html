@@ -1,7 +1,7 @@
-<div class="boxed" style="margin: 0px 0px 20px 20px; max-height: 500px; overflow-y: scroll;">
+<div class="boxed" style="margin: 0px 0px 20px 0px; max-height: 500px; overflow-y: scroll;">
   <h1>News</h1>
   <app-post-item *ngFor="let post of posts" [post]="post"></app-post-item>
 </div>
-<div class="boxed" style="margin-left: 20px;">
+<div class="boxed">
   <app-post-form [onSubmit]="onSubmit" [postTypes]="postTypes"></app-post-form>
 </div>

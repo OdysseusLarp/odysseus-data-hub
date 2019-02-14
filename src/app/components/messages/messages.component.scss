@@ -17,7 +17,7 @@
 
 	.messages {
 		// TODO: better way for doing this
-		height: calc(100vh - 180px);
+		height: calc(100vh - 380px);
 		overflow-y: auto;
 		overflow-x: hidden;
 	}
@@ -39,10 +39,10 @@
 			vertical-align: middle;
 		}
 		li:nth-child(even) {
-			background: rgb(250, 250, 250);
+			background: #333;
 		}
 		li:nth-child(odd) {
-			background: #eee;
+			background: #222;
 		}
 
 		a {

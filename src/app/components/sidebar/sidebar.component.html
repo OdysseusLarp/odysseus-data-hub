@@ -1,11 +1,13 @@
 <div class="sidebar boxed">
-	<a routerLink="news">News</a>
-	<a routerLink="communications/channel/general">Communications</a>
-	<a routerLink="vote">Influence</a> <a routerLink="ship-log">Ship log</a>
-	<a routerLink="personnel">Personnel database</a>
-	<a routerLink="artifact">Artifact database</a>
-	<a routerLink="fleet">Fleet information</a>
-	<a routerLink="captains-log">Captain's log</a><span>Star Map (?)</span>
+	<a routerLink="news"><img src="assets/img/ui/news.svg" />News</a>
+	<a routerLink="communications/channel/general"><img src="assets/img/ui/communications.svg" />Comms</a>
+	<a routerLink="vote"><img src="assets/img/ui/influence.svg" />Influence</a>
+	<a routerLink="ship-log"><img src="assets/img/ui/shiplog.svg" />Ship log</a>
+	<a routerLink="personnel"><img src="assets/img/ui/personnel.svg" />Personnel<br />database</a>
+	<a routerLink="artifact"><img src="assets/img/ui/artifact_database.svg" />Artifact<br />database</a>
+	<a routerLink="fleet"><img src="assets/img/ui/fleet.svg" />Fleet<br />information</a>
+	<a routerLink="captains-log"><img src="assets/img/ui/captain.svg" />Captain's log</a>
+	<a ><img src="assets/img/ui/starmap.svg" />Star Map (?)</a>
 	<hr />
 	<p>User: {{ (user$ | async).full_name }}</p>
 	<button (click)="onLogout()" type="button">Log out</button>

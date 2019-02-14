@@ -4,7 +4,10 @@ table {
 }
 
 tbody > tr:nth-child(odd) {
-	background: #eee;
+	background: #222;
+}
+tbody > tr:nth-child(even) {
+	background: #333;
 }
 
 td {

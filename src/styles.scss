@@ -33,39 +33,68 @@ a {
 .boxed {
 	padding: 15px;
 	border: 3px solid #00c5c8;
-	/* background: linear-gradient(
-		165deg,
-		#00c6c1 0%,
-		#011826 45%,
-		#011826 55%,
-		#026d7d 100%
-	); */
 	background-image: url('assets/img/ui/liukuvari2.jpg');
 	background-size: cover;
 	background-attachment: fixed;
 	box-shadow: 0px 0px 10px #00c6c1;
+	hr {
+		width: 100%;
+		border: none;
+		border-top: 2px solid #00c5c8;
+		margin: 0px;
+	}
 }
-.sidebar > a > img {
-	width: 50px;
-	max-height: 50px;
-	margin-right: 25px;
-}
-.sidebar > a {
-	display: flex;
-	flex-direction: row;
-	align-items: flex-end;
-	font-weight: bold;
-	font-size: 20px;
-	line-height: 22px;
-	text-decoration: none;
-	color: #02f6fe;
-}
-.sidebar > a:hover {
-	color: #e0ff00;
-}
-.sidebar > a:hover > img {
-	filter: brightness(50%) sepia(100) saturate(100) hue-rotate(25deg);
-}
+
 .sidebar {
+	display: flex;
+	flex-direction: column;
+	padding: 15px;
 	margin-right: 20px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+
+	a {
+		padding: 15px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		font-weight: bold;
+		font-size: 13px;
+		line-height: 16px;
+		text-decoration: none;
+		color: #02f6fe;
+
+		img {
+			flex-shrink: 0;
+			width: 50px;
+			max-height: 50px;
+			margin-right: 25px;
+		}
+	}
+
+	a:hover {
+		color: #e0ff00;
+		background-color: rgba(2, 246, 254, 0.2);
+	}
+
+	p {
+		color: #e0ff00;
+		margin: 0px 0px 0px 15px;
+		font-size: 13px;
+	}
+}
+
+.logout_b {
+	a {
+		color: #fff;
+	}
+	a:hover {
+		color: #f00;
+		cursor: pointer;
+	}
+	a > img {
+		width: 50px;
+		max-height: 25px;
+		margin-right: 0px;
+	}
 }

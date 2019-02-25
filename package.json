@@ -14,7 +14,7 @@
 	"private": true,
 	"dependencies": {
 		"@angular/animations": "^7.2.0",
-		"@angular/cdk": "^7.2.1",
+		"@angular/cdk": "^7.3.3",
 		"@angular/common": "~7.2.0",
 		"@angular/compiler": "~7.2.0",
 		"@angular/core": "~7.2.0",
@@ -31,6 +31,7 @@
 		"moment": "^2.23.0",
 		"ng2-trim-directive": "^2.3.2",
 		"ngx-auto-scroll": "^1.1.0",
+		"ngx-scrollbar": "^4.1.1",
 		"pluralize": "^7.0.0",
 		"rxjs": "~6.3.3",
 		"socket.io-client": "^2.2.0",

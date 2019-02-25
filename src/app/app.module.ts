@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { InputTrimModule } from 'ng2-trim-directive';
 import { NgxAutoScrollModule } from 'ngx-auto-scroll';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { routes } from './routes';
@@ -61,6 +62,7 @@ import { TableComponent } from '@components/shared/table/table.component';
 		ReactiveFormsModule,
 		NgxAutoScrollModule,
 		NgxDatatableModule,
+		NgScrollbarModule,
 	],
 	providers: [StateService, MessagingService],
 	bootstrap: [AppComponent],

@@ -16,7 +16,7 @@ body {
 	margin: 0;
 	background: linear-gradient(180deg, #010412 0%, #010412 45%, #011b2b 100%);
 	background-attachment: fixed;
-	font-family: 'Exo';
+	font-family: 'CutiveMono';
 	color: #fff;
 }
 app-root {
@@ -27,6 +27,25 @@ app-root {
 a {
 	color: #fff;
 }
+h1 {
+	font-family: 'Exo';
+	font-size: 30px;
+}
+h2 {
+	font-family: 'Exo';
+	font-size: 20px;
+}
+h3 {
+	font-family: 'Exo';
+	font-size: 15px;
+}
+button {
+	font-family: 'Exo';
+}
+.exo {
+	font-family: 'Exo';
+}
+
 .outer-padding {
 	padding: 20px 60px 20px 60px;
 }
@@ -52,6 +71,7 @@ a {
 	margin-right: 20px;
 	letter-spacing: 1px;
 	text-transform: uppercase;
+	font-family: 'Exo';
 
 	a {
 		padding: 15px;
@@ -75,6 +95,33 @@ a {
 	a:hover {
 		color: #e0ff00;
 		background-color: rgba(2, 246, 254, 0.2);
+		img[alt='news'] {
+			content: url('assets/img/ui/news_kelt.svg');
+		}
+		img[alt='comms'] {
+			content: url('assets/img/ui/comms_kelt.svg');
+		}
+		img[alt='influence'] {
+			content: url('assets/img/ui/influence_kelt.svg');
+		}
+		img[alt='shiplog'] {
+			content: url('assets/img/ui/shiplog_kelt.svg');
+		}
+		img[alt='personnel'] {
+			content: url('assets/img/ui/personnel_kelt.svg');
+		}
+		img[alt='artifact'] {
+			content: url('assets/img/ui/artifact_database_kelt.svg');
+		}
+		img[alt='fleet'] {
+			content: url('assets/img/ui/fleet_kelt.svg');
+		}
+		img[alt='captain'] {
+			content: url('assets/img/ui/captain_kelt.svg');
+		}
+		img[alt='starmap'] {
+			content: url('assets/img/ui/starmap_kelt.svg');
+		}
 	}
 
 	p {
@@ -97,4 +144,8 @@ a {
 		max-height: 25px;
 		margin-right: 0px;
 	}
+}
+
+.post_author {
+	font-weight: bold;
 }

@@ -1,17 +1,17 @@
 <div class="sidebar boxed">
 	<hr />
-	<a routerLink="news"><img src="assets/img/ui/news.svg" />News</a>
-	<a routerLink="communications/channel/general"><img src="assets/img/ui/logout.svg" />Communications</a>
-	<a routerLink="vote"><img src="assets/img/ui/influence.svg" />Influence</a>
-	<a routerLink="ship-log"><img src="assets/img/ui/logout.svg" />Ship log</a>
-	<a routerLink="personnel"><img src="assets/img/ui/personnel.svg" />Personnel database</a>
-	<a routerLink="artifact"><img src="assets/img/ui/artifact_database.svg" />Artifact database</a>
-	<a routerLink="fleet"><img src="assets/img/ui/fleet.svg" />Fleet information</a>
-	<a routerLink="captains-log"><img src="assets/img/ui/captain.svg" />Captain's log</a>
-	<a ><img src="assets/img/ui/logout.svg" />Star Map (?)</a>
+	<a routerLink="news"><img alt="news" src="assets/img/ui/news.svg" />News</a>
+	<a routerLink="communications/channel/general"><img alt="comms" src="assets/img/ui/comms.svg" />Communications</a>
+	<a routerLink="vote"><img alt="influence" src="assets/img/ui/influence.svg" />Influence</a>
+	<a routerLink="ship-log"><img alt="shiplog" src="assets/img/ui/shiplog.svg" />Ship log</a>
+	<a routerLink="personnel"><img alt="personnel" src="assets/img/ui/personnel.svg" />Personnel database</a>
+	<a routerLink="artifact"><img alt="artifact" src="assets/img/ui/artifact_database.svg" />Artifact database</a>
+	<a routerLink="fleet"><img alt="fleet" src="assets/img/ui/fleet.svg" />Fleet information</a>
+	<a routerLink="captains-log"><img alt="captain" src="assets/img/ui/captain.svg" />Captain's log</a>
+	<a ><img alt="starmap" src="assets/img/ui/starmap.svg" />Star Map (?)</a>
   <span>&nbsp;</span>
   <span>&nbsp;</span>
 	<p>{{ (user$ | async).full_name }}</p>
-	<span class="logout_b"><a (click)="onLogout()"><img src="assets/img/ui/logout.svg"/>Log out</a></span>
+	<span class="logout_b"><a (click)="onLogout()"><img alt="logout" src="assets/img/ui/logout.svg"/>Log out</a></span>
 	<hr />
 </div>

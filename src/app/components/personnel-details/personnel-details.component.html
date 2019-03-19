@@ -35,9 +35,11 @@
 				</p>
 			</div>
 
-			<div *ngFor="let medicalEntry of person.medical_entries">
+			<div>
 				<h2>Medical entries</h2>
-				<p>[{{ medicalEntry.time }}] {{ medicalEntry.details }}</p>
+				<p *ngFor="let medicalEntry of person.medical_entries">
+					[{{ medicalEntry.time }}] {{ medicalEntry.details }}
+				</p>
 			</div>
 
 			<div>
@@ -58,6 +60,13 @@
 						>Send a private message
 					</a>
 				</p>
+			</div>
+			<div>
+				<h2>Add medical entry</h2>
+				<div>
+					<textarea trim="blur" #medicalEntryForm></textarea>
+					<button (click)="saveMedicalEntry()" [disabled]="isSubmitting">Save medical entry</button>
+				</div>
 			</div>
 		</div>
 	</div>

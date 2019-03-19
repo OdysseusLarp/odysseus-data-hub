@@ -6,4 +6,15 @@
 	div {
 		min-width: 400px;
 	}
+
+	textarea,
+	button {
+		min-width: 400px;
+		display: block;
+	}
+
+	textarea {
+		min-height: 200px;
+		resize: none;
+	}
 }

@@ -38,12 +38,38 @@ h2 {
 h3 {
 	font-family: 'Exo';
 	font-size: 15px;
-}
-button {
-	font-family: 'Exo';
+	margin: 0px;
 }
 .exo {
 	font-family: 'Exo';
+}
+button {
+	font-family: 'Exo';
+	background: rgba(0, 0, 0, 0.2);
+	box-shadow: 0px 0px 5px #00c6c1;
+	border: 2px solid #00c5c8;
+	padding: 5px;
+	color: #fff;
+}
+button:hover {
+	transition-duration: 0.4s;
+	background: rgba(2, 246, 254, 0.2);
+	box-shadow: 0px 0px 10px #00c6c1;
+}
+
+input[type='text'],
+textarea {
+	font-family: 'CutiveMono';
+	background: rgba(0, 0, 0, 0.2);
+	border: 1px solid #00c5c8;
+	padding: 4px;
+	color: #fff;
+}
+input[type='text']:focus,
+textarea:focus {
+	outline: none;
+	transition-duration: 0.4s;
+	box-shadow: 0px 0px 10px #00c6c1;
 }
 
 .outer-padding {
@@ -64,6 +90,11 @@ button {
 	}
 }
 
+.post_author {
+	font-weight: bold;
+}
+
+// Navmenu
 .sidebar {
 	display: flex;
 	flex-direction: column;
@@ -75,6 +106,7 @@ button {
 
 	a {
 		padding: 15px;
+		height: 50px;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -93,6 +125,7 @@ button {
 	}
 
 	a:hover {
+		transition-duration: 0.4s;
 		color: #e0ff00;
 		background-color: rgba(2, 246, 254, 0.2);
 		img[alt='news'] {
@@ -122,6 +155,9 @@ button {
 		img[alt='starmap'] {
 			content: url('assets/img/ui/starmap_kelt.svg');
 		}
+		img[alt='logout'] {
+			content: url('assets/img/ui/logout_red.svg');
+		}
 	}
 
 	p {
@@ -134,6 +170,7 @@ button {
 .logout_b {
 	a {
 		color: #fff;
+		height: 30px;
 	}
 	a:hover {
 		color: #f00;
@@ -146,14 +183,10 @@ button {
 	}
 }
 
-.post_author {
-	font-weight: bold;
-}
-
 /* Body scrollbar settigns */
 
 ::-webkit-scrollbar {
-	width: 12px;
+	width: 18px;
 }
 
 ::-webkit-scrollbar-button {
@@ -161,14 +194,14 @@ button {
 }
 ::-webkit-scrollbar-thumb {
 	background-color: transparent;
-	box-shadow: inset 0 0 10px 10px rgba(2, 246, 254, 0.4);
-	border: solid 3px transparent;
-	border-radius: 8px;
+	box-shadow: inset 0 0 10px 10px rgba(2, 246, 254, 0.8);
+	border: solid 5px transparent;
+	border-radius: 0px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
 	background-color: transparent;
-	box-shadow: inset 0 0 10px 10px rgba(2, 246, 254, 0.8);
+	box-shadow: inset 0 0 10px 10px rgba(2, 246, 254, 1);
 }
 
 ::-webkit-scrollbar-track {

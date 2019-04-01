@@ -1,13 +1,13 @@
 /* Scrollbar */
 ng-scrollbar {
 	--scrollbar-color: transparent;
-	--scrollbar-container-color: transparent;
-	--scrollbar-thumb-color: rgba(2, 246, 254, 0.4);
-	--scrollbar-thumb-hover-color: rgba(2, 246, 254, 0.8);
-	--scrollbar-border-radius: 4px;
-	--scrollbar-size: 6px;
-	--scrollbar-padding: 8px;
-	--scroll-view-margin: 0;
+	--scrollbar-container-color: rgba(2, 246, 254, 0.4);
+	--scrollbar-thumb-color: rgba(2, 246, 254, 0.8);
+	--scrollbar-thumb-hover-color: rgba(2, 246, 254, 1);
+	--scrollbar-border-radius: 0px;
+	--scrollbar-size: 8px;
+	--scrollbar-padding: 0px;
+	--scroll-view-margin: 0px 15px 0px 0px;
 	--scroll-view-color: transparent;
 	// Override width: 100% set by default
 	width: auto !important;

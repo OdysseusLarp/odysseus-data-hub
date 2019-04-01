@@ -1,7 +1,37 @@
 form {
-	display: flex;
+	/*	display: flex;
 	flex-direction: column;
-	max-width: 600px;
+	max-width: 600px;*/
+	.grid-container {
+		display: grid;
+		grid-template-columns: 1fr 200px 250px;
+		grid-template-rows: 40px 1fr;
+		grid-template-areas: 'TITLE TYPE .' 'TEXTAREA TEXTAREA SUBMIT';
+	}
+
+	.post_text {
+		grid-area: TEXTAREA;
+		display: flex;
+		flex-direction: column;
+		padding-top: 15px;
+	}
+	.post_title {
+		grid-area: TITLE;
+		display: flex;
+		flex-direction: column;
+		padding-right: 15px;
+	}
+	.post_type {
+		grid-area: TYPE;
+		display: flex;
+		flex-direction: column;
+	}
+	.post_sub {
+		grid-area: SUBMIT;
+		display: flex;
+		flex-direction: column;
+		flex-flow: column-reverse;
+	}
 
 	label {
 		font-weight: bold;
@@ -13,10 +43,11 @@ form {
 	}
 
 	textarea {
-		height: 200px;
+		height: 120px;
+		resize: vertical;
 	}
 
 	button {
-		margin-top: 8px;
+		margin: 0px 60px 0px 60px;
 	}
 }

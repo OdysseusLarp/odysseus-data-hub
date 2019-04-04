@@ -6,6 +6,7 @@ import { InputTrimModule } from 'ng2-trim-directive';
 import { NgxAutoScrollModule } from 'ngx-auto-scroll';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { routes } from './routes';
@@ -63,6 +64,7 @@ import { TableComponent } from '@components/shared/table/table.component';
 		NgxAutoScrollModule,
 		NgxDatatableModule,
 		NgScrollbarModule,
+		NgSelectModule,
 	],
 	providers: [StateService, MessagingService],
 	bootstrap: [AppComponent],

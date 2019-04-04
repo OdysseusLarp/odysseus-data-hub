@@ -4,11 +4,15 @@
 		<label for="title">Title</label>
 		<input type="text" placeholder="Title" id="title" formControlName="title" />
 		<label for="type">Type</label>
-		<select formControlName="type">
-			<option *ngFor="let type of postTypes" [value]="type.value">{{
-				type.text
-			}}</option>
-		</select>
+		<ng-select
+			formControlName="type"
+			[items]="postTypes"
+			[searchable]="false"
+			[clearable]="false"
+			bindLabel="text"
+			bindValue="value"
+		>
+		</ng-select>
 		<label for="text">Text</label>
 		<textarea id="text" formControlName="body"></textarea>
 		<button type="submit">Submit</button>

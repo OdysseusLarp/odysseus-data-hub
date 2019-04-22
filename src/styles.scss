@@ -60,6 +60,7 @@ button:hover {
 input[type='text'],
 textarea {
 	font-family: 'CutiveMono';
+	font-size: 13px;
 	background: rgba(0, 0, 0, 0.2);
 	border: 1px solid #00c5c8;
 	padding: 4px;
@@ -213,29 +214,31 @@ textarea:focus {
 }
 
 .ng-select {
-	min-height: 0px;
-	border-radius: 0;
-	color: #02f6fe;
+	font-family: 'CutiveMono';
+	font-size: 13px;
+}
+.ng-select:hover {
+	box-shadow: 0px 0px 10px #00c6c1;
 }
 .ng-select .ng-select-container {
+	background: rgba(0, 0, 0, 0.2);
+	border: 1px solid #00c5c8;
+	padding: 4px;
 	min-height: 0px;
 	border-radius: 0;
-	background: #030a29;
-	border: 1px solid #00c5c8;
-	color: #02f6fe;
-	padding: 8px;
 
 	.ng-value {
-		color: #02f6fe;
+		color: #fff;
 	}
 }
 .ng-select .ng-dropdown-panel {
-	background: #030a29;
+	background: rgba(0, 0, 0, 0.9);
 	border: 1px solid #00c5c8;
 
 	.ng-dropdown-panel-items .ng-option {
 		cursor: pointer;
-		padding: 6px;
+		padding: 4px;
+		color: #bbb;
 	}
 
 	.ng-dropdown-panel-items .ng-option:not(:last-child) {
@@ -243,7 +246,7 @@ textarea:focus {
 	}
 
 	.ng-dropdown-panel-items .ng-option:hover {
-		background: #131313;
+		background: #666;
 		color: #fff;
 	}
 }

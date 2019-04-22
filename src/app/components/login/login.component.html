@@ -3,6 +3,7 @@
 	<h2>Log in using your Social ID</h2>
 	<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 		<input type="text" formControlName="personId" trim="blur" />
+		&nbsp;
 		<button [disabled]="!loginForm.valid || submitting">Log in!</button>
 	</form>
 	<p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>

@@ -34,6 +34,7 @@ h1 {
 h2 {
 	font-family: 'Exo';
 	font-size: 20px;
+	margin-bottom: 10px;
 }
 h3 {
 	font-family: 'Exo';
@@ -93,6 +94,11 @@ textarea:focus {
 
 .post_author {
 	font-weight: bold;
+}
+.post_body {
+	background: rgba(0, 0, 0, 0.3);
+	padding: 8px;
+	margin: 5px 0px 0px 10px;
 }
 
 // Navmenu

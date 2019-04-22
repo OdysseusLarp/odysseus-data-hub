@@ -2,17 +2,25 @@
 <div>
 	<h1>Communications</h1>
 	<h2 *ngIf="chatView.type === 'private'">
-		{{ chatView?.targetPerson?.full_name }}
+		Messaging with person {{ chatView?.targetPerson?.full_name }}
 	</h2>
-	<h2 *ngIf="chatView.type === 'channel'">#{{ chatView?.target }}</h2>
+	<h2 *ngIf="chatView.type === 'channel'">Messaging channel #{{ chatView?.target }}</h2>
 </div>
 <div class="com-wrapper">
-	<div class="messages" ngx-auto-scroll #chatMessages>
-		<p *ngFor="let message of (message$ | async)">
-			[{{ formatTimestamp(message.created_at) }}]
-			<strong>{{ message.sender.full_name }}</strong
-			>: {{ message.message }}
-		</p>
+	<div>
+		<div class="messages" ngx-auto-scroll #chatMessages>
+			<p *ngFor="let message of (message$ | async)">
+				[{{ formatTimestamp(message.created_at) }}]
+				<strong>{{ message.sender.full_name }}</strong
+				>: {{ message.message }}
+			</p>
+		</div>
+		<div class="message-box">
+			<form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
+				<input type="text" placeholder="Type here..." formControlName="message" />&nbsp;
+				<button> Send&nbsp;message </button>
+			</form>
+		</div>
 	</div>
 	<div class="user-list">
 		<h2>Channels</h2>
@@ -64,12 +72,6 @@
 				</span>
 			</li>
 		</ul>
-	</div>
-	<div class="message-box">
-		<form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
-			<input type="text" placeholder="Type here..." formControlName="message" />
-			<button>Say</button>
-		</form>
 	</div>
 </div>
 </div>

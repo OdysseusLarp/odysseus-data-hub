@@ -17,9 +17,15 @@
 
 	.messages {
 		// TODO: better way for doing this
-		height: calc(100vh - 380px);
+		//height: calc(100vh - 380px);
+		height: 65vh;
 		overflow-y: auto;
 		overflow-x: hidden;
+		background-color: rgba(0, 0, 0, 0.3);
+		border: 1px solid #00c5c8;
+		p {
+			margin: 4px;
+		}
 	}
 
 	.user-list {
@@ -75,6 +81,7 @@
 	}
 
 	.message-box {
+		margin-top: 10px;
 		width: 100%;
 		form {
 			display: flex;

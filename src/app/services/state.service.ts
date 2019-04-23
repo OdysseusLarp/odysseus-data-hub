@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { getPersonId } from '@api/Person';
+import { getPersonCardId } from '@api/Person';
 
 @Injectable({
 	providedIn: 'root',
@@ -23,10 +23,10 @@ export class StateService {
 	}
 
 	login(id): Promise<api.Person> {
-		return getPersonId(id).then((res: api.Response<any>) => {
+		return getPersonCardId(id).then((res: api.Response<any>) => {
 			if (!res.data) throw new Error('User not found');
 			this.user.next(res.data);
-			this.sessionStorage.setItem('previousUserId', res.data.id);
+			this.sessionStorage.setItem('previousUserId', res.data.card_id);
 			return res.data;
 		});
 	}

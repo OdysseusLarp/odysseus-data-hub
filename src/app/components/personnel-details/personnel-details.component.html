@@ -4,7 +4,8 @@
 		<div class="person-container">
 			<div>
 				<h2>Details</h2>
-				<p>Current ship: {{ person.ship.name }}</p>
+				<p *ngIf="person.ship">Current ship: {{ person.ship.name }}</p>
+				<p *ngIf="!person.ship">Current ship: unknown</p>
 				<p *ngIf="person.title">Title: {{ person.title }}</p>
 				<p>Status: {{ person.status }}</p>
 				<p>Occupation: {{ person.occupation }}</p>
@@ -13,7 +14,7 @@
 				<p>Birth year: {{ person.birth_year }}</p>
 			</div>
 
-			<div>
+			<div *ngIf="person.medical_data">
 				<h2>Medical data</h2>
 				<p>Blood type: {{ person.medical_data.blood_type }}</p>
 				<p>Surgeries: {{ person.medical_data.surgeries }}</p>
@@ -23,7 +24,7 @@
 				<p>Medical history: {{ person.medical_data.medical_history }}</p>
 			</div>
 
-			<div>
+			<div *ngIf="person.military_data">
 				<h2>Military record</h2>
 				<p>Rank: {{ person.military_data.rank }}</p>
 				<p>Unit: {{ person.military_data.unit }}</p>
@@ -35,14 +36,14 @@
 				</p>
 			</div>
 
-			<div>
+			<div *ngIf="person.medical_entries">
 				<h2>Medical entries</h2>
 				<p *ngFor="let medicalEntry of person.medical_entries">
 					[{{ medicalEntry.time }}] {{ medicalEntry.details }}
 				</p>
 			</div>
 
-			<div>
+			<div *ngIf="person.family">
 				<h2>Family members</h2>
 				<ul>
 					<li *ngFor="let familyMember of person.family">

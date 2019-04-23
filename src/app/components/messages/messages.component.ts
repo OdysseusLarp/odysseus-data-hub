@@ -66,6 +66,10 @@ export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 			this.messaging.chatViewChanged(chatView);
 		});
 
+		this.filterForm.valueChanges.subscribe(({ userFilter }) => {
+			this.messaging.debouncedSearchUsers(userFilter);
+		});
+
 		// Users that show up in users list
 		this.users$ = combineLatest(
 			this.messaging.users,

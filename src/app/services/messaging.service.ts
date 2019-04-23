@@ -4,7 +4,7 @@ import { distinctUntilChanged, first } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { BehaviorSubject, Subject } from 'rxjs';
 import * as io from 'socket.io-client/dist/socket.io';
-import { get, isEqual, forIn } from 'lodash';
+import { get, isEqual, forIn, debounce } from 'lodash';
 import {
 	ChatView,
 	OutgoingMessage,
@@ -20,6 +20,7 @@ export class MessagingService {
 	private chatView: ChatView;
 	private user: api.Person;
 	private socket: any;
+	debouncedSearchUsers: Function;
 	messages = new BehaviorSubject<api.ComMessage[]>([]);
 	users: BehaviorSubject<api.Person[]> = new BehaviorSubject([]);
 	unseenMessagesUpdated: Subject<Map<string, number>> = new Subject();
@@ -34,10 +35,15 @@ export class MessagingService {
 			// Wipe message cache on logout
 			this.messageCache = new Map<string, api.ComMessage[]>();
 		});
+		this.debouncedSearchUsers = debounce(this.searchUsers, 200);
 	}
 
 	sendMessage(message: OutgoingMessage) {
 		this.socket.emit('message', message);
+	}
+
+	searchUsers(name: string) {
+		this.socket.emit('searchUsers', name);
 	}
 
 	// Function to manually emit since I don't know how to use RXJS properly
@@ -136,6 +142,11 @@ export class MessagingService {
 
 		// Up the unseen count unless current user is the sender
 		if (message.person_id !== this.user.id) {
+			// If sender is not on the contact list, refetch contacts
+			const isUserVisible = !!this.users
+				.getValue()
+				.find(u => u.id === message.person_id);
+			if (!isUserVisible) this.socket.emit('getUserList');
 			const currentlyUnseen = this.unseenMessages.get(target) || 0;
 			this.unseenMessages.set(target, currentlyUnseen + 1);
 		}

@@ -32,6 +32,7 @@
 		"moment": "^2.23.0",
 		"ng2-trim-directive": "^2.3.2",
 		"ngx-auto-scroll": "^1.1.0",
+		"ngx-markdown": "^7.1.5",
 		"ngx-scrollbar": "^4.1.1",
 		"pluralize": "^7.0.0",
 		"rxjs": "~6.3.3",

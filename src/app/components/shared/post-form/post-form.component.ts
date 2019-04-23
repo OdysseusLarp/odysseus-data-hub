@@ -18,6 +18,7 @@ export class PostFormComponent implements OnInit, OnDestroy {
 	@Input() title = 'Add post';
 	@Input() onSubmit: Function;
 	@Input() postTypes: PostType[] = [];
+	showTitleSelector: boolean;
 	postForm: FormGroup;
 	currentUser: api.Person;
 	user$: Subscription;
@@ -38,6 +39,7 @@ export class PostFormComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.user$ = this.state.user.subscribe(user => (this.currentUser = user));
 		this.buildForm();
+		this.showTitleSelector = this.postTypes.length > 1;
 	}
 
 	ngOnDestroy() {

@@ -9,6 +9,10 @@ form {
 		grid-template-areas: 'TITLE TYPE .' 'TEXTAREA TEXTAREA SUBMIT';
 	}
 
+	.grid-container.no-title {
+		grid-template-areas: 'TITLE TITLE .' 'TEXTAREA TEXTAREA SUBMIT';
+	}
+
 	.post_text {
 		grid-area: TEXTAREA;
 		display: flex;
@@ -19,9 +23,9 @@ form {
 		grid-area: TITLE;
 		display: flex;
 		flex-direction: column;
-		padding-right: 15px;
 	}
 	.post_type {
+		padding-left: 15px;
 		grid-area: TYPE;
 		display: flex;
 		flex-direction: column;

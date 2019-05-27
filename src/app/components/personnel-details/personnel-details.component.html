@@ -14,6 +14,7 @@
 				<p>Birth year: {{ person.birth_year }}</p>
 			</div>
 
+			<!--
 			<div *ngIf="person.medical_data">
 				<h2>Medical data</h2>
 				<p>Blood type: {{ person.medical_data.blood_type }}</p>
@@ -23,7 +24,9 @@
 				<p>Allergies: {{ person.medical_data.allergies }}</p>
 				<p>Medical history: {{ person.medical_data.medical_history }}</p>
 			</div>
+			-->
 
+			<!--
 			<div *ngIf="person.military_data">
 				<h2>Military record</h2>
 				<p>Rank: {{ person.military_data.rank }}</p>
@@ -35,13 +38,16 @@
 					Service history: {{ person.military_data.service_history }}
 				</p>
 			</div>
+			-->
 
+			<!--
 			<div *ngIf="person.medical_entries">
 				<h2>Medical entries</h2>
 				<p *ngFor="let medicalEntry of person.medical_entries">
 					[{{ medicalEntry.time }}] {{ medicalEntry.details }}
 				</p>
 			</div>
+			-->
 
 			<div *ngIf="person.family">
 				<h2>Family members</h2>

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { getPersonId, postPersonIdMedicalEntry } from '@api/Person';
+import { getPersonId } from '@api/Person';
 import * as moment from 'moment';
 
 @Component({
@@ -26,14 +26,15 @@ export class PersonnelDetailsComponent implements OnInit {
 		const value = this.medicalEntryForm.nativeElement.value;
 		if (!value || !this.person || this.isSubmitting) return;
 		this.isSubmitting = true;
-		postPersonIdMedicalEntry(this.person.id, {
-			// TODO: Convert time to fictional year or get rid of it
-			time: moment().format('D.M.YYYY'),
-			details: value,
-		}).then(() => {
-			this.fetchPerson(this.person.id);
-			this.isSubmitting = false;
-			this.medicalEntryForm.nativeElement.value = '';
-		});
+		console.log('saving medical entry', value);
+		// postPersonIdMedicalEntry(this.person.id, {
+		// 	// TODO: Convert time to fictional year or get rid of it
+		// 	time: moment().format('D.M.YYYY'),
+		// 	details: value,
+		// }).then(() => {
+		// 	this.fetchPerson(this.person.id);
+		// 	this.isSubmitting = false;
+		// 	this.medicalEntryForm.nativeElement.value = '';
+		// });
 	}
 }

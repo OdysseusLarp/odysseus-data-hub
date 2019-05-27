@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import * as PersonApi from '@api/Person';
 import { get } from 'lodash';
+import { autobind } from 'core-decorators';
 
 @Component({
 	selector: 'app-personnel',
@@ -11,15 +12,36 @@ export class PersonnelComponent implements OnInit {
 	@ViewChild('nameTemplate') nameTemplate: TemplateRef<any>;
 	@ViewChild('shipTemplate') shipTemplate: TemplateRef<any>;
 	persons: api.Person[] = [];
+	page = 1;
+	pageSize = 25;
+	totalRows = 0;
 	columns: any[];
 	filterFunction: Function;
+	isLoading = false;
 
 	constructor() {}
 
+	@autobind()
+	setPage(event) {
+		const page = event.offset + 1;
+		this.fetchPage(page);
+	}
+
+	fetchPage(page) {
+		this.isLoading = true;
+		PersonApi.getPerson({ page, entries: this.pageSize }).then(
+			(res: api.Response<any>) => {
+				this.persons = get(res.data, 'persons', []);
+				this.page = get(res.data, 'page');
+				this.pageSize = get(res.data, 'pageSize');
+				this.totalRows = get(res.data, 'rowCount');
+				this.isLoading = false;
+			}
+		);
+	}
+
 	ngOnInit() {
-		PersonApi.getPerson().then((res: api.Response<any>) => {
-			this.persons = res.data;
-		});
+		this.fetchPage(this.page);
 		this.columns = [
 			{
 				prop: 'full_name',
@@ -28,7 +50,6 @@ export class PersonnelComponent implements OnInit {
 				width: 250,
 			},
 			{ prop: 'dynasty', name: 'Dynasty' },
-			{ prop: 'dynasty_rank', name: 'Dynasty rank' },
 			{ prop: 'home_planet', name: 'Home planet' },
 			{
 				prop: 'ship.name',

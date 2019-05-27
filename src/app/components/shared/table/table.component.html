@@ -9,8 +9,14 @@
 	<ngx-datatable
 		[rows]="filteredRows"
 		[columns]="columns"
+		[columnMode]="'force'"
 		[limit]="limit"
 		class="material"
+		[externalPaging]="externalPaging"
+		[footerHeight]="50"
+		[count]="count"
+		[offset]="offset"
+		(page)="setPage($event)"
 	>
 	</ngx-datatable>
 </div>

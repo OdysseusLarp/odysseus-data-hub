@@ -256,3 +256,18 @@ textarea:focus {
 		color: #fff;
 	}
 }
+
+ul.pager {
+	li.pages {
+		a {
+			padding: 10px;
+		}
+		font-size: 2em;
+	}
+
+	li.pages.active {
+		a {
+			color: #02f6fe;
+		}
+	}
+}

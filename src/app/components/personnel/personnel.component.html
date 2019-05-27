@@ -14,5 +14,10 @@
 		[rows]="persons"
 		[columns]="columns"
 		[filterFunction]="filterFunction"
+		[externalPaging]="true"
+		[count]="totalRows"
+		[offset]="page - 1"
+		[limit]="pageSize"
+		[setPage]="setPage"
 	></app-table>
 </div>

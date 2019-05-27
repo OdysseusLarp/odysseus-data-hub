@@ -22,6 +22,11 @@ export class TableComponent implements OnInit, OnChanges {
 	@Input() columns;
 	@Input() filterFunction;
 	@Input() limit;
+	@Input() page;
+	@Input() offset;
+	@Input() externalPaging;
+	@Input() count;
+	@Input() setPage;
 
 	constructor() {}
 

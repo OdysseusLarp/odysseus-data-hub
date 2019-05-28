@@ -18,6 +18,7 @@ export class PersonnelComponent implements OnInit {
 	columns: any[];
 	filterFunction: Function;
 	isLoading = false;
+	filterValue = '';
 
 	constructor() {}
 
@@ -27,17 +28,19 @@ export class PersonnelComponent implements OnInit {
 		this.fetchPage(page);
 	}
 
-	fetchPage(page) {
+	fetchPage(page = this.page, nameFilter = this.filterValue) {
 		this.isLoading = true;
-		PersonApi.getPerson({ page, entries: this.pageSize }).then(
-			(res: api.Response<any>) => {
-				this.persons = get(res.data, 'persons', []);
-				this.page = get(res.data, 'page');
-				this.pageSize = get(res.data, 'pageSize');
-				this.totalRows = get(res.data, 'rowCount');
-				this.isLoading = false;
-			}
-		);
+		PersonApi.getPerson({
+			page,
+			entries: this.pageSize,
+			name: nameFilter || undefined,
+		}).then((res: api.Response<any>) => {
+			this.persons = get(res.data, 'persons', []);
+			this.page = get(res.data, 'page');
+			this.pageSize = get(res.data, 'pageSize');
+			this.totalRows = get(res.data, 'rowCount');
+			this.isLoading = false;
+		});
 	}
 
 	ngOnInit() {
@@ -48,32 +51,27 @@ export class PersonnelComponent implements OnInit {
 				name: 'Name',
 				cellTemplate: this.nameTemplate,
 				width: 250,
+				sortable: false,
 			},
-			{ prop: 'dynasty', name: 'Dynasty' },
-			{ prop: 'home_planet', name: 'Home planet' },
+			{ prop: 'dynasty', name: 'Dynasty', sortable: false },
+			{ prop: 'home_planet', name: 'Home planet', sortable: false },
 			{
 				prop: 'ship.name',
 				name: 'Current ship',
 				cellTemplate: this.shipTemplate,
+				sortable: false,
 			},
-			{ prop: 'status', name: 'Status' },
+			{
+				prop: 'status',
+				name: 'Status',
+				sortable: false,
+			},
 		];
-		this.filterFunction = (rows, value) =>
-			rows.filter(
-				r =>
-					r.full_name.toLowerCase().includes(value) ||
-					get(r, 'ship.name', '')
-						.toLowerCase()
-						.includes(value) ||
-					get(r, 'dynasty', '')
-						.toLowerCase()
-						.includes(value) ||
-					get(r, 'home_planet', '')
-						.toLowerCase()
-						.includes(value) ||
-					get(r, 'status', '')
-						.toLowerCase()
-						.includes(value)
-			);
+		this.filterFunction = (rows, value) => {
+			if (this.isLoading) return;
+			this.filterValue = value;
+			// Always set page to 1 when filtering
+			this.fetchPage(1, value);
+		};
 	}
 }

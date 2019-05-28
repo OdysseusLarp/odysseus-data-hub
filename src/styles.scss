@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+
+// Material styles for Material Tabs
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
 @font-face {
 	font-family: 'CutiveMono';
 	src: url('assets/fonts/CutiveMono-Regular.woff') format('woff');
@@ -270,4 +274,8 @@ ul.pager {
 			color: #02f6fe;
 		}
 	}
+}
+
+.mat-tab-label {
+	color: #fff;
 }

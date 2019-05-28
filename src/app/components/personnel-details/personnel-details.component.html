@@ -1,80 +1,95 @@
 <div class="boxed">
 	<div *ngIf="person">
 		<h1>{{ person.full_name }}</h1>
-		<div class="person-container">
-			<div>
-				<h2>Details</h2>
-				<p *ngIf="person.ship">Current ship: {{ person.ship.name }}</p>
-				<p *ngIf="!person.ship">Current ship: unknown</p>
-				<p *ngIf="person.title">Title: {{ person.title }}</p>
-				<p>Status: {{ person.status }}</p>
-				<p>Occupation: {{ person.occupation }}</p>
-				<p>Home planet: {{ person.home_planet }}</p>
-				<p>Dynasty: {{ person.dynasty }}</p>
-				<p>Birth year: {{ person.birth_year }}</p>
-			</div>
+		<mat-tab-group>
+			<mat-tab label="General details">
+				<div class="person-container">
+					<div>
+						<p *ngIf="person.ship">Current ship: {{ person.ship.name }}</p>
+						<p *ngIf="!person.ship">Current ship: unknown</p>
+						<p *ngIf="person.title">Title: {{ person.title }}</p>
+						<p>Status: {{ person.status }}</p>
+						<p>Occupation: {{ person.occupation }}</p>
+						<p>Home planet: {{ person.home_planet }}</p>
+						<p>Dynasty: {{ person.dynasty }}</p>
+						<p>Birth year: {{ person.birth_year }}</p>
+					</div>
 
-			<!--
-			<div *ngIf="person.medical_data">
-				<h2>Medical data</h2>
-				<p>Blood type: {{ person.medical_data.blood_type }}</p>
-				<p>Surgeries: {{ person.medical_data.surgeries }}</p>
-				<p>Medication: {{ person.medical_data.medication }}</p>
-				<p>Immunization: {{ person.medical_data.immunization }}</p>
-				<p>Allergies: {{ person.medical_data.allergies }}</p>
-				<p>Medical history: {{ person.medical_data.medical_history }}</p>
-			</div>
-			-->
+					<!--
+					<div *ngIf="person.medical_data">
+						<h2>Medical data</h2>
+						<p>Blood type: {{ person.medical_data.blood_type }}</p>
+						<p>Surgeries: {{ person.medical_data.surgeries }}</p>
+						<p>Medication: {{ person.medical_data.medication }}</p>
+						<p>Immunization: {{ person.medical_data.immunization }}</p>
+						<p>Allergies: {{ person.medical_data.allergies }}</p>
+						<p>Medical history: {{ person.medical_data.medical_history }}</p>
+					</div>
+					-->
 
-			<!--
-			<div *ngIf="person.military_data">
-				<h2>Military record</h2>
-				<p>Rank: {{ person.military_data.rank }}</p>
-				<p>Unit: {{ person.military_data.unit }}</p>
-				<p *ngIf="person.military_data.remarks">
-					Remarks: {{ person.military_data.remarks }}
-				</p>
-				<p *ngIf="person.military_data.service_history">
-					Service history: {{ person.military_data.service_history }}
-				</p>
-			</div>
-			-->
+					<!--
+					<div *ngIf="person.military_data">
+						<h2>Military record</h2>
+						<p>Rank: {{ person.military_data.rank }}</p>
+						<p>Unit: {{ person.military_data.unit }}</p>
+						<p *ngIf="person.military_data.remarks">
+							Remarks: {{ person.military_data.remarks }}
+						</p>
+						<p *ngIf="person.military_data.service_history">
+							Service history: {{ person.military_data.service_history }}
+						</p>
+					</div>
+					-->
 
-			<!--
-			<div *ngIf="person.medical_entries">
-				<h2>Medical entries</h2>
-				<p *ngFor="let medicalEntry of person.medical_entries">
-					[{{ medicalEntry.time }}] {{ medicalEntry.details }}
-				</p>
-			</div>
-			-->
+					<!--
+					<div *ngIf="person.medical_entries">
+						<h2>Medical entries</h2>
+						<p *ngFor="let medicalEntry of person.medical_entries">
+							[{{ medicalEntry.time }}] {{ medicalEntry.details }}
+						</p>
+					</div>
+					-->
 
-			<div *ngIf="person.family">
-				<h2>Family members</h2>
-				<ul>
-					<li *ngFor="let familyMember of person.family">
-						<a routerLink="/personnel/{{ familyMember.id }}">{{
-							familyMember.full_name
-						}}</a>
-						(status {{ familyMember.status }})
-					</li>
-				</ul>
-			</div>
+					<div *ngIf="person.family">
+						<h2>Family members</h2>
+						<ul>
+							<li *ngFor="let familyMember of person.family">
+								<a routerLink="/personnel/{{ familyMember.id }}">{{
+									familyMember.full_name
+								}}</a>
+								(status {{ familyMember.status }})
+							</li>
+						</ul>
+					</div>
 
-			<div>
-				<p>
-					<a routerLink="/communications/private/{{ person.id }}"
-						>Send a private message
-					</a>
-				</p>
-			</div>
-			<div>
-				<h2>Add medical entry</h2>
-				<div>
-					<textarea trim="blur" #medicalEntryForm></textarea>
-					<button (click)="saveMedicalEntry()" [disabled]="isSubmitting">Save medical entry</button>
+					<div>
+						<p>
+							<a routerLink="/communications/private/{{ person.id }}"
+								>Send a private message
+							</a>
+						</p>
+					</div>
+					<div>
+						<h2>Add medical entry</h2>
+						<div>
+							<textarea trim="blur" #medicalEntryForm></textarea>
+							<button (click)="saveMedicalEntry()" [disabled]="isSubmitting">Save medical entry</button>
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
+			</mat-tab>
+			<mat-tab label="Medical details">
+				<h1>Some more tab content</h1>
+				<p>...</p>
+			</mat-tab>
+			<mat-tab label="Security entries">
+				<h1>Some more tab content</h1>
+				<p>...</p>
+			</mat-tab>
+			<mat-tab label="Military entries">
+				<h1>Some more tab content</h1>
+				<p>...</p>
+			</mat-tab>
+		</mat-tab-group>
 	</div>
 </div>

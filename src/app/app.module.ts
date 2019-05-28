@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -8,6 +9,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MarkdownModule } from 'ngx-markdown';
+
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { AppRoutingModule } from './app-routing.module';
 import { routes } from './routes';
@@ -58,6 +61,8 @@ import { TableComponent } from '@components/shared/table/table.component';
 	],
 	imports: [
 		BrowserModule,
+		// Screw animations
+		NoopAnimationsModule,
 		AppRoutingModule,
 		InputTrimModule,
 		RouterModule.forRoot(routes),
@@ -67,6 +72,7 @@ import { TableComponent } from '@components/shared/table/table.component';
 		NgScrollbarModule,
 		NgSelectModule,
 		MarkdownModule.forRoot(),
+		MatTabsModule,
 	],
 	providers: [StateService, MessagingService],
 	bootstrap: [AppComponent],

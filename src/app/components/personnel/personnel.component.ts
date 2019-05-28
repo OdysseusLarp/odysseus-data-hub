@@ -13,7 +13,7 @@ export class PersonnelComponent implements OnInit {
 	@ViewChild('shipTemplate') shipTemplate: TemplateRef<any>;
 	persons: api.Person[] = [];
 	page = 1;
-	pageSize = 25;
+	pageSize = 21;
 	totalRows = 0;
 	columns: any[];
 	filterFunction: Function;

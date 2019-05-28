@@ -1,94 +1,103 @@
 <div class="boxed">
-	<div *ngIf="person">
-		<h1>{{ person.full_name }}</h1>
+	<div *ngIf="person && person.is_visible">
+		<h1>
+			<span>{{ person.full_name }}</span>
+			<a routerLink="/communications/private/{{ person.id }}">[ open communications ]</a></h1>
 		<mat-tab-group>
 			<mat-tab label="General details">
 				<div class="person-container">
 					<div>
-						<p *ngIf="person.ship">Current ship: {{ person.ship.name }}</p>
-						<p *ngIf="!person.ship">Current ship: unknown</p>
+						<h2>General details</h2>
+						<p *ngIf="person.ship">Current ship: {{ person.ship.name || 'Unknown' }}</p>
 						<p *ngIf="person.title">Title: {{ person.title }}</p>
-						<p>Status: {{ person.status }}</p>
-						<p>Occupation: {{ person.occupation }}</p>
-						<p>Home planet: {{ person.home_planet }}</p>
-						<p>Dynasty: {{ person.dynasty }}</p>
-						<p>Birth year: {{ person.birth_year }}</p>
-					</div>
+						<p>Status: {{ person.status || 'Unknown' }}</p>
+						<p>Occupation: {{ person.occupation || 'Unknown' }}</p>
+						<p>Home planet: {{ person.home_planet || 'Unknown' }}</p>
+						<p>Dynasty: {{ person.dynasty || 'None' }}</p>
+						<p>Birth year: {{ person.birth_year || 'Unknown' }}</p>
+						<p *ngIf="person.religion">Religion: {{ person.religion }}</p>
+						<p *ngIf="person.citizenship">Citizenship: {{ person.citizenship }}</p>
+						<p *ngIf="person.social_class">Social class: {{ person.social_class }}</p>
+						<p *ngIf="person.political_party">Political party: {{ person.social_class }}</p>
 
-					<!--
-					<div *ngIf="person.medical_data">
-						<h2>Medical data</h2>
-						<p>Blood type: {{ person.medical_data.blood_type }}</p>
-						<p>Surgeries: {{ person.medical_data.surgeries }}</p>
-						<p>Medication: {{ person.medical_data.medication }}</p>
-						<p>Immunization: {{ person.medical_data.immunization }}</p>
-						<p>Allergies: {{ person.medical_data.allergies }}</p>
-						<p>Medical history: {{ person.medical_data.medical_history }}</p>
+						<div *ngIf="person.family && person.family.length">
+							<h2>Known family members</h2>
+							<ul class="family-members">
+								<li *ngFor="let familyMember of person.family">
+									<span *ngIf="familyMember.is_visible">
+										<a routerLink="/personnel/{{ familyMember.id }}">{{
+											familyMember.full_name
+										}}</a>
+										({{ familyMember.status || 'Status unknown' }})
+									</span>
+									<span *ngIf="!familyMember.is_visible">
+										familyMember.full_name (Status unknown)
+									</span>
+								</li>
+							</ul>
+						</div>
 					</div>
-					-->
-
-					<!--
-					<div *ngIf="person.military_data">
-						<h2>Military record</h2>
-						<p>Rank: {{ person.military_data.rank }}</p>
-						<p>Unit: {{ person.military_data.unit }}</p>
-						<p *ngIf="person.military_data.remarks">
-							Remarks: {{ person.military_data.remarks }}
-						</p>
-						<p *ngIf="person.military_data.service_history">
-							Service history: {{ person.military_data.service_history }}
-						</p>
-					</div>
-					-->
-
-					<!--
-					<div *ngIf="person.medical_entries">
-						<h2>Medical entries</h2>
-						<p *ngFor="let medicalEntry of person.medical_entries">
-							[{{ medicalEntry.time }}] {{ medicalEntry.details }}
-						</p>
-					</div>
-					-->
-
-					<div *ngIf="person.family">
-						<h2>Family members</h2>
-						<ul>
-							<li *ngFor="let familyMember of person.family">
-								<a routerLink="/personnel/{{ familyMember.id }}">{{
-									familyMember.full_name
-								}}</a>
-								(status {{ familyMember.status }})
-							</li>
-						</ul>
-					</div>
-
+				</div>
+			</mat-tab>
+			<mat-tab label="Medical details">
+				<div class="person-container">
+					<h2>Medical details</h2>
+					<p>Blood type: {{ person.blood_type || 'Unknown' }}</p>
+					<p>Allergies: {{ person.allergies || 'None / Unknown' }}</p>
+					<p>Fitness level: {{ person.medical_fitness_level || 'Unknown' }}</p>
+					<p>Last fitness check (year): {{ person.medical_last_fitness_check || 'Unknown' }}</p>
 					<div>
-						<p>
-							<a routerLink="/communications/private/{{ person.id }}"
-								>Send a private message
-							</a>
+						<h2 *ngIf="medicalEntries.length">Medical entries</h2>
+						<p markdown ngPreserveWhitespaces *ngFor="let entry of medicalEntries">
+							{{ entry.entry }}
 						</p>
 					</div>
 					<div>
 						<h2>Add medical entry</h2>
 						<div>
 							<textarea trim="blur" #medicalEntryForm></textarea>
-							<button (click)="saveMedicalEntry()" [disabled]="isSubmitting">Save medical entry</button>
+							<button (click)="saveEntry('MEDICAL')" [disabled]="isSubmitting">Save medical entry</button>
 						</div>
 					</div>
 				</div>
 			</mat-tab>
-			<mat-tab label="Medical details">
-				<h1>Some more tab content</h1>
-				<p>...</p>
+			<mat-tab label="Military file">
+					<div class="person-container">
+							<h2>Military file</h2>
+							<p>Rank: {{ person.military_rank || 'Unknown' }}</p>
+							<p markdown ngPreserveWhitespaces>Remarks: {{ person.military_remarks || 'None / Unknown' }}</p>
+							<p *ngIf="person.military_service_history">Service history: {{ person.military_service_history }}</p>
+							<div *ngIf="militaryEntries.length">
+								<h2>Entries</h2>
+								<p markdown ngPreserveWhitespaces *ngFor="let entry of militaryEntries">
+									{{ entry.entry }}
+								</p>
+							</div>
+							<div>
+								<h2>Add entry to military file</h2>
+								<div>
+									<textarea trim="blur" #militaryEntryForm></textarea>
+									<button (click)="saveEntry('MILITARY')" [disabled]="isSubmitting">Save military entry</button>
+								</div>
+							</div>
+						</div>
 			</mat-tab>
 			<mat-tab label="Security entries">
-				<h1>Some more tab content</h1>
-				<p>...</p>
-			</mat-tab>
-			<mat-tab label="Military entries">
-				<h1>Some more tab content</h1>
-				<p>...</p>
+				<div class="person-container">
+					<div *ngIf="personalEntries.length">
+						<h2>Security entries</h2>
+						<p markdown ngPreserveWhitespaces *ngFor="let entry of personalEntries">
+							{{ entry.entry }}
+						</p>
+					</div>
+					<div>
+						<h2>Add security entry</h2>
+						<div>
+							<textarea trim="blur" #personalEntryForm></textarea>
+							<button (click)="saveEntry('PERSONAL')" [disabled]="isSubmitting">Save security entry</button>
+						</div>
+					</div>
+				</div>
 			</mat-tab>
 		</mat-tab-group>
 	</div>

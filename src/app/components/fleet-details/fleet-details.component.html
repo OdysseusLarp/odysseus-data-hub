@@ -5,6 +5,10 @@
 		<p>Status: {{ ship.status }}</p>
 		<p>Class: {{ ship.class }}</p>
 		<p>Type: {{ ship.type }}</p>
+		<p *ngIf="ship.description">Description: {{ ship.description }}</p>
+		<p>Fighter count: {{ ship.fighter_count || 0}}</p>
+		<p>Transporter count: {{ ship.transporter_count || 0}}</p>
+		<p>Souls on board: {{ ship.person_count || 'Unknown' }}</p>
 		<p>
 			Current position: Sector {{ ship.position.sector }} (subsector
 			{{ ship.position.sub_sector }}) in {{ ship.position.quadrant }} quadrant

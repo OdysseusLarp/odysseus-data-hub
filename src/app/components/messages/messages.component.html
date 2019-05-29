@@ -53,25 +53,27 @@
 				formControlName="userFilter"
 			/>
 		</form>
-		<ul>
-			<li *ngFor="let user of (users$ | async)">
-				<span class="status-circle" [ngClass]="{ online: user.is_online }"
-					>&nbsp;</span
-				>
-				<a
-					routerLink="/communications/private/{{ user.id }}"
-					routerLinkActive="active"
-				>
-					{{ user.full_name }}
-				</a>
-				<span
-					class="status-circle unseen-message-count"
-					*ngIf="user.unseen_message_count"
-				>
-					{{ user.unseen_message_count }}
-				</span>
-			</li>
-		</ul>
+		<ng-scrollbar class="custom-scrollbar">
+			<ul>
+				<li *ngFor="let user of (users$ | async)">
+					<span class="status-circle" [ngClass]="{ online: user.is_online }"
+						>&nbsp;</span
+					>
+					<a
+						routerLink="/communications/private/{{ user.id }}"
+						routerLinkActive="active"
+					>
+						{{ user.full_name }}
+					</a>
+					<span
+						class="status-circle unseen-message-count"
+						*ngIf="user.unseen_message_count"
+					>
+						{{ user.unseen_message_count }}
+					</span>
+				</li>
+			</ul>
+		</ng-scrollbar>
 	</div>
 </div>
 </div>

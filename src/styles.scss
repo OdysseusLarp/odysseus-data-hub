@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'variables';
 
 // Material styles for Material Tabs
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
@@ -20,7 +21,7 @@ body {
 	margin: 0;
 	background: linear-gradient(180deg, #010412 0%, #010412 45%, #011b2b 100%);
 	background-attachment: fixed;
-	font-family: 'CutiveMono';
+	font-family: $data-font;
 	color: #fff;
 }
 app-root {
@@ -51,31 +52,34 @@ h3 {
 button {
 	font-family: 'Exo';
 	background: rgba(0, 0, 0, 0.2);
-	box-shadow: 0px 0px 5px #00c6c1;
-	border: 2px solid #00c5c8;
+	box-shadow: 0px 0px 5px $dark-blue;
+	border: 2px solid $blue;
 	padding: 5px;
 	color: #fff;
 }
+.no-shadow {
+	box-shadow: none;
+}
 button:hover {
-	transition-duration: 0.4s;
+	transition-duration: $transition-ms;
 	background: rgba(2, 246, 254, 0.2);
-	box-shadow: 0px 0px 10px #00c6c1;
+	box-shadow: 0px 0px 10px $dark-blue;
 }
 
 input[type='text'],
 textarea {
-	font-family: 'CutiveMono';
+	font-family: $data-font;
 	font-size: 13px;
 	background: rgba(0, 0, 0, 0.2);
-	border: 1px solid #00c5c8;
+	border: 1px solid $blue;
 	padding: 4px;
 	color: #fff;
 }
 input[type='text']:focus,
 textarea:focus {
 	outline: none;
-	transition-duration: 0.4s;
-	box-shadow: 0px 0px 10px #00c6c1;
+	transition-duration: $transition-ms;
+	box-shadow: 0px 0px 10px $dark-blue;
 }
 
 .outer-padding {
@@ -83,15 +87,15 @@ textarea:focus {
 }
 .boxed {
 	padding: 15px;
-	border: 3px solid #00c5c8;
+	border: 3px solid $blue;
 	background-image: url('assets/img/ui/liukuvari2.jpg');
 	background-size: cover;
 	background-attachment: fixed;
-	box-shadow: 0px 0px 10px #00c6c1;
+	box-shadow: 0px 0px 10px $dark-blue;
 	hr {
 		width: 100%;
 		border: none;
-		border-top: 2px solid #00c5c8;
+		border-top: 2px solid $blue;
 		margin: 0px;
 	}
 }
@@ -113,10 +117,10 @@ textarea:focus {
 	margin-right: 20px;
 	letter-spacing: 1px;
 	text-transform: uppercase;
-	font-family: 'Exo';
+	font-family: $primary-font;
 
 	a {
-		padding: 15px;
+		padding: 15px 0;
 		height: 50px;
 		display: flex;
 		flex-direction: row;
@@ -125,9 +129,12 @@ textarea:focus {
 		font-size: 13px;
 		line-height: 16px;
 		text-decoration: none;
-		color: #02f6fe;
+		color: lighten($bright-blue, 20%);
+		text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.6);
+		transition-duration: $transition-ms;
 
 		img {
+			margin-left: 8px;
 			flex-shrink: 0;
 			width: 50px;
 			max-height: 50px;
@@ -135,9 +142,12 @@ textarea:focus {
 		}
 	}
 
+	.route-active {
+		color: #fff;
+	}
+
 	a:hover {
-		transition-duration: 0.4s;
-		color: #e0ff00;
+		color: $bright-yellow;
 		background-color: rgba(2, 246, 254, 0.2);
 		img[alt='news'] {
 			content: url('assets/img/ui/news_kelt.svg');
@@ -172,9 +182,14 @@ textarea:focus {
 	}
 
 	p {
-		color: #e0ff00;
 		margin: 0px 0px 0px 15px;
 		font-size: 13px;
+	}
+	p.user-name {
+		margin-top: 8px;
+		margin-bottom: 8px;
+		font-size: 1em;
+		color: $bright-yellow;
 	}
 }
 
@@ -224,15 +239,15 @@ textarea:focus {
 }
 
 .ng-select {
-	font-family: 'CutiveMono';
+	font-family: $data-font;
 	font-size: 13px;
 }
 .ng-select:hover {
-	box-shadow: 0px 0px 10px #00c6c1;
+	box-shadow: 0px 0px 10px $dark-blue;
 }
 .ng-select .ng-select-container {
 	background: rgba(0, 0, 0, 0.2);
-	border: 1px solid #00c5c8;
+	border: 1px solid $blue;
 	padding: 4px;
 	min-height: 0px;
 	border-radius: 0;
@@ -243,7 +258,7 @@ textarea:focus {
 }
 .ng-select .ng-dropdown-panel {
 	background: rgba(0, 0, 0, 0.9);
-	border: 1px solid #00c5c8;
+	border: 1px solid $blue;
 
 	.ng-dropdown-panel-items .ng-option {
 		cursor: pointer;
@@ -252,7 +267,7 @@ textarea:focus {
 	}
 
 	.ng-dropdown-panel-items .ng-option:not(:last-child) {
-		border-bottom: 1px dotted #00c5c8;
+		border-bottom: 1px dotted $blue;
 	}
 
 	.ng-dropdown-panel-items .ng-option:hover {
@@ -261,17 +276,32 @@ textarea:focus {
 	}
 }
 
+.dark-bg {
+	background: rgba(0, 0, 0, 0.3);
+	padding: 8px;
+}
+
+.ngx-datatable {
+	background: rgba(0, 0, 0, 0.3);
+	padding: 8px;
+}
+
+// ngx-datatable pager
 ul.pager {
 	li.pages {
 		a {
 			padding: 10px;
+			color: #fff;
 		}
-		font-size: 2em;
+		a:hover {
+			color: $bright-yellow;
+		}
+		font-size: 1.5em;
 	}
 
 	li.pages.active {
 		a {
-			color: #02f6fe;
+			color: $bright-blue !important;
 		}
 	}
 }
@@ -283,5 +313,5 @@ ul.pager {
 // Material Tabs component active tab color override
 .mat-tab-group.mat-primary .mat-ink-bar,
 .mat-tab-nav-bar.mat-primary .mat-ink-bar {
-	background: #02f6fe;
+	background: $bright-blue;
 }

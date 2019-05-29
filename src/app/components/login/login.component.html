@@ -1,10 +1,14 @@
 <div class="boxed">
-	<h1>Welcome to EOC DataHub</h1>
-	<h2>Log in using your Social ID</h2>
-	<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-		<input type="text" formControlName="personId" trim="blur" />
-		&nbsp;
-		<button [disabled]="!loginForm.valid || submitting">Log in!</button>
-	</form>
-	<p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+	<div class="form-wrapper">
+		<div>
+			<h1>Welcome to EOC DataHub</h1>
+			<h2>Log in using your Citizen Card</h2>
+			<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+				<input type="text" formControlName="personId" trim="blur" placeholder="000000" />
+				&nbsp;
+				<button [disabled]="!loginForm.valid || submitting" class="no-shadow">Log in!</button>
+			</form>
+			<p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+		</div>
+	</div>
 </div>

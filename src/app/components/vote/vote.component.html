@@ -3,11 +3,11 @@
 	<div>
 		Here you can vote on stuff. <a routerLink="new">Create a new vote here.</a>
 	</div>
-	<div *ngFor="let vote of votes">
+	<div *ngFor="let vote of votes" class="dark-bg">
 		<h2>
-			<a [routerLink]="vote.id">{{ vote.title }}</a> ({{
+			<a [routerLink]="vote.id">{{ vote.title }}</a><span [ngClass]="{ 'voting-active': vote.is_active }">{{
 				vote.is_active ? 'voting active' : 'voting ended'
-			}})
+			}}</span>
 		</h2>
 		<p>{{ vote.description }}</p>
 	</div>

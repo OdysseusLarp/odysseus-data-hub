@@ -30,10 +30,12 @@ export class PersonnelDetailsComponent implements OnInit {
 			this.person = res.data;
 			// TODO: Replace single newlines with two newlines in seeds
 			// instead of here in frontend
-			const entries = get(this.person, 'entries', []).map(e => {
-				const entry = e.entry.replace('\n', '\n\n');
-				return { ...e, entry };
-			});
+			const entries = get(this.person, 'entries', [])
+				.map(e => {
+					const entry = e.entry.split('\n').join('\n\n');
+					return { ...e, entry };
+				})
+				.sort((a, b) => (a.created_at > b.created_at ? 1 : -1));
 			this.medicalEntries = entries.filter(e => e.type === 'MEDICAL');
 			this.personalEntries = entries.filter(e => e.type === 'PERSONAL');
 			this.militaryEntries = entries.filter(e => e.type === 'MILITARY');
@@ -48,7 +50,7 @@ export class PersonnelDetailsComponent implements OnInit {
 		const added_by = get(this.state.user.getValue(), 'id');
 		postPersonIdEntry(this.person.id, {
 			type,
-			entry,
+			entry: `542 ${entry}`,
 			added_by,
 		}).then(res => {
 			console.log('got res', res);

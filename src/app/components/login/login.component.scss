@@ -1,9 +1,41 @@
-:host {
-	width: 400px;
+@import '../../../variables';
+
+.form-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	div {
+		text-align: center;
+	}
+}
+
+form {
+	max-width: 500px;
+	display: flex;
+	flex-direction: column;
+	margin-top: 50px;
+	margin-bottom: 50px;
+
+	input {
+		padding-top: 20px !important;
+		margin-bottom: 0px;
+	}
+
+	input,
+	button {
+		font-size: 2em;
+		text-align: center;
+		padding: 8px;
+	}
+
+	button {
+		font-size: 1.5em;
+	}
 }
 
 .error {
-	font-family: 'Exo';
+	font-family: $primary-font;
 	font-weight: bold;
 	color: #f22;
 	background-color: rgba(255, 0, 0, 0.3);

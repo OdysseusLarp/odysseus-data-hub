@@ -3,9 +3,16 @@
 	height: 100%;
 	margin: 0;
 	padding: 0;
+}
+
+.host-wrapper {
 	display: grid;
 	grid-template-columns: 280px auto;
 	grid-row-gap: 0px;
+}
+
+.host-wrapper.login {
+	grid-template-columns: auto;
 }
 
 .main-container {

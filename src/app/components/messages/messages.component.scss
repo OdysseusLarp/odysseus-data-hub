@@ -1,3 +1,5 @@
+@import '../../scrollbar.scss';
+
 :host {
 	display: block;
 }
@@ -77,6 +79,10 @@
 			font-size: 0.9em;
 			font-weight: bold;
 			border-radius: 10%;
+		}
+
+		ng-scrollbar {
+			max-height: 370px;
 		}
 	}
 

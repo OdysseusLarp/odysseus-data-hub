@@ -18,7 +18,7 @@
 						<p *ngIf="person.religion">Religion: {{ person.religion }}</p>
 						<p *ngIf="person.citizenship">Citizenship: {{ person.citizenship }}</p>
 						<p *ngIf="person.social_class">Social class: {{ person.social_class }}</p>
-						<p *ngIf="person.political_party">Political party: {{ person.social_class }}</p>
+						<p *ngIf="person.political_party">Political party: {{ person.political_party }}</p>
 
 						<div *ngIf="person.family && person.family.length">
 							<h2>Known family members</h2>
@@ -42,6 +42,7 @@
 			<mat-tab label="Medical details">
 				<div class="person-container">
 					<h2>Medical details</h2>
+					<p>Birth year: {{ person.birth_year || 'Unknown' }}</p>
 					<p>Blood type: {{ person.blood_type || 'Unknown' }}</p>
 					<p>Allergies: {{ person.allergies || 'None / Unknown' }}</p>
 					<p>Fitness level: {{ person.medical_fitness_level || 'Unknown' }}</p>
@@ -49,7 +50,7 @@
 					<div>
 						<h2 *ngIf="medicalEntries.length">Medical entries</h2>
 						<p markdown ngPreserveWhitespaces *ngFor="let entry of medicalEntries">
-							{{ entry.entry }}
+							{{ entry.entry }}<span *ngIf="entry.added_by"> - Added by {{ entry.added_by.full_name }}</span>
 						</p>
 					</div>
 					<div>
@@ -70,7 +71,7 @@
 							<div *ngIf="militaryEntries.length">
 								<h2>Entries</h2>
 								<p markdown ngPreserveWhitespaces *ngFor="let entry of militaryEntries">
-									{{ entry.entry }}
+									{{ entry.entry }}<span *ngIf="entry.added_by"> - Added by {{ entry.added_by.full_name }}</span>
 								</p>
 							</div>
 							<div>
@@ -87,7 +88,7 @@
 					<div *ngIf="personalEntries.length">
 						<h2>Security entries</h2>
 						<p markdown ngPreserveWhitespaces *ngFor="let entry of personalEntries">
-							{{ entry.entry }}
+							{{ entry.entry }}<span *ngIf="entry.added_by"> - Added by {{ entry.added_by.full_name }}</span>
 						</p>
 					</div>
 					<div>

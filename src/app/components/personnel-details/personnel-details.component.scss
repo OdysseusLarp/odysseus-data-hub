@@ -1,4 +1,9 @@
+@import '../../../variables';
+
 .person-container {
+	background: rgba(0, 0, 0, 0.3);
+	padding: 8px;
+
 	div {
 		min-width: 400px;
 	}
@@ -25,7 +30,8 @@
 
 	p,
 	.family-members {
-		font-family: 'CutiveMono';
+		font-family: $data-font;
+		margin: 8px;
 	}
 
 	li {

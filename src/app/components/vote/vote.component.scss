@@ -1,0 +1,14 @@
+@import '../../../variables';
+
+.dark-bg {
+	margin-top: 15px;
+}
+
+span {
+	font-size: 0.7em;
+	float: right;
+}
+
+.voting-active {
+	color: $bright-yellow;
+}

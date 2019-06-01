@@ -53,7 +53,6 @@ export class PersonnelDetailsComponent implements OnInit {
 			entry: `542 ${entry}`,
 			added_by,
 		}).then(res => {
-			console.log('got res', res);
 			this.fetchPerson(this.person.id);
 			this.isSubmitting = false;
 			form.nativeElement.value = '';

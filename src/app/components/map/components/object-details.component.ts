@@ -20,7 +20,6 @@ export class ObjectDetailsComponent implements OnInit, OnDestroy {
 	constructor() {}
 
 	ngOnInit() {
-		console.log('this =>', this);
 		this.selectedFeature$ = this.feature$.subscribe(feat => {
 			this.resetValues();
 			this.feature = feat;

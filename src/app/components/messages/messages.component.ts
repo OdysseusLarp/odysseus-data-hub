@@ -14,6 +14,7 @@ import { get } from 'lodash';
 import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 import { StateService } from '@app/services/state.service';
+import { getPersonId } from '@api/Person';
 
 export interface ChatView {
 	type: 'channel' | 'private';
@@ -61,6 +62,9 @@ export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 				chatView.targetPerson = this.messaging.users
 					.getValue()
 					.find(user => user.id === chatView.target);
+				getPersonId(<any>params.target).then(person => {
+					chatView.targetPerson = <any>person.data;
+				});
 			}
 			this.chatView = chatView;
 			this.messaging.chatViewChanged(chatView);

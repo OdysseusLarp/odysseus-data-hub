@@ -2,7 +2,7 @@
 	<h1>Vote details</h1>
 	<div *ngIf="vote" class="dark-bg">
 		<h2>
-			{{ vote.title }} ({{ vote.is_active ? 'voting active' : 'voting ended' }})
+			{{ vote.title }} <span class="is-active" [ngClass]="{ 'voting-active': vote.is_active }">{{ vote.is_active ? 'voting active' : 'voting ended' }}</span>
 		</h2>
 		<h3>Initiated by {{ vote.author?.full_name }}</h3>
 		<p *ngIf="vote.active_until">

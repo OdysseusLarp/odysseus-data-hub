@@ -1,9 +1,8 @@
 <div class="boxed">
 	<h1>Ship log</h1>
 	<div class="dark-bg">
-		<p>Latest log entries:</p>
 		<p *ngFor="let entry of logs">
-			<span class="{{ entry.type }}">&nbsp;</span>[{{ entry.created_at }}]
+			<span class="{{ entry.type }}">&nbsp;</span>[{{ entry.time }} ago]
 			{{ entry.message }}
 		</p>
 	</div>

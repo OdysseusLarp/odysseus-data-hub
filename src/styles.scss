@@ -324,7 +324,35 @@ ul.pager {
 	top: 8px;
 	right: 16px;
 	font-size: 1.2em;
+	transition: color $transition-ms;
 }
 .box-closer:after {
 	content: '✖';
+}
+
+.box-closer:hover {
+	color: $bright-yellow;
+}
+
+.SUCCESS {
+	background: #34df00;
+}
+.WARNING {
+	background: #dfdf00;
+}
+.INFO {
+	background: #0083df;
+}
+.ERROR {
+	background: #df0024;
+}
+
+.log-entry-snackbar {
+	background: linear-gradient(180deg, #010412 0%, #010412 45%, #011b2b 100%);
+	border: 2px solid #00c5c8;
+	padding: 0;
+}
+
+.cdk-overlay-0 .mat-snack-bar-container {
+	padding: 0 !important;
 }

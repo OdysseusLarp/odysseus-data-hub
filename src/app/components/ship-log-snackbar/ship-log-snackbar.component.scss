@@ -1,0 +1,28 @@
+@import '../../../variables';
+
+div {
+	vertical-align: middle;
+	padding: 2px;
+	margin-top: 5px;
+	margin-bottom: 0px;
+
+	font-size: 0.8em;
+
+	span {
+		width: 12px;
+		height: 12px;
+		box-sizing: border-box;
+		border-radius: 50%;
+		display: inline-block;
+		margin-right: 8px;
+	}
+
+	h3 {
+		color: $bright-blue;
+	}
+
+	.box-closer {
+		right: 4px;
+		transition: color $transition-ms;
+	}
+}

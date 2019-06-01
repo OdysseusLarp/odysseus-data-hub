@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -12,6 +12,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { MarkdownModule } from 'ngx-markdown';
 
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard, routes } from './routes';
@@ -39,6 +40,7 @@ import { VoteCreateComponent } from '@components/vote-create/vote-create.compone
 import { TableComponent } from '@components/shared/table/table.component';
 import { HackingComponent } from '@components/hacking/hacking.component';
 import { StaticScreenComponent } from './components/static-screen/static-screen.component';
+import { ShipLogSnackbarComponent } from './components/ship-log-snackbar/ship-log-snackbar.component';
 
 @NgModule({
 	declarations: [
@@ -63,11 +65,11 @@ import { StaticScreenComponent } from './components/static-screen/static-screen.
 		TableComponent,
 		HackingComponent,
 		StaticScreenComponent,
+		ShipLogSnackbarComponent,
 	],
 	imports: [
 		BrowserModule,
-		// Screw animations
-		NoopAnimationsModule,
+		BrowserAnimationsModule,
 		AppRoutingModule,
 		InputTrimModule,
 		RouterModule.forRoot(routes),
@@ -78,9 +80,11 @@ import { StaticScreenComponent } from './components/static-screen/static-screen.
 		NgSelectModule,
 		MarkdownModule.forRoot(),
 		MatTabsModule,
+		MatSnackBarModule,
 		HttpClientModule,
 	],
 	providers: [StateService, MessagingService, AuthGuard, HttpClient],
 	bootstrap: [AppComponent],
+	entryComponents: [ShipLogSnackbarComponent],
 })
 export class AppModule {}

@@ -3,26 +3,14 @@ p {
 	padding: 2px;
 	margin-top: 5px;
 	margin-bottom: 0px;
+	font-size: 0.8em;
 }
 
 span {
-	width: 18px;
-	height: 18px;
+	width: 14px;
+	height: 14px;
 	box-sizing: border-box;
 	border-radius: 50%;
 	display: inline-block;
 	margin-right: 5px;
-}
-
-.SUCCESS {
-	background: #34df00;
-}
-.WARNING {
-	background: #dfdf00;
-}
-.INFO {
-	background: #0083df;
-}
-.ERROR {
-	background: #df0024;
 }

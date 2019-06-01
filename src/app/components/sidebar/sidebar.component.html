@@ -1,6 +1,6 @@
 <div class="sidebar boxed">
 	<a [routerLinkActive]="['route-active']" routerLink="news"><img alt="news" src="assets/img/ui/news.svg" />News</a>
-	<a [routerLinkActive]="['route-active']" routerLink="communications/channel/general"><img alt="comms" src="assets/img/ui/comms.svg" />Communications</a>
+	<a [routerLinkActive]="['route-active']" routerLink="communications/channel/general" [title]="(unseenMessagesCount$ | async) > 0 ? unseenMessagesCount$.getValue() + ' new messages' : 'No unread messages'"><img alt="comms" src="assets/img/ui/comms.svg" />Communications<span *ngIf="(unseenMessagesCount$ | async) > 0" class="unread-message-count blinking"></span></a>
 	<a [routerLinkActive]="['route-active']" routerLink="vote"><img alt="influence" src="assets/img/ui/influence.svg" />Influence</a>
 	<a [routerLinkActive]="['route-active']" routerLink="ship-log"><img alt="shiplog" src="assets/img/ui/shiplog.svg" />Ship log</a>
 	<a [routerLinkActive]="['route-active']" routerLink="personnel"><img alt="personnel" src="assets/img/ui/personnel.svg" />Personnel database</a>

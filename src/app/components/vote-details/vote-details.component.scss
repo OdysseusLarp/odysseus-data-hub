@@ -1,0 +1,15 @@
+@import '../../../variables';
+
+.is-active {
+	float: right;
+}
+.voting-active {
+	color: $bright-yellow;
+}
+
+button {
+	font-size: 1.5em;
+	padding: 5px 20px;
+	min-width: 200px;
+	margin-bottom: 10px;
+}

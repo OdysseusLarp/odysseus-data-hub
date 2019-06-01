@@ -3,6 +3,7 @@ import { StateService } from '@app/services/state.service';
 import { distinctUntilChanged, first } from 'rxjs/operators';
 import { environment } from '@env/environment';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import * as io from 'socket.io-client/dist/socket.io';
 import { get, isEqual, forIn, debounce } from 'lodash';
 import {
@@ -24,13 +25,20 @@ export class MessagingService {
 	messages = new BehaviorSubject<api.ComMessage[]>([]);
 	users: BehaviorSubject<api.Person[]> = new BehaviorSubject([]);
 	unseenMessagesUpdated: Subject<Map<string, number>> = new Subject();
+	unseenMessagesCount = new BehaviorSubject<number>(0);
 
 	constructor(private state: StateService) {
-		state.user.pipe(distinctUntilChanged(isEqual)).subscribe(user => {
-			this.user = user;
-			this.createSocket();
-		});
-		state.logout.subscribe(() => {
+		console.log('messaging service constructor');
+		this.state.user
+			.pipe(
+				filter(Boolean),
+				distinctUntilChanged(isEqual)
+			)
+			.subscribe(user => {
+				this.user = user;
+				this.createSocket();
+			});
+		this.state.logout.subscribe(() => {
 			this.removeSocket();
 			// Wipe message cache on logout
 			this.messageCache = new Map<string, api.ComMessage[]>();
@@ -43,15 +51,17 @@ export class MessagingService {
 	}
 
 	searchUsers(name: string) {
-		if (!name) return this.onUserListReceived([]);
 		// Require at least 3 characters of the name to prevent fetching a huge list
-		if (name.length < 3) return;
+		if (name.length < 3 && name !== '') return;
 		this.socket.emit('searchUsers', name);
 	}
 
 	// Function to manually emit since I don't know how to use RXJS properly
 	emitUnseenMessages() {
 		this.unseenMessagesUpdated.next(this.unseenMessages);
+		let totalUnseenMessages = 0;
+		this.unseenMessages.forEach(val => (totalUnseenMessages += val));
+		this.unseenMessagesCount.next(totalUnseenMessages);
 	}
 
 	private markMessagesSeen(senderPersonId: string) {
@@ -94,6 +104,7 @@ export class MessagingService {
 		);
 		this.socket = socket;
 		this.hasInitialized.next(true);
+		console.log('initialized messaging socket');
 	}
 
 	private onMessagesSeen(messages: api.ComMessage[]) {
@@ -162,7 +173,7 @@ export class MessagingService {
 		} else {
 			messages.push(message);
 			this.messageCache.set(target, messages);
-			if (target === this.chatView.target) {
+			if (this.chatView && target === this.chatView.target) {
 				this.messages.next(messages);
 				this.markMessagesSeen(target);
 			} else {
@@ -185,7 +196,11 @@ export class MessagingService {
 		if (unseenMessageCount) this.unseenMessages.set(target, unseenMessageCount);
 		this.emitUnseenMessages();
 
-		if (this.chatView.type === type && this.chatView.target === target) {
+		if (
+			this.chatView &&
+			this.chatView.type === type &&
+			this.chatView.target === target
+		) {
 			this.messages.next(messages);
 			if (this.unseenMessages.has(target)) this.markMessagesSeen(target);
 		}

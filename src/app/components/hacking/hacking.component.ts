@@ -27,7 +27,7 @@ export class HackingComponent implements OnInit, OnDestroy {
 	correctInputValue: string;
 	hackInputValue = '';
 	isHackingComplete = false;
-	charsRemaining = Array(HACKING_PASSWORD_LENGTH);
+	charsRemaining = Array(HACKING_PASSWORD_LENGTH - 1);
 
 	constructor() {}
 
@@ -64,7 +64,7 @@ export class HackingComponent implements OnInit, OnDestroy {
 	}
 
 	private generateCorrectInputValue() {
-		this.charsRemaining = Array(HACKING_PASSWORD_LENGTH);
+		this.charsRemaining = Array(HACKING_PASSWORD_LENGTH - 1);
 		const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'.split('');
 		let val = '';
 		for (let i = 0; i < HACKING_PASSWORD_LENGTH; i++) {

@@ -35,7 +35,7 @@ export class MessagingService {
 			// Wipe message cache on logout
 			this.messageCache = new Map<string, api.ComMessage[]>();
 		});
-		this.debouncedSearchUsers = debounce(this.searchUsers, 200);
+		this.debouncedSearchUsers = debounce(this.searchUsers, 300);
 	}
 
 	sendMessage(message: OutgoingMessage) {
@@ -43,6 +43,9 @@ export class MessagingService {
 	}
 
 	searchUsers(name: string) {
+		if (!name) return this.onUserListReceived([]);
+		// Require at least 3 characters of the name to prevent fetching a huge list
+		if (name.length < 3) return;
 		this.socket.emit('searchUsers', name);
 	}
 

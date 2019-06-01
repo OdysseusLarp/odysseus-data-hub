@@ -43,6 +43,7 @@ import { DottedListComponent } from '@components/map/components/dotted-list.comp
 import { ObjectDetailsComponent } from '@components/map/components/object-details.component';
 import { GridDetailsComponent } from '@components/map/components/grid-details.component';
 import { ShipDetailsComponent } from '@components/map/components/ship-details.component';
+import { StaticScreenComponent } from './components/static-screen/static-screen.component';
 
 @NgModule({
 	declarations: [
@@ -71,6 +72,7 @@ import { ShipDetailsComponent } from '@components/map/components/ship-details.co
 		ObjectDetailsComponent,
 		GridDetailsComponent,
 		ShipDetailsComponent,
+		StaticScreenComponent,
 	],
 	imports: [
 		BrowserModule,

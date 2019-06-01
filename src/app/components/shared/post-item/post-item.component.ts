@@ -2,8 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { startCase, toLower } from 'lodash';
 import moment from 'moment';
 
+interface Person extends api.Person {
+	full_name: string;
+}
+
 interface Post extends api.Post {
-	author: api.Person;
+	author: Person;
 }
 
 @Component({

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { startCase, toLower } from 'lodash';
+import moment from 'moment';
 
 interface Post extends api.Post {
 	author: api.Person;
@@ -12,9 +13,15 @@ interface Post extends api.Post {
 })
 export class PostItemComponent implements OnInit {
 	@Input() post: Post;
+	postAge: string;
 	constructor() {}
 
-	ngOnInit() {}
+	ngOnInit() {
+		if (!this.post) return;
+		this.postAge = moment
+			.duration(moment(this.post.created_at).diff(moment()))
+			.humanize();
+	}
 
 	getPostType() {
 		if (this.post.type === 'CAPTAINS_LOG') return '';

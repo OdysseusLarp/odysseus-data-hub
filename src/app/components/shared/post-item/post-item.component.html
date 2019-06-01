@@ -2,8 +2,7 @@
 <div>
 	<h2>{{ getPostType() }}{{ post.title }} </h2>
 	<span class="post_author exo"
-		>{{ post.author.first_name }} {{ post.author.last_name }} |
-		{{ post.created_at }}</span
+		>By <a [routerLink]="['/personnel', post.author.id]">{{ post.author.full_name }}</a>, {{ postAge }} ago</span
 	>
 	<div class="post_body" markdown ngPreserveWhitespaces>{{ post.body }}</div>
 </div>

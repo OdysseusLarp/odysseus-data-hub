@@ -36,6 +36,7 @@ import { PostFormComponent } from '@components/shared/post-form/post-form.compon
 import { PostItemComponent } from '@components/shared/post-item/post-item.component';
 import { VoteCreateComponent } from '@components/vote-create/vote-create.component';
 import { TableComponent } from '@components/shared/table/table.component';
+import { HackingComponent } from './components/hacking/hacking.component';
 
 @NgModule({
 	declarations: [
@@ -58,6 +59,7 @@ import { TableComponent } from '@components/shared/table/table.component';
 		PostItemComponent,
 		VoteCreateComponent,
 		TableComponent,
+		HackingComponent,
 	],
 	imports: [
 		BrowserModule,

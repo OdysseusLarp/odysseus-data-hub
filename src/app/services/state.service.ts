@@ -9,6 +9,7 @@ export class StateService {
 	user: BehaviorSubject<api.Person> = new BehaviorSubject(null);
 	sessionStorage = window.sessionStorage;
 	logout = new Subject<api.Person>();
+	showHackingView = new BehaviorSubject(false);
 
 	constructor() {
 		// Attempt to log in as previous user automatically

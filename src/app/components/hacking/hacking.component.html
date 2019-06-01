@@ -1,0 +1,17 @@
+<div (window:resize)="onResize($event)" class="content">
+  <canvas #canvas></canvas>
+  <div id="hackform">
+    <div class="wrapper">
+      <div [ngClass]="{ 'hacking-complete': isHackingComplete }">
+        <div *ngIf="!isHackingComplete">
+            <h1>
+              {{ hackInputValue }}<span class="blinking" *ngIf="!isHackingComplete">|</span><span *ngFor="let _ of charsRemaining">*</span>
+            </h1>
+        </div>
+        <div *ngIf="isHackingComplete">
+          <h1>ACCESS GRANTED</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

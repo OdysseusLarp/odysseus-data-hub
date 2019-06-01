@@ -1,4 +1,10 @@
-import { Routes } from '@angular/router';
+import { Injectable } from '@angular/core';
+import {
+	Routes,
+	CanActivate,
+	ActivatedRouteSnapshot,
+	RouterStateSnapshot,
+} from '@angular/router';
 import { NewsComponent } from './components/news/news.component';
 import { LoginComponent } from './components/login/login.component';
 import { PersonnelComponent } from '@app/components/personnel/personnel.component';
@@ -13,21 +19,67 @@ import { CaptainsLogComponent } from '@app/components/captains-log/captains-log.
 import { FleetComponent } from '@app/components/fleet/fleet.component';
 import { FleetDetailsComponent } from '@app/components/fleet-details/fleet-details.component';
 import { VoteCreateComponent } from '@app/components/vote-create/vote-create.component';
+import { StateService } from '@app/services/state.service';
+
+@Injectable()
+export class AuthGuard implements CanActivate {
+	constructor(private state: StateService) {}
+
+	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+		return !!this.state.user.getValue();
+	}
+}
 
 export const routes: Routes = [
 	{ path: '', component: LoginComponent },
-	{ path: 'news', component: NewsComponent },
-	{ path: 'personnel', component: PersonnelComponent },
-	{ path: 'personnel/:id', component: PersonnelDetailsComponent },
-	{ path: 'artifact', component: ArtifactsComponent },
-	{ path: 'artifact/:id', component: ArtifactDetailsComponent },
-	{ path: 'fleet', component: FleetComponent },
-	{ path: 'fleet/:id', component: FleetDetailsComponent },
-	{ path: 'vote', component: VoteComponent },
-	{ path: 'vote/new', component: VoteCreateComponent },
-	{ path: 'vote/:id', component: VoteDetailsComponent },
-	{ path: 'communications', component: MessagesComponent },
-	{ path: 'communications/:type/:target', component: MessagesComponent },
-	{ path: 'ship-log', component: ShipLogComponent },
-	{ path: 'captains-log', component: CaptainsLogComponent },
+	{ path: 'news', component: NewsComponent, canActivate: [AuthGuard] },
+	{
+		path: 'personnel',
+		component: PersonnelComponent,
+		canActivate: [AuthGuard],
+	},
+	{
+		path: 'personnel/:id',
+		component: PersonnelDetailsComponent,
+		canActivate: [AuthGuard],
+	},
+	{ path: 'artifact', component: ArtifactsComponent, canActivate: [AuthGuard] },
+	{
+		path: 'artifact/:id',
+		component: ArtifactDetailsComponent,
+		canActivate: [AuthGuard],
+	},
+	{ path: 'fleet', component: FleetComponent, canActivate: [AuthGuard] },
+	{
+		path: 'fleet/:id',
+		component: FleetDetailsComponent,
+		canActivate: [AuthGuard],
+	},
+	{ path: 'vote', component: VoteComponent, canActivate: [AuthGuard] },
+	{
+		path: 'vote/new',
+		component: VoteCreateComponent,
+		canActivate: [AuthGuard],
+	},
+	{
+		path: 'vote/:id',
+		component: VoteDetailsComponent,
+		canActivate: [AuthGuard],
+	},
+	{
+		path: 'communications',
+		component: MessagesComponent,
+		canActivate: [AuthGuard],
+	},
+	{
+		path: 'communications/:type/:target',
+		component: MessagesComponent,
+		canActivate: [AuthGuard],
+	},
+	{ path: 'ship-log', component: ShipLogComponent, canActivate: [AuthGuard] },
+	{
+		path: 'captains-log',
+		component: CaptainsLogComponent,
+		canActivate: [AuthGuard],
+	},
 ];

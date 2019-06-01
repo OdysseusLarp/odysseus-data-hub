@@ -13,7 +13,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { MatTabsModule } from '@angular/material/tabs';
 
 import { AppRoutingModule } from './app-routing.module';
-import { routes } from './routes';
+import { AuthGuard, routes } from './routes';
 
 import { AppComponent } from './app.component';
 import { NewsComponent } from '@components/news/news.component';
@@ -76,7 +76,7 @@ import { HackingComponent } from './components/hacking/hacking.component';
 		MarkdownModule.forRoot(),
 		MatTabsModule,
 	],
-	providers: [StateService, MessagingService],
+	providers: [StateService, MessagingService, AuthGuard],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

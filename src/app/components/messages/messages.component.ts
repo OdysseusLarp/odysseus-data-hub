@@ -11,7 +11,7 @@ import { MessagingService } from '@app/services/messaging.service';
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { get } from 'lodash';
-import * as moment from 'moment';
+import moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 import { StateService } from '@app/services/state.service';
 import { getPersonId } from '@api/Person';

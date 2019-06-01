@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { StateService } from '@app/services/state.service';
 import { get } from 'lodash';
 import { Subscription } from 'rxjs';
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Component({
 	selector: 'app-artifact-details',

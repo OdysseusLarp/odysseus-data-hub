@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { getPersonId, postPersonIdEntry } from '@api/Person';
 import { get } from 'lodash';
-import * as moment from 'moment';
 import { StateService } from '@app/services/state.service';
 
 @Component({

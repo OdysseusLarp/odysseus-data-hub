@@ -38,11 +38,6 @@ import { PostItemComponent } from '@components/shared/post-item/post-item.compon
 import { VoteCreateComponent } from '@components/vote-create/vote-create.component';
 import { TableComponent } from '@components/shared/table/table.component';
 import { HackingComponent } from '@components/hacking/hacking.component';
-import { MapComponent } from '@components/map/map.component';
-import { DottedListComponent } from '@components/map/components/dotted-list.component';
-import { ObjectDetailsComponent } from '@components/map/components/object-details.component';
-import { GridDetailsComponent } from '@components/map/components/grid-details.component';
-import { ShipDetailsComponent } from '@components/map/components/ship-details.component';
 import { StaticScreenComponent } from './components/static-screen/static-screen.component';
 
 @NgModule({
@@ -67,11 +62,6 @@ import { StaticScreenComponent } from './components/static-screen/static-screen.
 		VoteCreateComponent,
 		TableComponent,
 		HackingComponent,
-		MapComponent,
-		DottedListComponent,
-		ObjectDetailsComponent,
-		GridDetailsComponent,
-		ShipDetailsComponent,
 		StaticScreenComponent,
 	],
 	imports: [

@@ -22,7 +22,6 @@ import { FleetComponent } from '@app/components/fleet/fleet.component';
 import { FleetDetailsComponent } from '@app/components/fleet-details/fleet-details.component';
 import { VoteCreateComponent } from '@app/components/vote-create/vote-create.component';
 import { StateService } from '@app/services/state.service';
-import { MapComponent } from '@app/components/map/map.component';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -90,7 +89,7 @@ export const routes: Routes = [
 	},
 	{
 		path: 'map',
-		component: MapComponent,
 		canActivate: [AuthGuard],
+		loadChildren: './components/map/map.module#MapModule',
 	},
 ];

@@ -122,7 +122,7 @@ export class MapComponent implements OnInit, OnDestroy {
 	selectedGrid$ = new BehaviorSubject(null);
 	selectedFleet$ = new BehaviorSubject(null);
 
-	constructor(private state: StateService, private http: HttpClient) {}
+	constructor(private http: HttpClient) {}
 
 	ngOnInit() {
 		this.initializeMap();

@@ -41,6 +41,7 @@ import { TableComponent } from '@components/shared/table/table.component';
 import { HackingComponent } from '@components/hacking/hacking.component';
 import { StaticScreenComponent } from './components/static-screen/static-screen.component';
 import { ShipLogSnackbarComponent } from './components/ship-log-snackbar/ship-log-snackbar.component';
+import { ArtifactCreateComponent } from './components/artifact-create/artifact-create.component';
 
 @NgModule({
 	declarations: [
@@ -66,6 +67,7 @@ import { ShipLogSnackbarComponent } from './components/ship-log-snackbar/ship-lo
 		HackingComponent,
 		StaticScreenComponent,
 		ShipLogSnackbarComponent,
+		ArtifactCreateComponent,
 	],
 	imports: [
 		BrowserModule,

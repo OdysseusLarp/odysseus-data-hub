@@ -1,0 +1,14 @@
+<div class="boxed sidebar-box" *ngIf="fleet">
+		<h1>Fleet</h1>
+		<div *ngIf="fleet">
+			<app-dotted-list [items]="formattedListItems"></app-dotted-list>
+			<p *ngIf="fleet.ships.length > 0">
+				Ships: {{ fleet.ships.join(', ') }}
+			</p>
+		</div>
+		<span
+			class="box-closer link"
+			(click)="this.closeBox()"
+		></span>
+	</div>
+	

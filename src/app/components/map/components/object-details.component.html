@@ -1,0 +1,24 @@
+<div class="boxed sidebar-box" *ngIf="feature">
+		<h1>{{ feature?.properties.name_generated }}</h1>
+		<div *ngIf="feature && feature.properties.is_scanned">
+			<app-dotted-list [items]="formattedListItems"></app-dotted-list>
+			<p *ngIf="feature.properties.habitable_zone">
+				{{ getHabitableZoneString() }}
+			</p>
+			<p *ngIf="getAtmosphereString()">
+				{{ getAtmosphereString() }}
+			</p>
+			<p *ngIf="feature.properties.description">
+				{{ feature.properties.description }}
+			</p>
+		</div>
+		<div *ngIf="feature && !feature.properties.is_scanned">
+			This object of type {{ feature.properties.category }} has not yet been
+			scanned.
+		</div>
+		<span
+			class="box-closer link"
+			(click)="this.closeBox()"
+		></span>
+	</div>
+	

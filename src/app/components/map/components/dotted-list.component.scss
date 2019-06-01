@@ -1,0 +1,27 @@
+ul {
+	padding-left: 0;
+	margin-bottom: 8px;
+	li {
+		display: flex;
+		.title,
+		.value {
+			flex: 1 0 auto;
+		}
+		.value {
+			font-weight: bold;
+		}
+		.dots {
+			flex: 0 1 auto;
+		}
+		.dots::before {
+			display: block;
+			height: 1em;
+			overflow: hidden;
+			text-overflow: clip;
+			content: '. . . . . . . . . . . . . . . . . . . . '
+				'. . . . . . . . . . . . . . . . . . . . '
+				'. . . . . . . . . . . . . . . . . . . . '
+				'. . . . . . . . . . . . . . . . . . . . ';
+		}
+	}
+}

@@ -1,0 +1,11 @@
+<div class="boxed sidebar-box" *ngIf="selectedGrid">
+		<h1>{{ properties?.name }}</h1>
+		<div *ngIf="properties">
+			<app-dotted-list [items]="formattedListItems"></app-dotted-list>
+		</div>
+		<span
+			class="box-closer link"
+			(click)="this.closeBox()"
+		></span>
+	</div>
+	

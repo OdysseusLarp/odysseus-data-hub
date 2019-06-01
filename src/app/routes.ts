@@ -5,6 +5,8 @@ import {
 	ActivatedRouteSnapshot,
 	RouterStateSnapshot,
 } from '@angular/router';
+import { first, map } from 'rxjs/operators';
+
 import { NewsComponent } from './components/news/news.component';
 import { LoginComponent } from './components/login/login.component';
 import { PersonnelComponent } from '@app/components/personnel/personnel.component';
@@ -20,13 +22,17 @@ import { FleetComponent } from '@app/components/fleet/fleet.component';
 import { FleetDetailsComponent } from '@app/components/fleet-details/fleet-details.component';
 import { VoteCreateComponent } from '@app/components/vote-create/vote-create.component';
 import { StateService } from '@app/services/state.service';
+import { MapComponent } from '@app/components/map/map.component';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 	constructor(private state: StateService) {}
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-		return !!this.state.user.getValue();
+		return this.state.hasInitialized$.pipe(
+			first(Boolean),
+			map(() => !!this.state.user.getValue())
+		);
 	}
 }
 
@@ -80,6 +86,11 @@ export const routes: Routes = [
 	{
 		path: 'captains-log',
 		component: CaptainsLogComponent,
+		canActivate: [AuthGuard],
+	},
+	{
+		path: 'map',
+		component: MapComponent,
 		canActivate: [AuthGuard],
 	},
 ];

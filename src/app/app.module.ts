@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { InputTrimModule } from 'ng2-trim-directive';
 import { NgxAutoScrollModule } from 'ngx-auto-scroll';
@@ -36,7 +37,12 @@ import { PostFormComponent } from '@components/shared/post-form/post-form.compon
 import { PostItemComponent } from '@components/shared/post-item/post-item.component';
 import { VoteCreateComponent } from '@components/vote-create/vote-create.component';
 import { TableComponent } from '@components/shared/table/table.component';
-import { HackingComponent } from './components/hacking/hacking.component';
+import { HackingComponent } from '@components/hacking/hacking.component';
+import { MapComponent } from '@components/map/map.component';
+import { DottedListComponent } from '@components/map/components/dotted-list.component';
+import { ObjectDetailsComponent } from '@components/map/components/object-details.component';
+import { GridDetailsComponent } from '@components/map/components/grid-details.component';
+import { ShipDetailsComponent } from '@components/map/components/ship-details.component';
 
 @NgModule({
 	declarations: [
@@ -60,6 +66,11 @@ import { HackingComponent } from './components/hacking/hacking.component';
 		VoteCreateComponent,
 		TableComponent,
 		HackingComponent,
+		MapComponent,
+		DottedListComponent,
+		ObjectDetailsComponent,
+		GridDetailsComponent,
+		ShipDetailsComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -75,8 +86,9 @@ import { HackingComponent } from './components/hacking/hacking.component';
 		NgSelectModule,
 		MarkdownModule.forRoot(),
 		MatTabsModule,
+		HttpClientModule,
 	],
-	providers: [StateService, MessagingService, AuthGuard],
+	providers: [StateService, MessagingService, AuthGuard, HttpClient],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

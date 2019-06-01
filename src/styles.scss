@@ -315,3 +315,16 @@ ul.pager {
 .mat-tab-nav-bar.mat-primary .mat-ink-bar {
 	background: $bright-blue;
 }
+
+// Starmap box closer
+.box-closer {
+	cursor: pointer;
+	text-decoration: none;
+	position: absolute;
+	top: 8px;
+	right: 16px;
+	font-size: 1.2em;
+}
+.box-closer:after {
+	content: '✖';
+}

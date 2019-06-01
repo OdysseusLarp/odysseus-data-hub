@@ -10,11 +10,13 @@ export class StateService {
 	sessionStorage = window.sessionStorage;
 	logout = new Subject<api.Person>();
 	showHackingView = new BehaviorSubject(false);
+	hasInitialized$ = new BehaviorSubject(false);
 
 	constructor() {
 		// Attempt to log in as previous user automatically
 		const previousUserId = this.sessionStorage.getItem('previousUserId');
 		if (previousUserId) this.login(previousUserId);
+		else this.hasInitialized$.next(true);
 
 		// Handle logout
 		this.logout.subscribe(() => {
@@ -24,11 +26,13 @@ export class StateService {
 	}
 
 	login(id): Promise<api.Person> {
-		return getPersonCardId(id).then((res: api.Response<any>) => {
-			if (!res.data) throw new Error('User not found');
-			this.user.next(res.data);
-			this.sessionStorage.setItem('previousUserId', res.data.card_id);
-			return res.data;
-		});
+		return getPersonCardId(id)
+			.then((res: api.Response<any>) => {
+				if (!res.data) throw new Error('User not found');
+				this.user.next(res.data);
+				this.sessionStorage.setItem('previousUserId', res.data.card_id);
+				return res.data;
+			})
+			.finally(() => this.hasInitialized$.next(true));
 	}
 }

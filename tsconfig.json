@@ -1,30 +1,25 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "module": "es2015",
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "es5",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-		],
+	"compileOnSave": false,
+	"compilerOptions": {
+		"outDir": "./dist/out-tsc",
+		"sourceMap": true,
+		"declaration": false,
+		"module": "es2015",
+		"moduleResolution": "node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"importHelpers": true,
+		"esModuleInterop": true,
+		"target": "es5",
+		"typeRoots": ["node_modules/@types"],
+		"lib": ["es2018", "dom"],
 		"baseUrl": "src",
-    "paths": {
-      "@app/*": ["app/*"],
-      "@api/*": ["app/api/*"],
-      "@services/*": ["app/services/*"],
-      "@components/*": ["app/components/*"],
-      "@env/*": ["environments/*"]
-    }
-  }
+		"paths": {
+			"@app/*": ["app/*"],
+			"@api/*": ["app/api/*"],
+			"@services/*": ["app/services/*"],
+			"@components/*": ["app/components/*"],
+			"@env/*": ["environments/*"]
+		}
+	}
 }

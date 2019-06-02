@@ -1,15 +1,32 @@
 <div class="boxed">
-	<h1>New vote</h1>
-	<div>
+	<h1>Create a new vote</h1>
+	<div class="dark-bg">
+		<p>
+			Enter your vote details below. After submitting your vote, it will be sent to the fleet for approval.
+		</p>
 		<form [formGroup]="voteForm" (ngSubmit)="onFormSubmit()">
 			<label>Title</label>
-			<input type="text" placeholder="Title" formControlName="title" />
+			<input type="text" formControlName="title" />
 			<label>Active time</label>
-			<select formControlName="activeTime">
-				<option value="30">30 minutes</option>
-				<option value="60">1 hour</option>
-				<option value="120">2 hours</option>
-			</select>
+			<ng-select
+				formControlName="duration_minutes"
+				[items]="voteDurations"
+				[searchable]="false"
+				[clearable]="false"
+				bindLabel="text"
+				bindValue="value"
+			>
+			</ng-select>
+			<label>Limit voting rights to</label>
+			<ng-select
+				formControlName="allowed_voters"
+				[items]="voteFilters"
+				[searchable]="false"
+				[clearable]="false"
+				bindLabel="text"
+				bindValue="value"
+			>
+			</ng-select>
 			<label>Description</label>
 			<textarea formControlName="description"></textarea>
 
@@ -20,15 +37,17 @@
 				"
 			>
 				<label>Vote option #{{ i + 1 }} </label>
-				<input
+				<div class="vote-option-row">
+					<input
 					type="text"
 					[formControl]="option"
 					placeholder="Vote option #{{ i + 1 }}"
-				/><button type="button" (click)="removeOption(i)">[x]</button>
+				/><button type="button" (click)="removeOption(i)">Remove</button>
+				</div>
 			</div>
 
-			<button type="button" (click)="addOption()">Add option</button>
-			<button type="submit">Create vote</button>
+			<button type="button" class="add-option-button" (click)="addOption()">Add option</button>
+			<button type="submit" class="create-vote-button">Submit for approval</button>
 		</form>
 	</div>
 </div>

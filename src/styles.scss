@@ -49,7 +49,8 @@ h3 {
 .exo {
 	font-family: 'Exo';
 }
-button {
+button,
+.button {
 	font-family: 'Exo';
 	background: rgba(0, 0, 0, 0.2);
 	box-shadow: 0px 0px 5px $dark-blue;
@@ -60,10 +61,14 @@ button {
 .no-shadow {
 	box-shadow: none;
 }
-button:hover {
+button:hover,
+.button:hover {
 	transition-duration: $transition-ms;
 	background: rgba(2, 246, 254, 0.2);
 	box-shadow: 0px 0px 10px $dark-blue;
+}
+.button {
+	text-decoration: none;
 }
 
 input[type='text'],
@@ -347,6 +352,35 @@ ul.pager {
 	background: #df0024;
 }
 
+/* Material radio buttons */
+.mat-radio-button {
+	.mat-radio-outer-circle {
+		border-color: darken($dark-blue, 10%) !important;
+	}
+	.mat-radio-inner-circle {
+		background-color: darken($dark-blue, 10%) !important;
+	}
+	.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+		background-color: darken(#00c5c8, 20%);
+	}
+}
+.mat-radio-button.mat-radio-checked {
+	.mat-radio-outer-circle {
+		border-color: $bright-blue !important;
+	}
+	.mat-radio-inner-circle {
+		background-color: $bright-blue !important;
+	}
+}
+.mat-radio-disabled {
+	label {
+		.mat-radio-label-content {
+			color: #ccc !important;
+		}
+	}
+}
+
+/* Snackbar styling */
 .log-entry-snackbar {
 	background: linear-gradient(180deg, #010412 0%, #010412 45%, #011b2b 100%);
 	border: 2px solid #00c5c8;

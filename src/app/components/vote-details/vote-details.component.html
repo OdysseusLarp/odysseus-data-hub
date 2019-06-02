@@ -2,32 +2,19 @@
 	<h1>Vote details</h1>
 	<div *ngIf="vote" class="dark-bg">
 		<h2>
-			{{ vote.title }} <span class="is-active" [ngClass]="{ 'voting-active': vote.is_active }">{{ vote.is_active ? 'voting active' : 'voting ended' }}</span>
+			{{ vote.title }} <span class="is-active" [ngClass]="{ 'voting-active': vote.is_active }">{{ vote.is_active ? 'voting active for' : 'voting ended' }} {{ vote.active_until | duration }}</span>
 		</h2>
 		<h3>Initiated by {{ vote.author?.full_name }}</h3>
-		<p *ngIf="vote.active_until">
-			Voting is active until {{ vote.active_until }}
-		</p>
 		<p>{{ vote.description }}</p>
 		<h3>
-			Vote ({{ vote.entries.length }} total
-			{{ pluralize('vote', vote.entries.length)
-			}}<span *ngIf="vote.is_active"> so far</span>)
+			Vote options ({{ vote.entries.length }} {{ pluralize('vote', vote.entries.length) }}<span *ngIf="vote.is_active"> so far</span>)
 		</h3>
 		<form [formGroup]="voteForm" (ngSubmit)="onSubmit()">
-			<ul>
-				<li *ngFor="let option of vote.options">
-					<input
-						type="radio"
-						[value]="option.id"
-						id="option-{{ option.id }}"
-						formControlName="option"
-					/>
-					<label for="option-{{ option.id }}"
-						>{{ option.text }} ({{ getVoteCount(option.id) }})</label
-					>
-				</li>
-			</ul>
+			<mat-radio-group class="vote-options-group" formControlName="option">
+				<mat-radio-button *ngFor="let option of vote.options" [value]="option.id">
+					{{ option.text }} ({{ getVoteCount(option.id) }})
+				</mat-radio-button>
+			</mat-radio-group>
 			<button [disabled]="!voteForm.valid || submitting" *ngIf="vote.is_active">
 				{{ userVoteEntry ? 'You have already voted' : 'Vote' }}
 			</button>

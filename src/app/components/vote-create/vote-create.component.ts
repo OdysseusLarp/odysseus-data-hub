@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { get } from 'lodash';
 import { StateService } from '@app/services/state.service';
 import * as VoteApi from '@api/Vote';
 
@@ -15,10 +16,30 @@ export class VoteCreateComponent implements OnInit {
 	user$: Subscription;
 	currentUser: api.Person;
 	submitting = false;
+	voteDurations = [
+		{
+			value: 720,
+			text: '12 hours',
+		},
+		{
+			value: 480,
+			text: '8 hours',
+		},
+		{
+			value: 180,
+			text: '3 hours',
+		},
+		{
+			value: 30,
+			text: '30 minutes',
+		},
+	];
+	voteFilters = [];
 
 	constructor(private router: Router, private state: StateService) {}
 
 	ngOnInit() {
+		this.initVoteFilters();
 		this.buildForm();
 		this.user$ = this.state.user.subscribe(user => (this.currentUser = user));
 	}
@@ -34,8 +55,30 @@ export class VoteCreateComponent implements OnInit {
 		if (res.raw.status === 204) this.router.navigate(['../vote']);
 	}
 
-	getInitialActiveTime() {
-		return '30';
+	initVoteFilters() {
+		// TODO: Add vote filters depending on groups of current user
+		const filters = [
+			{
+				value: 'EVERYONE',
+				text: 'Everyone',
+			},
+			{
+				value: 'FULL_CITIZENSHIP',
+				text: 'Those with full citizenship status',
+			},
+			{
+				value: 'HIGH_RANKING_OFFICER',
+				text: 'High ranking military officers',
+			},
+		];
+		const userDynasty = get(this.state.user.getValue(), 'dynasty');
+		if (userDynasty) {
+			filters.push({
+				value: `DYNASTY:${userDynasty.toUpperCase()}`,
+				text: `Members of the ${userDynasty} dynasty`,
+			});
+		}
+		this.voteFilters = filters;
 	}
 
 	addOption() {
@@ -55,10 +98,8 @@ export class VoteCreateComponent implements OnInit {
 	private buildForm() {
 		this.voteForm = new FormGroup({
 			title: new FormControl('', Validators.required),
-			activeTime: new FormControl(
-				this.getInitialActiveTime(),
-				Validators.required
-			),
+			duration_minutes: new FormControl(180, Validators.required),
+			allowed_voters: new FormControl('EVERYONE', Validators.required),
 			description: new FormControl('', Validators.required),
 			options: new FormArray([this.getNewOption()]),
 		});

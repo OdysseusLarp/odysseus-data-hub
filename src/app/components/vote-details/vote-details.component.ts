@@ -6,6 +6,11 @@ import { getVoteId, putVoteIdCast } from '@api/Vote';
 import pluralize from 'pluralize';
 import { StateService } from '@app/services/state.service';
 import { get } from 'lodash';
+import { SocketService } from '@app/services/socket.service';
+
+interface Vote extends api.Vote {
+	entries: api.VoteEntry[];
+}
 
 @Component({
 	selector: 'app-vote-details',
@@ -13,15 +18,20 @@ import { get } from 'lodash';
 	styleUrls: ['./vote-details.component.scss'],
 })
 export class VoteDetailsComponent implements OnInit, OnDestroy {
-	vote: api.Vote;
+	vote: Vote;
 	voteId: number;
 	params$: Subscription;
 	voteForm: FormGroup;
 	pluralize = pluralize;
 	userVoteEntry: any;
 	submitting = false;
+	voteAddedOrUpdated$: Subscription;
 
-	constructor(private route: ActivatedRoute, private state: StateService) {}
+	constructor(
+		private route: ActivatedRoute,
+		private state: StateService,
+		private socket: SocketService
+	) {}
 
 	ngOnInit() {
 		this.params$ = this.route.params.subscribe(params => {
@@ -30,6 +40,12 @@ export class VoteDetailsComponent implements OnInit, OnDestroy {
 			this.fetchVote(params.id);
 		});
 		this.buildForm();
+		// Refetch on model update
+		this.voteAddedOrUpdated$ = this.socket.voteAddedOrUpdated$.subscribe(
+			vote => {
+				if (get(vote, 'id') === this.voteId) this.fetchVote(this.voteId);
+			}
+		);
 	}
 
 	ngOnDestroy() {
@@ -37,6 +53,7 @@ export class VoteDetailsComponent implements OnInit, OnDestroy {
 	}
 
 	onSubmit() {
+		if (!get(this.vote, 'is_active')) return;
 		this.submitting = true;
 		const person_id = get(this.state.user.getValue(), 'id');
 		const vote_id = get(this.vote, 'id');
@@ -49,28 +66,31 @@ export class VoteDetailsComponent implements OnInit, OnDestroy {
 	}
 
 	getVoteCount(voteId: number) {
-		// @ts-ignore
 		return this.vote.entries.filter(vote => vote.vote_option_id === voteId)
 			.length;
 	}
 
 	private fetchVote(id: number) {
-		getVoteId(id).then((res: api.Response<any>) => {
-			this.vote = res.data;
-			// Check if current user has already voted
-			// @ts-ignore
-			this.userVoteEntry = this.vote.entries.find(
-				entry => entry.person_id === get(this.state.user.getValue(), 'id')
-			);
-			this.buildForm();
-		});
+		getVoteId(id).then((res: api.Response<any>) => this.updateVote(res.data));
+	}
+
+	private updateVote(vote: Vote) {
+		this.vote = vote;
+		// Check if current user has already voted
+		this.userVoteEntry = this.vote.entries.find(
+			entry => entry.person_id === get(this.state.user.getValue(), 'id')
+		);
+		this.buildForm();
 	}
 
 	private buildForm() {
 		const optionId = get(this.userVoteEntry, 'vote_option_id', null);
 		this.voteForm = new FormGroup({
 			option: new FormControl(
-				{ value: optionId, disabled: !!optionId },
+				{
+					value: optionId,
+					disabled: !!optionId || !get(this.vote, 'is_active'),
+				},
 				Validators.required
 			),
 		});

@@ -39,9 +39,11 @@ import { PostItemComponent } from '@components/shared/post-item/post-item.compon
 import { VoteCreateComponent } from '@components/vote-create/vote-create.component';
 import { TableComponent } from '@components/shared/table/table.component';
 import { HackingComponent } from '@components/hacking/hacking.component';
-import { StaticScreenComponent } from './components/static-screen/static-screen.component';
-import { ShipLogSnackbarComponent } from './components/ship-log-snackbar/ship-log-snackbar.component';
-import { ArtifactCreateComponent } from './components/artifact-create/artifact-create.component';
+import { StaticScreenComponent } from '@components/static-screen/static-screen.component';
+import { ShipLogSnackbarComponent } from '@components/ship-log-snackbar/ship-log-snackbar.component';
+import { ArtifactCreateComponent } from '@components/artifact-create/artifact-create.component';
+import { DurationPipe } from './pipes/duration.pipe';
+import { MatRadioModule } from '@angular/material';
 
 @NgModule({
 	declarations: [
@@ -68,6 +70,7 @@ import { ArtifactCreateComponent } from './components/artifact-create/artifact-c
 		StaticScreenComponent,
 		ShipLogSnackbarComponent,
 		ArtifactCreateComponent,
+		DurationPipe,
 	],
 	imports: [
 		BrowserModule,
@@ -83,6 +86,7 @@ import { ArtifactCreateComponent } from './components/artifact-create/artifact-c
 		MarkdownModule.forRoot(),
 		MatTabsModule,
 		MatSnackBarModule,
+		MatRadioModule,
 		HttpClientModule,
 	],
 	providers: [StateService, MessagingService, AuthGuard, HttpClient],

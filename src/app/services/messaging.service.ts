@@ -28,7 +28,6 @@ export class MessagingService {
 	unseenMessagesCount = new BehaviorSubject<number>(0);
 
 	constructor(private state: StateService) {
-		console.log('messaging service constructor');
 		this.state.user
 			.pipe(
 				filter(Boolean),
@@ -104,7 +103,6 @@ export class MessagingService {
 		);
 		this.socket = socket;
 		this.hasInitialized.next(true);
-		console.log('initialized messaging socket');
 	}
 
 	private onMessagesSeen(messages: api.ComMessage[]) {

@@ -1,13 +1,10 @@
 <div class="boxed">
-	<h1>Influence</h1>
-	<div>
-		Here you can vote on stuff. <a routerLink="new">Create a new vote here.</a>
-	</div>
+	<h1>Influence<a routerLink="new" class="button">Create a new vote</a></h1>
 	<div *ngFor="let vote of votes" class="dark-bg">
 		<h2>
 			<a [routerLink]="vote.id">{{ vote.title }}</a><span [ngClass]="{ 'voting-active': vote.is_active }">{{
-				vote.is_active ? 'voting active' : 'voting ended'
-			}}</span>
+				vote.is_active ? 'voting active for' : 'voting ended'
+			}} {{ vote.active_until | duration }}</span>
 		</h2>
 		<p>{{ vote.description }}</p>
 	</div>

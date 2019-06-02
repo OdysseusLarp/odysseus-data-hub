@@ -5,12 +5,13 @@ import {
 	ElementRef,
 	OnDestroy,
 	HostListener,
+	Input,
 } from '@angular/core';
 
 // Cool matrix animation copied from:
 // https://code.sololearn.com/Wj7ZWBg5m2OG/?ref=app#html
 
-const HACKING_PASSWORD_LENGTH = 12;
+const HACKING_PASSWORD_LENGTH = 15;
 
 @Component({
 	selector: 'app-hacking',
@@ -19,6 +20,7 @@ const HACKING_PASSWORD_LENGTH = 12;
 })
 export class HackingComponent implements OnInit, OnDestroy {
 	@ViewChild('canvas') canvas: ElementRef;
+	@Input() onCompletion: () => void;
 	private ctx;
 	private fontSize;
 	private drops = []; // an array of drops - one per column
@@ -28,6 +30,7 @@ export class HackingComponent implements OnInit, OnDestroy {
 	hackInputValue = '';
 	isHackingComplete = false;
 	charsRemaining = Array(HACKING_PASSWORD_LENGTH - 1);
+	completeHackingTimeout: any;
 
 	constructor() {}
 
@@ -45,7 +48,7 @@ export class HackingComponent implements OnInit, OnDestroy {
 		this.initCanvas();
 	}
 
-	@HostListener('document:keyup', ['$event'])
+	@HostListener('document:keydown', ['$event'])
 	onKeyDown(event) {
 		const correctChar = this.correctInputValue.split('')[
 			this.hackInputValue.length
@@ -61,6 +64,8 @@ export class HackingComponent implements OnInit, OnDestroy {
 
 	private setHackingComplete() {
 		this.isHackingComplete = true;
+		clearTimeout(this.completeHackingTimeout);
+		this.completeHackingTimeout = setTimeout(() => this.onCompletion(), 1000);
 	}
 
 	private generateCorrectInputValue() {

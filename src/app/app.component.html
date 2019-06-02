@@ -11,5 +11,5 @@
 	</div>
 </div>
 
-<app-hacking *ngIf="this.showHackingView$ | async"></app-hacking>
-<div class="hacking-launcher" (click)="toggleHacking()" title="{{ (this.showHackingView$ | async) ? 'Disable' : 'Enable' }} hacking mode">π</div>
+<app-hacking *ngIf="this.showHackingView$ | async" [onCompletion]="onCompleteHacking"></app-hacking>
+<div *ngIf="this.canEnableHacking || (this.showHackingView$ | async) === true" class="hacking-launcher" (click)="toggleHacking()" title="{{ (this.showHackingView$ | async) ? 'Disable' : 'Enable' }} hacking mode">π</div>

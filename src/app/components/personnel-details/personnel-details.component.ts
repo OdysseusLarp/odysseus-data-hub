@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	ViewChild,
+	ElementRef,
+	OnDestroy,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { getPersonId, postPersonIdEntry } from '@api/Person';
 import { get } from 'lodash';
@@ -9,7 +15,7 @@ import { StateService } from '@app/services/state.service';
 	templateUrl: './personnel-details.component.html',
 	styleUrls: ['./personnel-details.component.scss'],
 })
-export class PersonnelDetailsComponent implements OnInit {
+export class PersonnelDetailsComponent implements OnInit, OnDestroy {
 	@ViewChild('medicalEntryForm') medicalEntryForm: ElementRef;
 	@ViewChild('personalEntryForm') personalEntryForm: ElementRef;
 	@ViewChild('militaryEntryForm') militaryEntryForm: ElementRef;
@@ -21,7 +27,15 @@ export class PersonnelDetailsComponent implements OnInit {
 	constructor(private route: ActivatedRoute, private state: StateService) {}
 
 	ngOnInit() {
-		this.route.params.subscribe(({ id }) => this.fetchPerson(id));
+		this.route.params.subscribe(({ id }) => {
+			this.fetchPerson(id);
+			this.state.hackingTarget$.next(id);
+		});
+	}
+
+	ngOnDestroy() {
+		this.state.canEnableHacking$.next(false);
+		this.state.hackingTarget$.next(null);
 	}
 
 	private fetchPerson(id) {
@@ -38,6 +52,8 @@ export class PersonnelDetailsComponent implements OnInit {
 			this.medicalEntries = entries.filter(e => e.type === 'MEDICAL');
 			this.personalEntries = entries.filter(e => e.type === 'PERSONAL');
 			this.militaryEntries = entries.filter(e => e.type === 'MILITARY');
+			const cardId = get(this.person, 'card_id');
+			this.state.canEnableHacking$.next(!!cardId);
 		});
 	}
 

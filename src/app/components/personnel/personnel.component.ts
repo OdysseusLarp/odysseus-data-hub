@@ -76,6 +76,8 @@ export class PersonnelComponent implements OnInit {
 		if (filterSelection && filterSelection.value)
 			queryParams[filterKey] = filterSelection.value;
 		else delete queryParams[filterKey];
+		// reset page to 1 if any other filter changes
+		if (filterKey !== 'page') queryParams.page = 1;
 		this.router.navigate([], {
 			relativeTo: this.activatedRoute,
 			queryParams,

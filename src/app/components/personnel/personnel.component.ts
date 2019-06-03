@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import * as PersonApi from '@api/Person';
-import { get, debounce, mapKeys, camelCase } from 'lodash';
+import { get, debounce, mapKeys, camelCase, pickBy } from 'lodash';
 import { autobind } from 'core-decorators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -22,7 +22,7 @@ export class PersonnelComponent implements OnInit {
 	filterFunction: Function;
 	isLoading = false;
 	filters: api.FilterCollection[] = [];
-	filterValues = {};
+	filterValues: any = { page: 1 };
 	onNameFilterChangeDebounce: any;
 	hasInitialized$ = new BehaviorSubject(false);
 
@@ -30,15 +30,16 @@ export class PersonnelComponent implements OnInit {
 
 	@autobind()
 	setPage(event) {
-		const page = event.offset + 1;
-		this.fetchPage(page);
+		this.onFilterChange('page', { value: event.offset + 1 });
 	}
 
-	fetchPage(page = this.page, filters = {}) {
+	fetchPage(filters = this.filterValues) {
 		this.isLoading = true;
-		const params = mapKeys(filters, (_value, key) => camelCase(key));
+		const params = pickBy(
+			mapKeys(filters, (_value, key) => camelCase(key)),
+			(value, key) => !!value
+		);
 		PersonApi.getPerson({
-			page,
 			entries: this.pageSize,
 			...params,
 		}).then((res: api.Response<any>) => {
@@ -89,31 +90,36 @@ export class PersonnelComponent implements OnInit {
 		this.onNameFilterChangeDebounce = debounce(this.onNameFilterChange, 300);
 		this.activatedRoute.queryParams.subscribe(async params => {
 			await this.hasInitialized$.pipe(first(Boolean)).toPromise();
-			this.fetchPage(this.page, params);
+			this.fetchPage(params);
 		});
 		this.fetchFilterValues();
+		const columnSettings = {
+			sortable: false,
+			resizeable: false,
+			canAutoResize: false,
+		};
 		this.columns = [
 			{
 				prop: 'full_name',
 				name: 'Name',
 				cellTemplate: this.nameTemplate,
 				width: 300,
-				sortable: false,
+				...columnSettings,
 			},
-			{ prop: 'dynasty', name: 'Dynasty', sortable: false },
-			{ prop: 'home_planet', name: 'Home planet', sortable: false },
+			{ prop: 'dynasty', name: 'Dynasty', ...columnSettings },
+			{ prop: 'home_planet', name: 'Home planet', ...columnSettings },
 			{
 				prop: 'ship.name',
 				name: 'Current location',
 				cellTemplate: this.shipTemplate,
 				width: 200,
-				sortable: false,
+				...columnSettings,
 			},
 			{
 				prop: 'status',
 				name: 'Status',
 				width: 350,
-				sortable: false,
+				...columnSettings,
 			},
 		];
 	}

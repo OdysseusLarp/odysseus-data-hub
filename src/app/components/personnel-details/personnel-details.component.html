@@ -16,10 +16,10 @@
 						<p>Status: {{ person.status || 'Unknown' }}</p>
 						<p>Current location: {{ person.ship.name || 'Unknown' }}</p>
 						<p>Social class: {{ person.social_class || 'Unknown' }}</p>
-						<p>Religion: {{ person.religion || 'None' }}</p>
+						<p>Religion: {{ person.religion || 'Unknown' }}</p>
 						<p>Dynasty: {{ person.dynasty || 'Floater' }}</p>
 						<p>Political party: {{ person.political_party || 'None' }}</p>
-						<p>Military rank: {{ person.military_rank || 'None' }}</p>
+						<p>Military rank: {{ person.military_rank || 'Unknown' }}</p>
 						<p>Occupation: {{ person.occupation || 'Unknown' }}</p>
 
 						<div *ngIf="person.family && person.family.length">
@@ -80,7 +80,7 @@
 			<mat-tab label="Military file">
 					<div class="person-container">
 							<h2 class="tab-title">Military file</h2>
-							<p><span class="subtitle">Rank:</span> {{ person.military_rank || 'None' }}</p>
+							<p><span class="subtitle">Rank:</span> {{ person.military_rank || 'Unknown' }}</p>
 							<div class="subtitle-wrapper">
 								<span class="subtitle">Remarks:</span>
 								<p markdown ngPreserveWhitespaces>{{ person.military_remarks || 'None / Unknown' }}</p>

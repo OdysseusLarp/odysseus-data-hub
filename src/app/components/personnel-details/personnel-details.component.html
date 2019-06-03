@@ -4,21 +4,23 @@
 			<span>{{ person.full_name }}</span>
 			<a routerLink="/communications/private/{{ person.id }}">[ open communications ]</a></h1>
 		<mat-tab-group animationDuration="0ms">
-			<mat-tab label="General details">
+			<mat-tab label="General information">
 				<div class="person-container">
 					<div>
-						<h2>General details</h2>
-						<p *ngIf="person.ship">Current ship: {{ person.ship.name || 'Unknown' }}</p>
+						<h2 class="tab-title">General information</h2>
 						<p *ngIf="person.title">Title: {{ person.title }}</p>
-						<p>Status: {{ person.status || 'Unknown' }}</p>
-						<p>Occupation: {{ person.occupation || 'Unknown' }}</p>
-						<p>Home planet: {{ person.home_planet || 'Unknown' }}</p>
-						<p>Dynasty: {{ person.dynasty || 'None' }}</p>
 						<p>Birth year: {{ person.birth_year || 'Unknown' }}</p>
-						<p *ngIf="person.religion">Religion: {{ person.religion }}</p>
-						<p *ngIf="person.citizenship">Citizenship: {{ person.citizenship }}</p>
-						<p *ngIf="person.social_class">Social class: {{ person.social_class }}</p>
-						<p *ngIf="person.political_party">Political party: {{ person.political_party }}</p>
+						<p>Home planet: {{ person.home_planet || 'Unknown' }}</p>
+						<p>Citizen ID: {{ person.citizen_id || 'Unknown' }}</p>
+						<p>Citizenship: {{ person.citizenship || 'Unknown' }}</p>
+						<p>Status: {{ person.status || 'Unknown' }}</p>
+						<p>Current location: {{ person.ship.name || 'Unknown' }}</p>
+						<p>Social class: {{ person.social_class || 'Unknown' }}</p>
+						<p>Religion: {{ person.religion || 'None' }}</p>
+						<p>Dynasty: {{ person.dynasty || 'Floater' }}</p>
+						<p>Political party: {{ person.political_party || 'None' }}</p>
+						<p>Military rank: {{ person.military_rank || 'None' }}</p>
+						<p>Occupation: {{ person.occupation || 'Unknown' }}</p>
 
 						<div *ngIf="person.family && person.family.length">
 							<h2>Known family members</h2>
@@ -36,66 +38,82 @@
 								</li>
 							</ul>
 						</div>
+						<p class="created-year">Data file creation year: {{ person.created_year || 'Unknown' }}</p>
 					</div>
 				</div>
 			</mat-tab>
-			<mat-tab label="Medical details">
+			<mat-tab label="Medical file">
 				<div class="person-container">
-					<h2>Medical details</h2>
-					<p>Birth year: {{ person.birth_year || 'Unknown' }}</p>
-					<p>Blood type: {{ person.blood_type || 'Unknown' }}</p>
-					<p>Allergies: {{ person.allergies || 'None / Unknown' }}</p>
-					<p>Fitness level: {{ person.medical_fitness_level || 'Unknown' }}</p>
-					<p>Last fitness check (year): {{ person.medical_last_fitness_check || 'Unknown' }}</p>
-					<div>
-						<h2 *ngIf="medicalEntries.length">Medical entries</h2>
-						<p markdown ngPreserveWhitespaces *ngFor="let entry of medicalEntries">
-							{{ entry.entry }}<span *ngIf="entry.added_by"> - Added by {{ entry.added_by.full_name }}</span>
-						</p>
+					<h2 class="tab-title">Medical file</h2>
+					<p><span class="subtitle">Birth year:</span> {{ person.birth_year || 'Unknown' }}</p>
+					<p><span class="subtitle">Fitness level:</span> {{ person.medical_fitness_level || 'Unknown' }}</p>
+					<p><span class="subtitle">Last fitness check (year):</span> {{ person.medical_last_fitness_check || 'Unknown' }}</p>
+					<p><span class="subtitle">Blood type:</span> {{ person.medical_blood_type || 'None / Unknown' }}</p>
+					<div class="subtitle-wrapper">
+						<span class="subtitle">Allergies:</span>
+						<p markdown ngPreserveWhitespaces>{{ person.medical_allergies || 'None / Unknown' }}</p>
+					</div>
+					<div class="subtitle-wrapper">
+						<span class="subtitle">Active conditions:</span>
+						<p markdown ngPreserveWhitespaces>{{ person.medical_active_conditions || 'None / Unknown' }}</p>
 					</div>
 					<div>
-						<h2>Add medical entry</h2>
+						<div class="subtitle-wrapper" *ngIf="militaryEntries.length">
+							<span class="subtitle">Medical records:</span>
+							<p markdown ngPreserveWhitespaces *ngFor="let entry of medicalEntries">
+								{{ entry.entry }}<span *ngIf="entry.added_by"> - Added by {{ entry.added_by.full_name }}</span>
+							</p>
+							<p *ngIf="!medicalEntries.length">
+								No medical records
+							</p>
+						</div>
+					</div>
+					<div class="add-entry-wrapper">
+						<h2>Add medical record</h2>
 						<div>
 							<textarea trim="blur" #medicalEntryForm></textarea>
-							<button (click)="saveEntry('MEDICAL')" [disabled]="isSubmitting">Save medical entry</button>
+							<button (click)="saveEntry('MEDICAL')" [disabled]="isSubmitting">Save medical record</button>
 						</div>
 					</div>
 				</div>
 			</mat-tab>
 			<mat-tab label="Military file">
 					<div class="person-container">
-							<h2>Military file</h2>
-							<p>Rank: {{ person.military_rank || 'Unknown' }}</p>
-							<p markdown ngPreserveWhitespaces>Remarks: {{ person.military_remarks || 'None / Unknown' }}</p>
+							<h2 class="tab-title">Military file</h2>
+							<p><span class="subtitle">Rank:</span> {{ person.military_rank || 'None' }}</p>
+							<div class="subtitle-wrapper">
+								<span class="subtitle">Remarks:</span>
+								<p markdown ngPreserveWhitespaces>{{ person.military_remarks || 'None / Unknown' }}</p>
+							</div>
 							<p *ngIf="person.military_service_history">Service history: {{ person.military_service_history }}</p>
-							<div *ngIf="militaryEntries.length">
-								<h2>Entries</h2>
+							<div class="subtitle-wrapper" *ngIf="militaryEntries.length">
+								<span class="subtitle">Service history:</span>
 								<p markdown ngPreserveWhitespaces *ngFor="let entry of militaryEntries">
 									{{ entry.entry }}<span *ngIf="entry.added_by"> - Added by {{ entry.added_by.full_name }}</span>
 								</p>
 							</div>
-							<div>
-								<h2>Add entry to military file</h2>
+							<div class="add-entry-wrapper">
+								<h2>Add entry to service history</h2>
 								<div>
 									<textarea trim="blur" #militaryEntryForm></textarea>
-									<button (click)="saveEntry('MILITARY')" [disabled]="isSubmitting">Save military entry</button>
+									<button (click)="saveEntry('MILITARY')" [disabled]="isSubmitting">Save entry to service history</button>
 								</div>
 							</div>
 						</div>
 			</mat-tab>
-			<mat-tab label="Security entries">
+			<mat-tab label="Personal file">
 				<div class="person-container">
 					<div *ngIf="personalEntries.length">
-						<h2>Security entries</h2>
+						<h2>Personal history</h2>
 						<p markdown ngPreserveWhitespaces *ngFor="let entry of personalEntries">
 							{{ entry.entry }}<span *ngIf="entry.added_by"> - Added by {{ entry.added_by.full_name }}</span>
 						</p>
 					</div>
-					<div>
-						<h2>Add security entry</h2>
+					<div class="add-entry-wrapper">
+						<h2>Add entry to personal history</h2>
 						<div>
 							<textarea trim="blur" #personalEntryForm></textarea>
-							<button (click)="saveEntry('PERSONAL')" [disabled]="isSubmitting">Save security entry</button>
+							<button (click)="saveEntry('PERSONAL')" [disabled]="isSubmitting">Save entry to personal history</button>
 						</div>
 					</div>
 				</div>

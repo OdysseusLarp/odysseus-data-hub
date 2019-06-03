@@ -43,12 +43,9 @@ export class PersonnelDetailsComponent implements OnInit, OnDestroy {
 			this.person = res.data;
 			// TODO: Replace single newlines with two newlines in seeds
 			// instead of here in frontend
-			const entries = get(this.person, 'entries', [])
-				.map(e => {
-					const entry = e.entry.split('\n').join('\n\n');
-					return { ...e, entry };
-				})
-				.sort((a, b) => (a.created_at > b.created_at ? 1 : -1));
+			const entries = get(this.person, 'entries', []).sort((a, b) =>
+				a.created_at > b.created_at ? 1 : -1
+			);
 			this.medicalEntries = entries.filter(e => e.type === 'MEDICAL');
 			this.personalEntries = entries.filter(e => e.type === 'PERSONAL');
 			this.militaryEntries = entries.filter(e => e.type === 'MILITARY');

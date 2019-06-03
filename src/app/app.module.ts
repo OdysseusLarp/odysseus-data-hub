@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { InputTrimModule } from 'ng2-trim-directive';
@@ -79,6 +79,7 @@ import { MatRadioModule } from '@angular/material';
 		InputTrimModule,
 		RouterModule.forRoot(routes),
 		ReactiveFormsModule,
+		FormsModule,
 		NgxAutoScrollModule,
 		NgxDatatableModule,
 		NgScrollbarModule,

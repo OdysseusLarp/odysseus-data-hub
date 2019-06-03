@@ -15,16 +15,17 @@
 		<div class="filter-items">
 			<div>
 				<label>Name</label>
-				<input type="text" (keyup)="onNameFilterChangeDebounce($event)"/>
+				<input type="text" (keyup)="onNameFilterChangeDebounce($event)" [(ngModel)]="filterValues['name']" />
 			</div>
 			<div *ngFor="let filterCollection of filters">
 				<label>{{ filterCollection.name }}</label>
 				<ng-select
 					[items]="filterCollection.items"
-					[searchable]="true"
+					[searchable]="false"
 					[clearable]="true"
 					bindLabel="name"
 					bindValue="value"
+					[(ngModel)]="filterValues[filterCollection.key]"
 					(change)="onFilterChange(filterCollection.key, $event)"
 				>
 				</ng-select>
@@ -34,7 +35,6 @@
 	<app-table
 		[rows]="persons"
 		[columns]="columns"
-		[filterFunction]="filterFunction"
 		[externalPaging]="true"
 		[count]="totalRows"
 		[offset]="page - 1"

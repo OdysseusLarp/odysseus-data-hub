@@ -21,10 +21,8 @@ export class PersonnelComponent implements OnInit {
 	columns: any[];
 	filterFunction: Function;
 	isLoading = false;
-	filterValue = '';
 	filters: api.FilterCollection[] = [];
-	filterValues: any;
-	filterSelections = {};
+	filterValues = {};
 	onNameFilterChangeDebounce: any;
 	hasInitialized$ = new BehaviorSubject(false);
 
@@ -56,6 +54,12 @@ export class PersonnelComponent implements OnInit {
 		PersonApi.getPersonFilters()
 			.then((res: api.Response<api.FilterValuesResponse>) => {
 				this.filters = res.data.filters || [];
+				const queryParams = this.getCurrentQueryParams();
+				this.filters.forEach(f => {
+					this.filterValues[f.key] = queryParams[f.key];
+				});
+				// Set name value manually
+				if (queryParams.name) this.filterValues['name'] = queryParams.name;
 			})
 			.finally(() => this.hasInitialized$.next(true));
 	}
@@ -67,7 +71,7 @@ export class PersonnelComponent implements OnInit {
 	}
 
 	onFilterChange(filterKey: string, filterSelection: api.FilterItem) {
-		const queryParams = { ...this.activatedRoute.snapshot.queryParams };
+		const queryParams = this.getCurrentQueryParams();
 		if (filterSelection && filterSelection.value)
 			queryParams[filterKey] = filterSelection.value;
 		else delete queryParams[filterKey];
@@ -77,13 +81,16 @@ export class PersonnelComponent implements OnInit {
 		});
 	}
 
+	private getCurrentQueryParams() {
+		return { ...this.activatedRoute.snapshot.queryParams };
+	}
+
 	ngOnInit() {
 		this.onNameFilterChangeDebounce = debounce(this.onNameFilterChange, 300);
 		this.activatedRoute.queryParams.subscribe(async params => {
 			await this.hasInitialized$.pipe(first(Boolean)).toPromise();
 			this.fetchPage(this.page, params);
 		});
-		// this.fetchPage(this.page);
 		this.fetchFilterValues();
 		this.columns = [
 			{
@@ -109,11 +116,5 @@ export class PersonnelComponent implements OnInit {
 				sortable: false,
 			},
 		];
-		this.filterFunction = (rows, value) => {
-			if (this.isLoading) return;
-			this.filterValue = value;
-			// Always set page to 1 when filtering
-			this.fetchPage(1, value);
-		};
 	}
 }

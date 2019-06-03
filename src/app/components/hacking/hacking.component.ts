@@ -7,6 +7,7 @@ import {
 	HostListener,
 	Input,
 } from '@angular/core';
+import { StateService } from '@app/services/state.service';
 
 // Cool matrix animation copied from:
 // https://code.sololearn.com/Wj7ZWBg5m2OG/?ref=app#html
@@ -32,7 +33,7 @@ export class HackingComponent implements OnInit, OnDestroy {
 	charsRemaining = Array(HACKING_PASSWORD_LENGTH - 1);
 	completeHackingTimeout: any;
 
-	constructor() {}
+	constructor(private state: StateService) {}
 
 	ngOnInit() {
 		this.initCanvas();
@@ -60,6 +61,7 @@ export class HackingComponent implements OnInit, OnDestroy {
 		}
 		if (this.hackInputValue === this.correctInputValue)
 			this.setHackingComplete();
+		if (event.key === 'Escape') this.state.showHackingView.next(false);
 	}
 
 	private setHackingComplete() {

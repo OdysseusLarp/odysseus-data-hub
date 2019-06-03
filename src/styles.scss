@@ -281,6 +281,10 @@ textarea:focus {
 	}
 }
 
+.ng-select .ng-select-container {
+	color: $bright-blue !important;
+}
+
 .dark-bg {
 	background: rgba(0, 0, 0, 0.3);
 	padding: 8px;

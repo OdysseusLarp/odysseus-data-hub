@@ -10,6 +10,27 @@
 >
 <div class="boxed">
 	<h1>Personnel database</h1>
+	<div class="filter-container dark-bg">
+		<h2>Filters</h2>
+		<div class="filter-items">
+			<div>
+				<label>Name</label>
+				<input type="text" (keyup)="onNameFilterChangeDebounce($event)"/>
+			</div>
+			<div *ngFor="let filterCollection of filters">
+				<label>{{ filterCollection.name }}</label>
+				<ng-select
+					[items]="filterCollection.items"
+					[searchable]="true"
+					[clearable]="true"
+					bindLabel="name"
+					bindValue="value"
+					(change)="onFilterChange(filterCollection.key, $event)"
+				>
+				</ng-select>
+			</div>
+		</div>
+	</div>
 	<app-table
 		[rows]="persons"
 		[columns]="columns"

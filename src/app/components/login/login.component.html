@@ -4,7 +4,7 @@
 			<h1>Welcome to EOC DataHub</h1>
 			<h2>Log in using your Citizen Card</h2>
 			<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-				<input type="text" formControlName="personId" trim="blur" placeholder="000000" />
+				<input type="text" formControlName="personId" trim="blur" placeholder="000000" autofocus />
 				&nbsp;
 				<button [disabled]="!loginForm.valid || submitting" class="no-shadow">Log in!</button>
 			</form>

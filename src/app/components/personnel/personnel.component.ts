@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import * as PersonApi from '@api/Person';
-import { get } from 'lodash';
+import { get, debounce, mapKeys, camelCase } from 'lodash';
 import { autobind } from 'core-decorators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-personnel',
@@ -19,8 +22,13 @@ export class PersonnelComponent implements OnInit {
 	filterFunction: Function;
 	isLoading = false;
 	filterValue = '';
+	filters: api.FilterCollection[] = [];
+	filterValues: any;
+	filterSelections = {};
+	onNameFilterChangeDebounce: any;
+	hasInitialized$ = new BehaviorSubject(false);
 
-	constructor() {}
+	constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
 	@autobind()
 	setPage(event) {
@@ -28,12 +36,13 @@ export class PersonnelComponent implements OnInit {
 		this.fetchPage(page);
 	}
 
-	fetchPage(page = this.page, nameFilter = this.filterValue) {
+	fetchPage(page = this.page, filters = {}) {
 		this.isLoading = true;
+		const params = mapKeys(filters, (_value, key) => camelCase(key));
 		PersonApi.getPerson({
 			page,
 			entries: this.pageSize,
-			name: nameFilter || undefined,
+			...params,
 		}).then((res: api.Response<any>) => {
 			this.persons = get(res.data, 'persons', []);
 			this.page = get(res.data, 'page');
@@ -43,8 +52,39 @@ export class PersonnelComponent implements OnInit {
 		});
 	}
 
+	fetchFilterValues() {
+		PersonApi.getPersonFilters()
+			.then((res: api.Response<api.FilterValuesResponse>) => {
+				this.filters = res.data.filters || [];
+			})
+			.finally(() => this.hasInitialized$.next(true));
+	}
+
+	@autobind
+	onNameFilterChange(event) {
+		const value = event.target.value;
+		this.onFilterChange('name', { value });
+	}
+
+	onFilterChange(filterKey: string, filterSelection: api.FilterItem) {
+		const queryParams = { ...this.activatedRoute.snapshot.queryParams };
+		if (filterSelection && filterSelection.value)
+			queryParams[filterKey] = filterSelection.value;
+		else delete queryParams[filterKey];
+		this.router.navigate([], {
+			relativeTo: this.activatedRoute,
+			queryParams,
+		});
+	}
+
 	ngOnInit() {
-		this.fetchPage(this.page);
+		this.onNameFilterChangeDebounce = debounce(this.onNameFilterChange, 300);
+		this.activatedRoute.queryParams.subscribe(async params => {
+			await this.hasInitialized$.pipe(first(Boolean)).toPromise();
+			this.fetchPage(this.page, params);
+		});
+		// this.fetchPage(this.page);
+		this.fetchFilterValues();
 		this.columns = [
 			{
 				prop: 'full_name',

@@ -1,0 +1,8 @@
+<div class="container">
+  <h2 [class]="data.type + '-TITLE'">{{ data.title || data.type }}</h2>
+  {{ data.message }}
+  <span
+  class="box-closer link"
+  (click)="this.close()"
+></span>
+</div>

@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { get } from 'lodash';
 import { StateService } from '@app/services/state.service';
-import * as VoteApi from '@api/Vote';
+import { DialogService } from '@app/services/dialog.service';
+import { putVoteCreate } from '@api/Vote';
 
 @Component({
 	selector: 'app-vote-create',
@@ -36,7 +37,11 @@ export class VoteCreateComponent implements OnInit {
 	];
 	voteFilters = [];
 
-	constructor(private router: Router, private state: StateService) {}
+	constructor(
+		private router: Router,
+		private state: StateService,
+		private dialog: DialogService
+	) {}
 
 	ngOnInit() {
 		this.initVoteFilters();
@@ -45,14 +50,22 @@ export class VoteCreateComponent implements OnInit {
 	}
 
 	async onFormSubmit() {
-		if (this.submitting) return;
+		if (this.submitting || this.voteForm.invalid) return;
 		this.submitting = true;
-		const res = await VoteApi.putVoteCreate({
+		const res = await putVoteCreate({
 			...this.voteForm.value,
 			person_id: this.currentUser.id,
 		});
 		this.submitting = false;
-		if (res.raw.status === 204) this.router.navigate(['../vote']);
+		if (res.raw.status === 204) {
+			this.dialog.info(
+				'Vote created',
+				`Your vote '${
+					this.voteForm.value.title
+				}' was submitted to fleet for approval. Check back later!`
+			);
+			this.router.navigate(['../vote']);
+		}
 	}
 
 	initVoteFilters() {

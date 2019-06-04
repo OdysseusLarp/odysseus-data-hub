@@ -43,7 +43,8 @@ import { StaticScreenComponent } from '@components/static-screen/static-screen.c
 import { ShipLogSnackbarComponent } from '@components/ship-log-snackbar/ship-log-snackbar.component';
 import { ArtifactCreateComponent } from '@components/artifact-create/artifact-create.component';
 import { DurationPipe } from './pipes/duration.pipe';
-import { MatRadioModule } from '@angular/material';
+import { MatRadioModule, MatDialogModule } from '@angular/material';
+import { MessageDialogComponent } from '@components/message-dialog/message-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -71,6 +72,7 @@ import { MatRadioModule } from '@angular/material';
 		ShipLogSnackbarComponent,
 		ArtifactCreateComponent,
 		DurationPipe,
+		MessageDialogComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -88,10 +90,11 @@ import { MatRadioModule } from '@angular/material';
 		MatTabsModule,
 		MatSnackBarModule,
 		MatRadioModule,
+		MatDialogModule,
 		HttpClientModule,
 	],
 	providers: [StateService, MessagingService, AuthGuard, HttpClient],
 	bootstrap: [AppComponent],
-	entryComponents: [ShipLogSnackbarComponent],
+	entryComponents: [ShipLogSnackbarComponent, MessageDialogComponent],
 })
 export class AppModule {}

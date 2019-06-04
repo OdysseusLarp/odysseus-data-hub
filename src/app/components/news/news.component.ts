@@ -3,6 +3,7 @@ import { PostType } from '@components/shared/post-form/post-form.component';
 import * as PostApi from '@api/Post';
 import { get } from 'lodash';
 import { autobind } from 'core-decorators';
+import { DialogService } from '@services/dialog.service';
 
 @Component({
 	selector: 'app-news',
@@ -22,7 +23,7 @@ export class NewsComponent implements OnInit {
 		},
 	];
 
-	constructor() {}
+	constructor(private dialog: DialogService) {}
 
 	ngOnInit() {
 		this.fetchPosts();
@@ -39,6 +40,12 @@ export class NewsComponent implements OnInit {
 	@autobind
 	onSubmit(post) {
 		return PostApi.putPost(post).then(async res => {
+			this.dialog.info(
+				'Post submitted',
+				`Your ${post.type.toLowerCase()} post '${
+					post.title
+				}' was submitted to fleet for approval. Check back later!`
+			);
 			this.fetchPosts();
 			return res;
 		});

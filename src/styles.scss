@@ -384,6 +384,12 @@ ul.pager {
 	}
 }
 
+/* Dialog styling */
+mat-dialog-container {
+	background: transparent !important;
+	box-shadow: none !important;
+}
+
 /* Snackbar styling */
 .log-entry-snackbar {
 	background: linear-gradient(180deg, #010412 0%, #010412 45%, #011b2b 100%);

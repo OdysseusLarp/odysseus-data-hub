@@ -14,7 +14,7 @@
 						<p>Citizen ID: {{ person.citizen_id || 'Unknown' }}</p>
 						<p>Citizenship: {{ person.citizenship || 'Unknown' }}</p>
 						<p>Status: {{ person.status || 'Unknown' }}</p>
-						<p>Current location: {{ person.ship.name || 'Unknown' }}</p>
+						<p>Current location: {{ person.ship?.name || 'Unknown' }}</p>
 						<p>Social class: {{ person.social_class || 'Unknown' }}</p>
 						<p>Religion: {{ person.religion || 'Unknown' }}</p>
 						<p>Dynasty: {{ person.dynasty || 'Floater' }}</p>
@@ -51,11 +51,11 @@
 					<p><span class="subtitle">Blood type:</span> {{ person.medical_blood_type || 'None / Unknown' }}</p>
 					<div class="subtitle-wrapper">
 						<span class="subtitle">Allergies:</span>
-						<p markdown ngPreserveWhitespaces>{{ person.medical_allergies || 'None / Unknown' }}</p>
+						<p [innerHTML]="person.medical_allergies || 'None / Unknown' | markdown"></p>
 					</div>
 					<div class="subtitle-wrapper">
 						<span class="subtitle">Active conditions:</span>
-						<p markdown ngPreserveWhitespaces>{{ person.medical_active_conditions || 'None / Unknown' }}</p>
+						<p [innerHTML]="person.medical_active_conditions || 'None / Unknown' | markdown"></p>
 					</div>
 					<div>
 						<div class="subtitle-wrapper" *ngIf="militaryEntries.length">
@@ -83,7 +83,7 @@
 							<p><span class="subtitle">Rank:</span> {{ person.military_rank || 'Unknown' }}</p>
 							<div class="subtitle-wrapper">
 								<span class="subtitle">Remarks:</span>
-								<p markdown ngPreserveWhitespaces>{{ person.military_remarks || 'None / Unknown' }}</p>
+								<p [innerHTML]="person.military_remarks || 'None / Unknown' | markdown"></p>
 							</div>
 							<p *ngIf="person.military_service_history">Service history: {{ person.military_service_history }}</p>
 							<div class="subtitle-wrapper" *ngIf="militaryEntries.length">

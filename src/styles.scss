@@ -30,7 +30,12 @@ app-root {
 	color: white;
 }
 a {
-	color: #fff;
+	color: $bright-blue;
+	transition: color $transition-ms;
+	text-decoration: none;
+}
+a:hover {
+	color: $bright-yellow;
 }
 h1 {
 	font-family: 'Exo';
@@ -247,6 +252,11 @@ textarea:focus {
 	font-family: $data-font;
 	font-size: 13px;
 }
+.ng-select-focused {
+	outline: none;
+	transition-duration: $transition-ms;
+	box-shadow: 0px 0px 10px $dark-blue;
+}
 .ng-select:hover {
 	box-shadow: 0px 0px 10px $dark-blue;
 }
@@ -283,6 +293,21 @@ textarea:focus {
 
 .ng-select .ng-select-container {
 	color: $bright-blue !important;
+}
+
+.ng-select .ng-arrow-wrapper {
+	width: 17px;
+	box-sizing: border-box;
+}
+
+.ng-select .ng-arrow-wrapper .ng-arrow {
+	display: inline-block;
+	font-size: 18px;
+	line-height: 1;
+	vertical-align: middle;
+	border-color: $bright-blue transparent transparent !important;
+	border-style: solid !important;
+	border-width: 5px 5px 2.5px !important;
 }
 
 .dark-bg {

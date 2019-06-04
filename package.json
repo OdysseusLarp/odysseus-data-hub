@@ -7,6 +7,7 @@
 		"apigen": "openapi -s http://localhost:8888/api-docs.json -o ./src/app/api -l ts --semicolon",
 		"apigen:dev": "openapi -s https://odysseus.nicou.me/api-docs.json -o ./src/app/api -l ts --semicolon",
 		"build": "ng build --base-href /social/ --prod",
+		"precommit": "lint-staged",
 		"test": "ng test",
 		"lint": "ng lint",
 		"e2e": "ng e2e"
@@ -69,11 +70,11 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "lint-staged"
+			"pre-commit": "npm run precommit"
 		}
 	},
 	"lint-staged": {
-		"*.{js,ts,json,scss,md}": [
+		"*.{js,ts,json,scss,html,md}": [
 			"prettier --write",
 			"git add"
 		]

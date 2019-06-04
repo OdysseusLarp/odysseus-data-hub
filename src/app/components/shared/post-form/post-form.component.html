@@ -2,29 +2,32 @@
 	<h3>{{ title }}</h3>
 	<form [formGroup]="postForm" (ngSubmit)="onFormSubmit()" autocomplete="off">
 		<div class="grid-container" [ngClass]="{ 'no-title': !showTitleSelector }">
-			<div class="post_text">
-				<label for="text">Text</label>
-				<textarea id="text" formControlName="body"></textarea>
-			</div>
 			<div class="post_title">
 				<label for="title">Title</label>
-				<input type="text" placeholder="Title" id="title" formControlName="title" />
+				<input
+					type="text"
+					placeholder="Title"
+					id="title"
+					formControlName="title"
+				/>
 			</div>
 			<div class="post_type" *ngIf="showTitleSelector">
 				<label for="type">Type</label>
 				<ng-select
-				formControlName="type"
-				[items]="postTypes"
-				[searchable]="false"
-				[clearable]="false"
-				bindLabel="text"
-				bindValue="value"
-			>
-			</ng-select>
+					formControlName="type"
+					[items]="postTypes"
+					[searchable]="false"
+					[clearable]="false"
+					bindLabel="text"
+					bindValue="value"
+				>
+				</ng-select>
 			</div>
-			<div class="post_sub">
-				<button type="submit">Submit</button>
+			<div class="post_text">
+				<label for="text">Text</label>
+				<textarea id="text" formControlName="body"></textarea>
 			</div>
+			<div class="post_sub"><button type="submit">Submit</button></div>
 		</div>
 	</form>
 </div>

@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
 	user$: Subscription;
 	user: api.Person;
 	showHackingView$: Observable<boolean>;
+	isSocialHubEnabled$: Observable<boolean>;
 	canEnableHacking: boolean;
 	hackingTarget: string;
 
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit {
 	ngOnInit() {
 		this.user$ = this.state.user.subscribe(user => (this.user = user));
 		this.showHackingView$ = this.state.showHackingView;
+		this.isSocialHubEnabled$ = this.state.isSocialHubEnabled$;
 		this.state.canEnableHacking$.subscribe(async canEnableHacking => {
 			// Not sure why I had to make this async/await but I was getting errors otherwise
 			// https://github.com/angular/angular/issues/17572

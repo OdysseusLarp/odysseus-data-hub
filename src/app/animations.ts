@@ -6,7 +6,7 @@ export const fadeInAnimation = trigger('enterAnimation', [
 		animate('500ms', style({ opacity: 1 })),
 	]),
 	transition(':leave', [
-		style({ opacity: 1 }),
-		animate('500ms', style({ opacity: 0 })),
+		style({ opacity: 1, transform: 'scale(1)' }),
+		animate('500ms ease', style({ opacity: 0, transform: 'scale(1.2)' })),
 	]),
 ]);

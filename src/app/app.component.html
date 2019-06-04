@@ -1,15 +1,17 @@
-<div class="outer-padding" *ngIf="!(this.showHackingView$ | async)">
-	<div class="boxed exo" style="margin-bottom: 20px; color: #fff; font-size: 50px; line-height: 50px; font-weight: bold; padding: 3px 40px 3px 50px; display: flex; flex-direction: row; justify-content: space-between;">
-		<div style="margin-top:auto; margin-bottom:auto;">EOC DATAHUB</div>
-		<div style="line-height: 0px;">
-			<img src="assets/img/ui/arati_system_emblem_white.png" style="height: 90px;" />
+<div *ngIf="isSocialHubEnabled$ | async">
+	<div class="outer-padding" *ngIf="!(this.showHackingView$ | async)">
+		<div class="boxed exo" style="margin-bottom: 20px; color: #fff; font-size: 50px; line-height: 50px; font-weight: bold; padding: 3px 40px 3px 50px; display: flex; flex-direction: row; justify-content: space-between;">
+			<div style="margin-top:auto; margin-bottom:auto;">EOC DATAHUB</div>
+			<div style="line-height: 0px;">
+				<img src="assets/img/ui/arati_system_emblem_white.png" style="height: 90px;" />
+			</div>
+		</div>
+		<div class="host-wrapper" [ngClass]="{ 'login': !user }">
+			<app-sidebar *ngIf="user"></app-sidebar>
+			<div class="main-container"><router-outlet></router-outlet></div>
 		</div>
 	</div>
-	<div class="host-wrapper" [ngClass]="{ 'login': !user }">
-		<app-sidebar *ngIf="user"></app-sidebar>
-		<div class="main-container"><router-outlet></router-outlet></div>
-	</div>
+	<app-hacking *ngIf="this.showHackingView$ | async" [onCompletion]="onCompleteHacking" [@enterAnimation]></app-hacking>
+	<div *ngIf="this.canEnableHacking || (this.showHackingView$ | async) === true" class="hacking-launcher" (click)="toggleHacking()" title="{{ (this.showHackingView$ | async) ? 'Disable' : 'Enable' }} hacking mode">π</div>
 </div>
-
-<app-hacking *ngIf="this.showHackingView$ | async" [onCompletion]="onCompleteHacking" [@enterAnimation]></app-hacking>
-<div *ngIf="this.canEnableHacking || (this.showHackingView$ | async) === true" class="hacking-launcher" (click)="toggleHacking()" title="{{ (this.showHackingView$ | async) ? 'Disable' : 'Enable' }} hacking mode">π</div>
+<app-static-screen *ngIf="!(isSocialHubEnabled$ | async)"></app-static-screen>

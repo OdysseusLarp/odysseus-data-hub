@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { get } from 'lodash';
 import { getPersonCardId, getPersonId } from '@api/Person';
+import { getDataTypeId } from '@api/Data';
 
 @Injectable({
 	providedIn: 'root',
@@ -13,12 +15,18 @@ export class StateService {
 	hackingTarget$ = new BehaviorSubject(null);
 	showHackingView = new BehaviorSubject(false);
 	hasInitialized$ = new BehaviorSubject(false);
+	isSocialHubEnabled$ = new BehaviorSubject(true);
 
 	constructor() {
 		// Attempt to log in as previous user automatically
 		const previousUserId = this.sessionStorage.getItem('previousUserId');
 		if (previousUserId) this.login(previousUserId);
 		else this.hasInitialized$.next(true);
+
+		getDataTypeId('metadata', 'ship').then(res => {
+			const isEnabled = get(res, 'data.social_ui_enabled', true);
+			this.isSocialHubEnabled$.next(isEnabled);
+		});
 
 		// Handle logout
 		this.logout.subscribe(() => {

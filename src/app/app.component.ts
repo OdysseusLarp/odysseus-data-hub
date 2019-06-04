@@ -5,12 +5,14 @@ import { StateService } from '@services/state.service';
 import { MessagingService } from '@services/messaging.service';
 import { SocketService } from '@services/socket.service';
 import { ShipLogSnackbarComponent } from '@components/ship-log-snackbar/ship-log-snackbar.component';
+import { fadeInAnimation } from '@app/animations';
 import { autobind } from 'core-decorators';
 
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
+	animations: [fadeInAnimation],
 })
 export class AppComponent implements OnInit {
 	@ViewChild('snackbar') snackbarTemplate: TemplateRef<any>;

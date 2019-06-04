@@ -8,6 +8,7 @@ import {
 	Input,
 } from '@angular/core';
 import { StateService } from '@app/services/state.service';
+import { fadeInAnimation } from '@app/animations';
 
 // Cool matrix animation copied from:
 // https://code.sololearn.com/Wj7ZWBg5m2OG/?ref=app#html
@@ -18,6 +19,7 @@ const HACKING_PASSWORD_LENGTH = 15;
 	selector: 'app-hacking',
 	templateUrl: './hacking.component.html',
 	styleUrls: ['./hacking.component.scss'],
+	animations: [fadeInAnimation],
 })
 export class HackingComponent implements OnInit, OnDestroy {
 	@ViewChild('canvas') canvas: ElementRef;

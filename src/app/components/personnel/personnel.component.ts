@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import {
+	Component,
+	OnInit,
+	ViewChild,
+	TemplateRef,
+	ElementRef,
+} from '@angular/core';
 import * as PersonApi from '@api/Person';
 import { get, debounce, mapKeys, camelCase, pickBy } from 'lodash';
 import { autobind } from 'core-decorators';
@@ -14,6 +20,7 @@ import { first } from 'rxjs/operators';
 export class PersonnelComponent implements OnInit {
 	@ViewChild('nameTemplate') nameTemplate: TemplateRef<any>;
 	@ViewChild('shipTemplate') shipTemplate: TemplateRef<any>;
+	@ViewChild('tableContainer') tableContainer: ElementRef;
 	persons: api.Person[] = [];
 	page = 1;
 	pageSize = 21;
@@ -95,32 +102,55 @@ export class PersonnelComponent implements OnInit {
 			this.fetchPage(params);
 		});
 		this.fetchFilterValues();
+		this.setTableColumns();
+	}
+
+	onResize() {
+		this.setTableColumns();
+	}
+
+	setTableColumns() {
+		const fullWidth = this.tableContainer.nativeElement.offsetWidth;
 		const columnSettings = {
 			sortable: false,
 			resizeable: false,
 			canAutoResize: false,
 		};
+
+		// Ghetto responsiveness implementation since ngx-datatable flex functionality is even buggier
+		const getWidth = (percentage: number) =>
+			Math.floor((percentage / 100) * fullWidth);
 		this.columns = [
 			{
 				prop: 'full_name',
 				name: 'Name',
 				cellTemplate: this.nameTemplate,
-				width: 300,
+				width: getWidth(27),
 				...columnSettings,
 			},
-			{ prop: 'dynasty', name: 'Dynasty', ...columnSettings },
-			{ prop: 'home_planet', name: 'Home planet', ...columnSettings },
+			{
+				prop: 'dynasty',
+				name: 'Dynasty',
+				...columnSettings,
+				width: getWidth(12),
+			},
+			{
+				prop: 'home_planet',
+				name: 'Home planet',
+				...columnSettings,
+				width: getWidth(12),
+			},
 			{
 				prop: 'ship.name',
 				name: 'Current location',
 				cellTemplate: this.shipTemplate,
-				width: 200,
+				width: getWidth(16),
 				...columnSettings,
 			},
 			{
 				prop: 'status',
 				name: 'Status',
-				width: 350,
+				width: getWidth(26),
 				...columnSettings,
 			},
 		];

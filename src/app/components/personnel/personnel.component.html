@@ -6,9 +6,9 @@
 <ng-template let-row="row" let-value="value" #shipTemplate
 	><a *ngIf="row.ship" [routerLink]="['../fleet', row.ship.id]"
 		><strong>{{ value }}</strong></a
-	><span *ngIf="!row.ship">Unknown</span></ng-template
+	><span *ngIf="!row.ship">Unknown / None</span></ng-template
 >
-<div class="boxed">
+<div class="boxed table-container" (window:resize)="onResize()" #tableContainer>
 	<h1>Personnel database</h1>
 	<div class="filter-container dark-bg">
 		<h2>Filters</h2>

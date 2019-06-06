@@ -41,8 +41,6 @@ export class PersonnelDetailsComponent implements OnInit, OnDestroy {
 	private fetchPerson(id) {
 		getPersonId(id).then((res: api.Response<any>) => {
 			this.person = res.data;
-			// TODO: Replace single newlines with two newlines in seeds
-			// instead of here in frontend
 			const entries = get(this.person, 'entries', []).sort((a, b) =>
 				a.created_at > b.created_at ? 1 : -1
 			);
@@ -50,7 +48,9 @@ export class PersonnelDetailsComponent implements OnInit, OnDestroy {
 			this.personalEntries = entries.filter(e => e.type === 'PERSONAL');
 			this.militaryEntries = entries.filter(e => e.type === 'MILITARY');
 			const cardId = get(this.person, 'card_id');
-			this.state.canEnableHacking$.next(!!cardId);
+			this.state.canEnableHacking$.next(
+				!!cardId && this.state.user.getValue().id !== id
+			);
 		});
 	}
 

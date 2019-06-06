@@ -25,7 +25,7 @@ function getVotingMessage(allowedVoters) {
 		['HIGH_RANKING_OFFICER', 'high ranking military officers'],
 	]);
 	if (votingAllowedFor.has(allowedVoters))
-		return votingAllowedFor.get(snakeCase(allowedVoters));
+		return votingAllowedFor.get(allowedVoters);
 	if (allowedVoters.match(/^RELIGION:/))
 		return (
 			'followers of the ' +

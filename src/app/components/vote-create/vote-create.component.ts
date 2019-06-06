@@ -19,6 +19,13 @@ export const politicalParties = new Set([
 	'Sustainable Development Alliance',
 ]);
 
+// Same for religions
+export const religions = new Set([
+	'Old Ways',
+	'Other',
+	'Faith of the High Science',
+]);
+
 // Same for dynasties
 export const dynasties = new Set([
 	'Tenacity',
@@ -146,7 +153,7 @@ export class VoteCreateComponent implements OnInit {
 				text: `Members of the ${dynasty} dynasty`,
 			});
 		}
-		if (religion) {
+		if (religions.has(religion)) {
 			filters.push({
 				value: formatFilter('religion', religion),
 				text: `Followers of the ${religion} religion`,

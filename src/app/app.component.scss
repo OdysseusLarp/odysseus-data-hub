@@ -30,6 +30,7 @@
 	color: $blue;
 	transition: color $transition-ms;
 	cursor: pointer;
+	animation: hack-blinker 1s linear infinite;
 }
 
 .hacking-launcher:hover {
@@ -40,4 +41,10 @@ app-hacking {
 	position: fixed;
 	left: 0;
 	top: 0;
+}
+
+@keyframes hack-blinker {
+	50% {
+		color: $bright-blue;
+	}
 }

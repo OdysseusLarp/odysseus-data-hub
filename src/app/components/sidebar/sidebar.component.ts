@@ -28,4 +28,10 @@ export class SidebarComponent implements OnInit {
 		this.state.logout.next();
 		this.router.navigate(['/']);
 	}
+
+	openUserProfile() {
+		const user = this.state.user.getValue();
+		if (!user) return;
+		this.router.navigate(['/personnel', user.id]);
+	}
 }

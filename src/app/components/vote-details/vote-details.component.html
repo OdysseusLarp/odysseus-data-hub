@@ -2,20 +2,47 @@
 	<h1>Vote details</h1>
 	<div *ngIf="vote" class="dark-bg">
 		<h2>
-			{{ vote.title }} <span class="is-active" [ngClass]="{ 'voting-active': vote.is_active }">{{ vote.is_active ? 'voting active for' : 'voting ended' }} {{ vote.active_until | duration }}</span>
+			{{ vote.title }}
+			<span class="is-active" [ngClass]="{ 'voting-active': vote.is_active }"
+				>{{ vote.is_active ? 'voting active for' : 'voting ended' }}
+				{{ vote.active_until | duration }}</span
+			>
 		</h2>
+		<h3 *ngIf="votingAllowedFor">
+			<span *ngIf="votingAllowedFor === 'everyone'"
+				>Voting is not limited.</span
+			>
+			<span *ngIf="votingAllowedFor !== 'everyone'"
+				>Voting is limited to {{ votingAllowedFor }}.</span
+			>
+			<span
+				class="is-voting-allowed"
+				[ngClass]="{ 'is-allowed': isUserAllowedToVote }"
+			>
+				You are {{ isUserAllowedToVote ? '' : ' NOT' }} allowed to
+				participate.</span
+			>
+		</h3>
 		<h3>Initiated by {{ vote.author?.full_name }}</h3>
 		<p>{{ vote.description }}</p>
 		<h3>
-			Vote options ({{ vote.entries.length }} {{ pluralize('vote', vote.entries.length) }}<span *ngIf="vote.is_active"> so far</span>)
+			Vote options ({{ vote.entries.length }}
+			{{ pluralize('vote', vote.entries.length)
+			}}<span *ngIf="vote.is_active"> so far</span>)
 		</h3>
 		<form [formGroup]="voteForm" (ngSubmit)="onSubmit()">
 			<mat-radio-group class="vote-options-group" formControlName="option">
-				<mat-radio-button *ngFor="let option of vote.options" [value]="option.id">
+				<mat-radio-button
+					*ngFor="let option of vote.options"
+					[value]="option.id"
+				>
 					{{ option.text }} ({{ getVoteCount(option.id) }})
 				</mat-radio-button>
 			</mat-radio-group>
-			<button [disabled]="!voteForm.valid || submitting" *ngIf="vote.is_active">
+			<button
+				[disabled]="!voteForm.valid || submitting"
+				*ngIf="vote.is_active && isUserAllowedToVote"
+			>
 				{{ userVoteEntry ? 'You have already voted' : 'Vote' }}
 			</button>
 		</form>

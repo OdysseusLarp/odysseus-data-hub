@@ -1,16 +1,51 @@
 <div class="sidebar boxed">
-	<a [routerLinkActive]="['route-active']" routerLink="news"><img alt="news" src="assets/img/ui/news.svg" />News</a>
-	<a [routerLinkActive]="['route-active']" routerLink="communications/channel/general" [title]="(unseenMessagesCount$ | async) > 0 ? (unseenMessagesCount$ | async) + ' new messages' : 'No unread messages'"><img alt="comms" src="assets/img/ui/comms.svg" />Communications<span *ngIf="(unseenMessagesCount$ | async) > 0" class="unread-message-count blinking"></span></a>
-	<a [routerLinkActive]="['route-active']" routerLink="vote"><img alt="influence" src="assets/img/ui/influence.svg" />Influence</a>
-	<a [routerLinkActive]="['route-active']" routerLink="ship-log"><img alt="shiplog" src="assets/img/ui/shiplog.svg" />Ship log</a>
-	<a [routerLinkActive]="['route-active']" routerLink="personnel"><img alt="personnel" src="assets/img/ui/personnel.svg" />Personnel database</a>
-	<a [routerLinkActive]="['route-active']" routerLink="artifact"><img alt="artifact" src="assets/img/ui/artifact_database.svg" />Artifact database</a>
-	<a [routerLinkActive]="['route-active']" routerLink="fleet"><img alt="fleet" src="assets/img/ui/fleet.svg" />Fleet information</a>
-	<a [routerLinkActive]="['route-active']" routerLink="captains-log"><img alt="captain" src="assets/img/ui/captain.svg" />Captain's log</a>
-	<a [routerLinkActive]="['route-active']" routerLink="map"><img alt="starmap" src="assets/img/ui/starmap.svg" />Star Map</a>
-	<span>&nbsp;</span>
-	<span>&nbsp;</span>
+	<a [routerLinkActive]="['route-active']" routerLink="news"
+		><img alt="news" src="assets/img/ui/news.svg" />News</a
+	>
+	<a
+		[routerLinkActive]="['route-active']"
+		routerLink="communications/channel/general"
+		[title]="
+			(unseenMessagesCount$ | async) > 0
+				? (unseenMessagesCount$ | async) + ' new messages'
+				: 'No unread messages'
+		"
+		><img alt="comms" src="assets/img/ui/comms.svg"/>Communications<span
+			*ngIf="(unseenMessagesCount$ | async) > 0"
+			class="unread-message-count blinking"
+		></span
+	></a>
+	<a [routerLinkActive]="['route-active']" routerLink="vote"
+		><img alt="influence" src="assets/img/ui/influence.svg" />Influence</a
+	>
+	<a [routerLinkActive]="['route-active']" routerLink="ship-log"
+		><img alt="shiplog" src="assets/img/ui/shiplog.svg" />Ship log</a
+	>
+	<a [routerLinkActive]="['route-active']" routerLink="personnel"
+		><img alt="personnel" src="assets/img/ui/personnel.svg" />Personnel
+		database</a
+	>
+	<a [routerLinkActive]="['route-active']" routerLink="artifact"
+		><img alt="artifact" src="assets/img/ui/artifact_database.svg" />Artifact
+		database</a
+	>
+	<a [routerLinkActive]="['route-active']" routerLink="fleet"
+		><img alt="fleet" src="assets/img/ui/fleet.svg" />Fleet information</a
+	>
+	<a [routerLinkActive]="['route-active']" routerLink="captains-log"
+		><img alt="captain" src="assets/img/ui/captain.svg" />Captain's log</a
+	>
+	<a [routerLinkActive]="['route-active']" routerLink="map"
+		><img alt="starmap" src="assets/img/ui/starmap.svg" />Star Map</a
+	>
+	<span>&nbsp;</span> <span>&nbsp;</span>
 	<p>Logged in as:</p>
-	<p class="user-name">{{ (user$ | async).full_name }}</p>
-	<span class="logout_b"><a (click)="onLogout()"><img alt="logout" src="assets/img/ui/logout.svg"/>Log out</a></span>
+	<p class="user-name" (click)="openUserProfile()">
+		{{ (user$ | async).full_name }}
+	</p>
+	<span class="logout_b"
+		><a (click)="onLogout()"
+			><img alt="logout" src="assets/img/ui/logout.svg" />Log out</a
+		></span
+	>
 </div>

@@ -2,10 +2,61 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { get } from 'lodash';
+import { get, snakeCase } from 'lodash';
 import { StateService } from '@app/services/state.service';
 import { DialogService } from '@app/services/dialog.service';
 import { putVoteCreate } from '@api/Vote';
+
+export function formatFilter(key: string, value: string) {
+	return `${key}:${snakeCase(value)}`.toUpperCase();
+}
+
+// Political party whitelist to filter out 'None' and 'Other' etc from data
+export const politicalParties = new Set([
+	'The Democratic Pluralist Party',
+	'Ellarion Centrist Party',
+	'Association for Spiritual Technology',
+	'Sustainable Development Alliance',
+]);
+
+// Same for dynasties
+export const dynasties = new Set([
+	'Tenacity',
+	'Logic',
+	'Generosity',
+	'Confidence',
+	'Loyalty',
+	'Unity',
+	'Purity',
+	'Tranquility',
+	'Defiance',
+	'Kindness',
+	'Dedication',
+	'Intelligence',
+	'Compassion',
+	'Strength',
+	'Justice',
+	'Excellence',
+	'Mercy',
+	'Floater',
+	'Fairness',
+	'Hope',
+	'Industry',
+	'Ambition',
+]);
+
+// Ranks that are considered high military ranks
+export const highMilitaryRanks = new Set([
+	'Lieutenant',
+	'Junior Grade',
+	'Lieutenant',
+	'Commander-Lieutenant',
+	'Commander-Captain',
+	'Commander',
+	'Commodore',
+	'Vice Admiral',
+	'Admiral',
+]);
 
 @Component({
 	selector: 'app-vote-create',
@@ -69,26 +120,48 @@ export class VoteCreateComponent implements OnInit {
 	}
 
 	initVoteFilters() {
-		// TODO: Add vote filters depending on groups of current user
+		if (!this.state.user.getValue()) return;
+		const {
+			citizenship,
+			dynasty,
+			religion,
+			political_party,
+			military_rank,
+		} = this.state.user.getValue();
 		const filters = [
 			{
 				value: 'EVERYONE',
 				text: 'Everyone',
 			},
-			{
+		];
+		if (citizenship === 'Full citizenship') {
+			filters.push({
 				value: 'FULL_CITIZENSHIP',
 				text: 'Those with full citizenship status',
-			},
-			{
+			});
+		}
+		if (dynasty && dynasties.has(dynasty)) {
+			filters.push({
+				value: formatFilter('dynasty', dynasty),
+				text: `Members of the ${dynasty} dynasty`,
+			});
+		}
+		if (religion) {
+			filters.push({
+				value: formatFilter('religion', religion),
+				text: `Followers of the ${religion} religion`,
+			});
+		}
+		if (politicalParties.has(political_party)) {
+			filters.push({
+				value: formatFilter('party', political_party),
+				text: `Members of the ${political_party}`,
+			});
+		}
+		if (highMilitaryRanks.has(military_rank)) {
+			filters.push({
 				value: 'HIGH_RANKING_OFFICER',
 				text: 'High ranking military officers',
-			},
-		];
-		const userDynasty = get(this.state.user.getValue(), 'dynasty');
-		if (userDynasty) {
-			filters.push({
-				value: `DYNASTY:${userDynasty.toUpperCase()}`,
-				text: `Members of the ${userDynasty} dynasty`,
 			});
 		}
 		this.voteFilters = filters;

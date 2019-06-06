@@ -11,6 +11,20 @@ h3 {
 	margin-bottom: 6px;
 }
 
+h4 {
+	font-family: 'Exo';
+	font-size: 14px;
+	margin: 0;
+}
+
+.is-voting-allowed {
+	float: right;
+	color: lighten($error-color, 30%);
+}
+.is-voting-allowed.is-allowed {
+	color: lighten($success-color, 30%);
+}
+
 button {
 	font-size: 1.3em;
 	padding: 5px 20px;

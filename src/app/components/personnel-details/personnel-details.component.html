@@ -1,3 +1,10 @@
+<ng-template #accessDenied>
+	<div class="person-container">
+		<h2 class="tab-title access-denied">Access denied</h2>
+		<p>Your access to this section is denied due to insufficient privileges.</p>
+	</div>
+</ng-template>
+
 <div class="boxed">
 	<div *ngIf="person && person.is_visible">
 		<h1>
@@ -48,7 +55,10 @@
 				</div>
 			</mat-tab>
 			<mat-tab label="Medical file">
-				<div class="person-container">
+				<div
+					class="person-container"
+					*ngIf="permission.has('role:medic'); else accessDenied"
+				>
 					<h2 class="tab-title">Medical file</h2>
 					<p>
 						<span class="subtitle">Birth year:</span>
@@ -110,7 +120,10 @@
 				</div>
 			</mat-tab>
 			<mat-tab label="Military file">
-				<div class="person-container">
+				<div
+					class="person-container"
+					*ngIf="permission.has('role:security'); else accessDenied"
+				>
 					<h2 class="tab-title">Military file</h2>
 					<p>
 						<span class="subtitle">Rank:</span>
@@ -152,7 +165,10 @@
 				</div>
 			</mat-tab>
 			<mat-tab label="Personal file">
-				<div class="person-container">
+				<div
+					class="person-container"
+					*ngIf="permission.has('role:security'); else accessDenied"
+				>
 					<div *ngIf="personalEntries.length">
 						<h2>Personal history</h2>
 						<p

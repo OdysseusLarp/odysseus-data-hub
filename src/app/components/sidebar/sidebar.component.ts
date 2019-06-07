@@ -3,6 +3,7 @@ import { StateService } from '@app/services/state.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { MessagingService } from '@services/messaging.service';
+import { PermissionService } from '@app/services/permission.service';
 
 @Component({
 	selector: 'app-sidebar',
@@ -16,7 +17,8 @@ export class SidebarComponent implements OnInit {
 	constructor(
 		private state: StateService,
 		private router: Router,
-		private messaging: MessagingService
+		private messaging: MessagingService,
+		public permission: PermissionService
 	) {}
 
 	ngOnInit() {

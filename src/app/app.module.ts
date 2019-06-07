@@ -15,7 +15,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AuthGuard, routes } from './routes';
+import { AuthGuard, PermissionGuard, routes } from './routes';
 
 import { AppComponent } from './app.component';
 import { NewsComponent } from '@components/news/news.component';
@@ -93,7 +93,13 @@ import { MessageDialogComponent } from '@components/message-dialog/message-dialo
 		MatDialogModule,
 		HttpClientModule,
 	],
-	providers: [StateService, MessagingService, AuthGuard, HttpClient],
+	providers: [
+		StateService,
+		MessagingService,
+		AuthGuard,
+		PermissionGuard,
+		HttpClient,
+	],
 	bootstrap: [AppComponent],
 	entryComponents: [ShipLogSnackbarComponent, MessageDialogComponent],
 })

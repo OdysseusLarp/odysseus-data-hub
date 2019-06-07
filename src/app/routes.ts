@@ -23,6 +23,8 @@ import { FleetComponent } from '@app/components/fleet/fleet.component';
 import { FleetDetailsComponent } from '@app/components/fleet-details/fleet-details.component';
 import { VoteCreateComponent } from '@app/components/vote-create/vote-create.component';
 import { StateService } from '@app/services/state.service';
+import { PermissionService } from '@app/services/permission.service';
+import { DialogService } from '@app/services/dialog.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -35,6 +37,36 @@ export class AuthGuard implements CanActivate {
 				const isLoggedIn = !!this.state.user.getValue();
 				if (!isLoggedIn) this.router.navigate(['/']);
 				return isLoggedIn;
+			})
+		);
+	}
+}
+
+@Injectable()
+export class PermissionGuard implements CanActivate {
+	constructor(
+		private state: StateService,
+		private permission: PermissionService,
+		private dialog: DialogService,
+		private router: Router
+	) {}
+
+	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+		return this.state.hasInitialized$.pipe(
+			first(Boolean),
+			map(() => {
+				let neededPermission;
+				if (state.url.match(/^\/captains-log/))
+					neededPermission = 'role:captain';
+				if (state.url.match(/^\/artifact/)) neededPermission = 'role:science';
+				if (!neededPermission) return false;
+				const isAllowed = this.permission.has(neededPermission);
+				if (!isAllowed)
+					this.dialog.error(
+						'Access denied',
+						'Your access to this section is denied due to insufficient privileges.'
+					);
+				return isAllowed;
 			})
 		);
 	}
@@ -53,7 +85,11 @@ export const routes: Routes = [
 		component: PersonnelDetailsComponent,
 		canActivate: [AuthGuard],
 	},
-	{ path: 'artifact', component: ArtifactsComponent, canActivate: [AuthGuard] },
+	{
+		path: 'artifact',
+		component: ArtifactsComponent,
+		canActivate: [AuthGuard, PermissionGuard],
+	},
 	{
 		path: 'artifact/:id',
 		component: ArtifactDetailsComponent,
@@ -90,7 +126,7 @@ export const routes: Routes = [
 	{
 		path: 'captains-log',
 		component: CaptainsLogComponent,
-		canActivate: [AuthGuard],
+		canActivate: [AuthGuard, PermissionGuard],
 	},
 	{
 		path: 'map',

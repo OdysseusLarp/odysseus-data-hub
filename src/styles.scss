@@ -351,6 +351,12 @@ ul.pager {
 	background: $bright-blue;
 }
 
+.mat-tab-label.mat-tab-disabled,
+.mat-tab-link.mat-tab-disabled {
+	color: #888;
+	cursor: not-allowed;
+}
+
 // Starmap box closer
 .box-closer {
 	cursor: pointer;

@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { getPersonId, postPersonIdEntry } from '@api/Person';
 import { get } from 'lodash';
 import { StateService } from '@app/services/state.service';
+import { PermissionService } from '@app/services/permission.service';
 
 @Component({
 	selector: 'app-personnel-details',
@@ -24,7 +25,11 @@ export class PersonnelDetailsComponent implements OnInit, OnDestroy {
 	medicalEntries: api.Entry[] = [];
 	personalEntries: api.Entry[] = [];
 	militaryEntries: api.Entry[] = [];
-	constructor(private route: ActivatedRoute, private state: StateService) {}
+	constructor(
+		private route: ActivatedRoute,
+		private state: StateService,
+		private permission: PermissionService
+	) {}
 
 	ngOnInit() {
 		this.route.params.subscribe(({ id }) => {
@@ -49,7 +54,10 @@ export class PersonnelDetailsComponent implements OnInit, OnDestroy {
 			this.militaryEntries = entries.filter(e => e.type === 'MILITARY');
 			const cardId = get(this.person, 'card_id');
 			this.state.canEnableHacking$.next(
-				!!cardId && this.state.user.getValue().id !== id
+				this.permission.has('role:hacker') && // need to be a hacker to hack
+				!!cardId && // target must have a card_id
+				this.state.user.getValue().id !== id && // can't hack self
+					!this.permission.has('role:admin', this.person) // can't hack admins
 			);
 		});
 	}

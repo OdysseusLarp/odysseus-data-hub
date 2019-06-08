@@ -1,10 +1,12 @@
-<ng-scrollbar class="boxed custom-scrollbar" style="margin: 0px 0px 20px 0px; max-height: 500px;">
-  <hr />
-  <h1>Captain's log</h1>
-  <app-post-item *ngFor="let post of posts" [post]="post"></app-post-item>
+<ng-scrollbar
+	class="boxed custom-scrollbar"
+	style="margin: 0px 0px 20px 0px; max-height: 500px;"
+>
+	<h1>Captain's log</h1>
+	<app-post-item *ngFor="let post of posts" [post]="post"></app-post-item>
 </ng-scrollbar>
 <div class="boxed">
-  <app-post-form
+	<app-post-form
 		[onSubmit]="onSubmit"
 		[postTypes]="postTypes"
 		title="Add a captain's log entry"

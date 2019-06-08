@@ -40,6 +40,8 @@ a:hover {
 h1 {
 	font-family: 'Exo';
 	font-size: 30px;
+	margin-top: 8px;
+	margin-bottom: 16px;
 }
 h2 {
 	font-family: 'Exo';
@@ -96,7 +98,7 @@ textarea:focus {
 	padding: 10px 15px;
 }
 .boxed {
-	padding: 15px;
+	padding: 5px 15px 10px 15px;
 	border: 3px solid $blue;
 	background-image: url('assets/img/ui/liukuvari2.jpg');
 	background-size: cover;
@@ -144,11 +146,11 @@ textarea:focus {
 		transition-duration: $transition-ms;
 
 		img {
-			margin-left: 8px;
+			margin-left: 12px;
 			flex-shrink: 0;
 			width: 50px;
 			max-height: 50px;
-			margin-right: 25px;
+			margin-right: 15px;
 		}
 	}
 
@@ -202,6 +204,10 @@ textarea:focus {
 		font-size: 1em;
 		color: $bright-yellow;
 	}
+}
+
+.sidebar.boxed {
+	padding: 0px;
 }
 
 .logout_b {

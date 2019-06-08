@@ -2,10 +2,10 @@
 	<div>
 		<h1>Communications</h1>
 		<h2 *ngIf="chatView.type === 'private'">
-			Private messaging with {{ chatView?.targetPerson?.full_name }}
+			Private EEP messaging with {{ chatView?.targetPerson?.full_name }}
 		</h2>
 		<h2 *ngIf="isEmpty(chatView)">
-			End-to-end encrypted private messaging system
+			End-to-end encrypted private messaging system (EEP)
 		</h2>
 	</div>
 	<div class="com-wrapper">
@@ -16,7 +16,10 @@
 					<strong>{{ message.sender.full_name }}</strong
 					>: {{ message.message }}
 				</p>
-				<p *ngIf="isEmpty(chatView)">// No contact selected</p>
+				<p *ngIf="isEmpty(chatView)">
+					// No contact selected<br /><br />
+					// Select a contact to send an EEP
+				</p>
 			</div>
 			<div class="message-box">
 				<form

@@ -1,5 +1,10 @@
 <div class="boxed">
-	<h1>Fleet database</h1>
+	<h1>
+		<span>Ship database</span
+		><span class="total-souls" *ngIf="totalSouls"
+			>Total souls alive: {{ totalSouls }}</span
+		>
+	</h1>
 	<table class="dark-bg">
 		<thead>
 			<tr>
@@ -17,6 +22,14 @@
 				<td>{{ ship.status }}</td>
 				<td>{{ ship.type }}</td>
 				<td>{{ ship.person_count || 0 }}</td>
+			</tr>
+			<tr *ngIf="totalSouls">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td>
+					<strong>{{ totalSouls }} total</strong>
+				</td>
 			</tr>
 		</tbody>
 	</table>

@@ -191,8 +191,10 @@ export class MessagingService {
 		}
 	}
 
-	private onUserListReceived(userList) {
-		this.users.next(userList);
+	private onUserListReceived(userList: api.Person[]) {
+		this.users.next(
+			(userList || []).sort((a, b) => (a.first_name > b.first_name ? 1 : -1))
+		);
 	}
 
 	private onLatestMessagesReceived(response) {

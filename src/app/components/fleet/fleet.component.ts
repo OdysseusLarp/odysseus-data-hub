@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { get } from 'lodash';
 import * as FleetApi from '@api/Fleet';
 
 @Component({
@@ -8,10 +9,17 @@ import * as FleetApi from '@api/Fleet';
 })
 export class FleetComponent implements OnInit {
 	fleet: api.Ship[];
+	totalSouls = 0;
 
 	constructor() {}
 
 	ngOnInit() {
-		FleetApi.getFleet().then(res => (this.fleet = res.data));
+		FleetApi.getFleet().then(res => {
+			this.fleet = res.data;
+			this.totalSouls = (res.data || []).reduce(
+				(p, n) => p + parseInt(get(n, 'person_count', '0'), 10),
+				0
+			);
+		});
 	}
 }

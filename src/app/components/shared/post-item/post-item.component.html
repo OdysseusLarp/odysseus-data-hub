@@ -1,8 +1,12 @@
-<hr />
 <div>
-	<h2>{{ getPostType() }}{{ post.title }} </h2>
+	<h2>{{ getPostType() }}{{ post.title }}</h2>
 	<span class="post_author exo"
-		>By <a [routerLink]="['/personnel', post.author.id]">{{ post.author.full_name }}</a>, {{ postAge }} ago</span
+		>By
+		<a [routerLink]="['/personnel', post.author.id]">{{
+			post.author.full_name
+		}}</a
+		>, {{ postAge }} ago</span
 	>
 	<div class="post_body" [innerHTML]="post.body | markdown"></div>
 </div>
+<hr />

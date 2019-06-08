@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { get, snakeCase } from 'lodash';
+import { get, snakeCase, startCase } from 'lodash';
 import { StateService } from '@app/services/state.service';
 import { DialogService } from '@app/services/dialog.service';
 import { putVoteCreate } from '@api/Vote';
@@ -135,6 +135,7 @@ export class VoteCreateComponent implements OnInit {
 			political_party,
 			military_rank,
 		} = this.state.user.getValue();
+		const ship = get(this.state.user.getValue(), 'ship.id');
 		const filters = [
 			{
 				value: 'EVERYONE',
@@ -145,6 +146,12 @@ export class VoteCreateComponent implements OnInit {
 			filters.push({
 				value: 'FULL_CITIZENSHIP',
 				text: 'Those with full citizenship status',
+			});
+		}
+		if (ship) {
+			filters.push({
+				value: formatFilter('ship', ship),
+				text: `Those aboard the ship ${startCase(ship)}`,
 			});
 		}
 		if (dynasty && dynasties.has(dynasty)) {

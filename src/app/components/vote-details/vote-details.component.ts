@@ -43,6 +43,10 @@ function getVotingMessage(allowedVoters) {
 			'members of the ' +
 			startCase(snakeCase(allowedVoters.replace(/^PARTY:/, '')))
 		);
+	if (allowedVoters.match(/^SHIP:/))
+		return `those aboard the ship ${startCase(
+			snakeCase(allowedVoters.replace(/^SHIP:/, ''))
+		)}`;
 }
 
 @Component({
@@ -134,6 +138,7 @@ export class VoteDetailsComponent implements OnInit, OnDestroy {
 		const userReligion = formatFilter('religion', religion);
 		const userDynasty = formatFilter('dynasty', dynasty);
 		const userPoliticalParty = formatFilter('party', political_party);
+		const userShip = formatFilter('ship', get(user, 'ship.id'));
 
 		this.isUserAllowedToVote = [
 			allowedVoters === 'EVERYONE',
@@ -141,6 +146,7 @@ export class VoteDetailsComponent implements OnInit, OnDestroy {
 				citizenship === 'Full citizenship',
 			allowedVoters === 'HIGH_RANKING_OFFICER' &&
 				highMilitaryRanks.has(military_rank),
+			userShip === allowedVoters,
 			userReligion === allowedVoters,
 			userDynasty === allowedVoters,
 			userPoliticalParty === allowedVoters,

@@ -10,7 +10,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MessagingService } from '@app/services/messaging.service';
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { get } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 import { StateService } from '@app/services/state.service';
@@ -42,6 +42,7 @@ export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 	currentUser: api.Person;
 	currentUser$: Subscription;
 	chatView: ChatView;
+	isEmpty = isEmpty;
 
 	constructor(
 		private messaging: MessagingService,
@@ -68,6 +69,7 @@ export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 			}
 			this.chatView = chatView;
 			this.messaging.chatViewChanged(chatView);
+			console.log('loaded route', this.chatView, isEmpty(this.chatView));
 		});
 
 		this.filterForm.valueChanges.subscribe(({ userFilter }) => {
@@ -116,7 +118,8 @@ export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 	onSubmit() {
 		const { message } = this.messageForm.value,
 			{ target, type } = this.chatView;
-		this.messaging.sendMessage({ message, target, type });
+		if (!target || !message) return;
+		this.messaging.sendMessage({ message: message.trim(), target, type });
 		this.messageForm.patchValue({ message: '' });
 	}
 

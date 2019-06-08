@@ -5,7 +5,7 @@ import { environment } from '@env/environment';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import * as io from 'socket.io-client/dist/socket.io';
-import { get, isEqual, forIn, debounce } from 'lodash';
+import { get, isEqual, forIn, debounce, isEmpty } from 'lodash';
 import {
 	ChatView,
 	OutgoingMessage,
@@ -76,8 +76,11 @@ export class MessagingService {
 		const { target } = chatView;
 
 		// Load messages from cache if they exist, otherwise fetch them
-		if (!this.messageCache.has(target)) this.fetchHistory(chatView);
-		else {
+		if (!isEmpty(chatView) && !this.messageCache.has(target))
+			this.fetchHistory(chatView);
+		else if (isEmpty(chatView)) {
+			this.messages.next([]);
+		} else {
 			this.messages.next(this.messageCache.get(target));
 			// If there are any unread messages, mark them as read now
 			if (this.unseenMessages.has(target)) this.markMessagesSeen(target);
@@ -138,7 +141,7 @@ export class MessagingService {
 		});
 	}
 
-	private onMessageReceived(message) {
+	private onMessageReceived(message: api.ComMessage) {
 		// Figure out what "conversation" the received message is part of
 		let target, type;
 		if (message.target_person === this.user.id) {
@@ -152,13 +155,21 @@ export class MessagingService {
 			(target = message.target_channel), (type = 'channel');
 		}
 
+		// See if the sender/receiver is in the users list, if not, fetch users
+		const isUserVisible = !!this.users
+			.getValue()
+			.find(
+				u =>
+					u.id ===
+					(message.person_id === this.user.id
+						? message.target_person
+						: message.person_id)
+			);
+		if (!isUserVisible) this.socket.emit('getUserList');
+
 		// Up the unseen count unless current user is the sender
 		if (message.person_id !== this.user.id) {
 			// If sender is not on the contact list, refetch contacts
-			const isUserVisible = !!this.users
-				.getValue()
-				.find(u => u.id === message.person_id);
-			if (!isUserVisible) this.socket.emit('getUserList');
 			const currentlyUnseen = this.unseenMessages.get(target) || 0;
 			this.unseenMessages.set(target, currentlyUnseen + 1);
 		}

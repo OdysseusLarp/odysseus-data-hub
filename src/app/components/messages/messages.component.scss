@@ -1,7 +1,20 @@
 @import '../../scrollbar.scss';
+@import '../../../variables';
 
 :host {
 	display: block;
+}
+
+h1 {
+	margin-bottom: 0;
+}
+
+h2 {
+	margin-top: 5px;
+}
+
+.boxed {
+	padding-right: 0px;
 }
 
 .active {
@@ -25,19 +38,21 @@
 		overflow-x: hidden;
 		background-color: rgba(0, 0, 0, 0.3);
 		border: 1px solid #00c5c8;
+		padding: 5px;
 		p {
 			margin: 4px;
 		}
 	}
 
 	.user-list {
-		margin: 0 15px;
+		margin: 0 8px;
 		input {
 			margin-bottom: 10px;
 			box-sizing: border-box;
 			width: 100%;
 		}
 		ul {
+			width: 100%;
 			margin: 0;
 			padding: 0;
 		}
@@ -45,12 +60,7 @@
 			list-style: none;
 			padding: 6px;
 			vertical-align: middle;
-		}
-		li:nth-child(even) {
-			background: #333;
-		}
-		li:nth-child(odd) {
-			background: #222;
+			font-size: 0.8em;
 		}
 
 		a {
@@ -58,13 +68,13 @@
 		}
 
 		.status-circle {
-			width: 18px;
-			height: 18px;
-			line-height: 18px;
+			width: 12px;
+			height: 12px;
+			line-height: 12px;
 			box-sizing: border-box;
 			border-radius: 50%;
 			display: inline-block;
-			margin-right: 5px;
+			margin-right: 1px;
 			background: #ccc;
 			text-align: center;
 			vertical-align: middle;
@@ -73,12 +83,15 @@
 			background: #34df00;
 		}
 		.unseen-message-count {
-			float: right;
-			background: #f00;
+			background: $error-color;
 			color: #fff;
-			font-size: 0.9em;
+			text-shadow: 1px 1px 1px #000;
+			font-size: 1em;
 			font-weight: bold;
 			border-radius: 10%;
+			width: 16px;
+			height: 16px;
+			line-height: 16px;
 		}
 
 		ng-scrollbar {
@@ -94,6 +107,8 @@
 			flex-direction: row;
 			input {
 				width: 100%;
+				padding-left: 10px;
+				margin-right: 10px;
 			}
 		}
 	}

@@ -1,79 +1,69 @@
 <div class="boxed">
-<div>
-	<h1>Communications</h1>
-	<h2 *ngIf="chatView.type === 'private'">
-		Messaging with person {{ chatView?.targetPerson?.full_name }}
-	</h2>
-	<h2 *ngIf="chatView.type === 'channel'">Messaging channel #{{ chatView?.target }}</h2>
-</div>
-<div class="com-wrapper">
 	<div>
-		<div class="messages" ngx-auto-scroll #chatMessages>
-			<p *ngFor="let message of (message$ | async)">
-				[{{ formatTimestamp(message.created_at) }}]
-				<strong>{{ message.sender.full_name }}</strong
-				>: {{ message.message }}
-			</p>
+		<h1>Communications</h1>
+		<h2 *ngIf="chatView.type === 'private'">
+			Private messaging with {{ chatView?.targetPerson?.full_name }}
+		</h2>
+		<h2 *ngIf="isEmpty(chatView)">
+			End-to-end encrypted private messaging system
+		</h2>
+	</div>
+	<div class="com-wrapper">
+		<div>
+			<div class="messages" ngx-auto-scroll #chatMessages>
+				<p *ngFor="let message of (message$ | async)">
+					[{{ formatTimestamp(message.created_at) }}]
+					<strong>{{ message.sender.full_name }}</strong
+					>: {{ message.message }}
+				</p>
+				<p *ngIf="isEmpty(chatView)">// No contact selected</p>
+			</div>
+			<div class="message-box">
+				<form
+					[formGroup]="messageForm"
+					(ngSubmit)="onSubmit()"
+					*ngIf="chatView && chatView.target"
+				>
+					<input
+						type="text"
+						placeholder="Your message here..."
+						formControlName="message"
+						autofocus
+					/>
+					<button>Send</button>
+				</form>
+			</div>
 		</div>
-		<div class="message-box">
-			<form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
-				<input type="text" placeholder="Type here..." formControlName="message" />&nbsp;
-				<button> Send&nbsp;message </button>
+		<div class="user-list">
+			<h2>Contacts</h2>
+			<form [formGroup]="filterForm">
+				<input
+					type="text"
+					placeholder="Search by name"
+					formControlName="userFilter"
+				/>
 			</form>
+			<ng-scrollbar class="custom-scrollbar">
+				<ul>
+					<li *ngFor="let user of (users$ | async)">
+						<span class="status-circle" [ngClass]="{ online: user.is_online }"
+							>&nbsp;</span
+						>
+						<a
+							routerLink="/communications/private/{{ user.id }}"
+							routerLinkActive="active"
+						>
+							{{ user.full_name }}
+						</a>
+						<span
+							class="status-circle unseen-message-count"
+							*ngIf="user.unseen_message_count"
+						>
+							{{ user.unseen_message_count }}
+						</span>
+					</li>
+				</ul>
+			</ng-scrollbar>
 		</div>
 	</div>
-	<div class="user-list">
-		<h2>Channels</h2>
-		<ul>
-			<li>
-				<a
-					routerLink="/communications/channel/general"
-					routerLinkActive="active"
-					>#general</a
-				>
-			</li>
-			<li>
-				<a
-					routerLink="/communications/channel/engineers"
-					routerLinkActive="active"
-					>#engineers</a
-				>
-			</li>
-			<li>
-				<a routerLink="/communications/channel/medics" routerLinkActive="active"
-					>#medics</a
-				>
-			</li>
-		</ul>
-		<h2>Users</h2>
-		<form [formGroup]="filterForm">
-			<input
-				type="text"
-				placeholder="Search for personnel"
-				formControlName="userFilter"
-			/>
-		</form>
-		<ng-scrollbar class="custom-scrollbar">
-			<ul>
-				<li *ngFor="let user of (users$ | async)">
-					<span class="status-circle" [ngClass]="{ online: user.is_online }"
-						>&nbsp;</span
-					>
-					<a
-						routerLink="/communications/private/{{ user.id }}"
-						routerLinkActive="active"
-					>
-						{{ user.full_name }}
-					</a>
-					<span
-						class="status-circle unseen-message-count"
-						*ngIf="user.unseen_message_count"
-					>
-						{{ user.unseen_message_count }}
-					</span>
-				</li>
-			</ul>
-		</ng-scrollbar>
-	</div>
-</div>
 </div>

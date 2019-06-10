@@ -1,0 +1,45 @@
+<div>
+	<h1>Odysseus phone</h1>
+	<div>
+		<label>Self</label>
+		<ng-select
+			[(ngModel)]="selfId"
+			[items]="sip.sipContacts"
+			[searchable]="false"
+			[clearable]="true"
+			bindLabel="name"
+			(change)="initSelf()"
+			bindValue="id"
+		></ng-select>
+	</div>
+	<div>
+		<label>Target contact</label>
+		<ng-select
+			[(ngModel)]="targetId"
+			[items]="sip.sipContacts"
+			[searchable]="false"
+			[clearable]="true"
+			bindLabel="name"
+			bindValue="id"
+		></ng-select>
+		<button type="button" (click)="call()" *ngIf="targetId">Make call</button>
+	</div>
+	<video #video></video> <audio controls="controls" #audio></audio>
+	<button *ngIf="sip.sessions.length" type="button" (click)="hangUp()">
+		Hang up
+	</button>
+
+	<div *ngIf="sip.incomingCalls.length">
+		<h2>Incoming calls</h2>
+		<p *ngFor="let call of sip.incomingCalls; let i = index">
+			<button (click)="sip.answerCall(i)" type="button">
+				Answer call from {{ call.caller.name }}
+			</button>
+		</p>
+	</div>
+	<div>
+		<button type="button" (click)="unregister()" *ngIf="selfId">
+			Unregister this client
+		</button>
+	</div>
+</div>

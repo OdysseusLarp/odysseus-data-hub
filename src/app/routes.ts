@@ -25,6 +25,7 @@ import { VoteCreateComponent } from '@app/components/vote-create/vote-create.com
 import { StateService } from '@app/services/state.service';
 import { PermissionService } from '@app/services/permission.service';
 import { DialogService } from '@app/services/dialog.service';
+import { PhoneComponent } from './components/phone/phone.component';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -74,6 +75,7 @@ export class PermissionGuard implements CanActivate {
 
 export const routes: Routes = [
 	{ path: '', component: LoginComponent },
+	{ path: 'phone', component: PhoneComponent },
 	{ path: 'news', component: NewsComponent, canActivate: [AuthGuard] },
 	{
 		path: 'personnel',

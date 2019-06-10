@@ -45,6 +45,7 @@ import { ArtifactCreateComponent } from '@components/artifact-create/artifact-cr
 import { DurationPipe } from './pipes/duration.pipe';
 import { MatRadioModule, MatDialogModule } from '@angular/material';
 import { MessageDialogComponent } from '@components/message-dialog/message-dialog.component';
+import { PhoneComponent } from './components/phone/phone.component';
 
 @NgModule({
 	declarations: [
@@ -73,6 +74,7 @@ import { MessageDialogComponent } from '@components/message-dialog/message-dialo
 		ArtifactCreateComponent,
 		DurationPipe,
 		MessageDialogComponent,
+		PhoneComponent,
 	],
 	imports: [
 		BrowserModule,

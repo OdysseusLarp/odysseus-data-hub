@@ -63,6 +63,7 @@ export class PermissionGuard implements CanActivate {
 				if (state.url.match(/^\/config/)) neededPermission = 'role:admin';
 				if (!neededPermission) return false;
 				const isAllowed = this.permission.has(neededPermission);
+				console.log('isAllowed? =>', isAllowed);
 				if (!isAllowed)
 					this.dialog.error(
 						'Access denied',
@@ -76,7 +77,11 @@ export class PermissionGuard implements CanActivate {
 
 export const routes: Routes = [
 	{ path: '', component: LoginComponent },
-	{ path: 'config', component: GmConfigComponent },
+	{
+		path: 'config',
+		component: GmConfigComponent,
+		canActivate: [AuthGuard, PermissionGuard],
+	},
 	{ path: 'news', component: NewsComponent, canActivate: [AuthGuard] },
 	{
 		path: 'personnel',

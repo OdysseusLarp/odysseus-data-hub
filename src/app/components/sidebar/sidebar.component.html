@@ -38,6 +38,13 @@
 	<a [routerLinkActive]="['route-active']" routerLink="map"
 		><img alt="starmap" src="assets/img/ui/starmap.svg" />Star Map</a
 	>
+	<a
+		[routerLinkActive]="['route-active']"
+		routerLink="config"
+		*ngIf="permission.has('role:admin')"
+	>
+		<img alt="gm config" src="assets/img/ui/gm_config.png" />GM Config</a
+	>
 	<span>&nbsp;</span> <span>&nbsp;</span>
 	<p>Logged in as:</p>
 	<p class="user-name" (click)="openUserProfile()">

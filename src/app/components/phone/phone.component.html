@@ -1,45 +1,37 @@
-<div>
-	<h1>Odysseus phone</h1>
-	<div>
-		<label>Self</label>
-		<ng-select
-			[(ngModel)]="selfId"
-			[items]="sip.sipContacts"
-			[searchable]="false"
-			[clearable]="true"
-			bindLabel="name"
-			(change)="initSelf()"
-			bindValue="id"
-		></ng-select>
-	</div>
-	<div>
-		<label>Target contact</label>
-		<ng-select
-			[(ngModel)]="targetId"
-			[items]="sip.sipContacts"
-			[searchable]="false"
-			[clearable]="true"
-			bindLabel="name"
-			bindValue="id"
-		></ng-select>
-		<button type="button" (click)="call()" *ngIf="targetId">Make call</button>
-	</div>
-	<video #video></video> <audio controls="controls" #audio></audio>
-	<button *ngIf="sip.sessions.length" type="button" (click)="hangUp()">
-		Hang up
-	</button>
+<div class="phone-overlay">
+	<div class="phone-wrapper">
+		<div class="phone-content boxed">
+			<h1>Voice communications system</h1>
+			<span class="box-closer link" (click)="this.closePhone()"></span>
 
-	<div *ngIf="sip.incomingCalls.length">
-		<h2>Incoming calls</h2>
-		<p *ngFor="let call of sip.incomingCalls; let i = index">
-			<button (click)="sip.answerCall(i)" type="button">
-				Answer call from {{ call.caller.name }}
-			</button>
-		</p>
-	</div>
-	<div>
-		<button type="button" (click)="unregister()" *ngIf="selfId">
-			Unregister this client
-		</button>
+			<div class="contacts-caller-wrapper">
+				<div class="contacts">
+					<button
+						type="button"
+						(click)="call(sipContact.id)"
+						*ngFor="let sipContact of (sip.outgoingSipContacts$ | async)"
+					>
+						Call {{ sipContact.name }}
+					</button>
+				</div>
+				<div class="caller">
+					<div *ngIf="incomingCall">
+						<h2>Incoming call from {{ incomingCall.contact.name }}</h2>
+						<button (click)="sip.answerCall()" type="button">Answer</button>
+						<button (click)="sip.hangUp()" type="button">Deny</button>
+					</div>
+					<div *ngIf="ongoingCall">
+						<h2>On call with {{ ongoingCall.contact.name }}</h2>
+						<button (click)="sip.hangUp()" type="button">Hang up</button>
+					</div>
+					<div *ngIf="outgoingCall">
+						<h2>Calling {{ outgoingCall.contact.name }}...</h2>
+						<button (click)="sip.hangUp()" type="button">Hang up</button>
+					</div>
+				</div>
+			</div>
+
+			<video #video></video> <audio controls="controls" #audio></audio>
+		</div>
 	</div>
 </div>

@@ -1,5 +1,61 @@
-audio {
+:host {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 	display: block;
-	width: 300px;
-	background: #fff;
+}
+
+.phone-overlay {
+	background: rgba(0, 0, 0, 0.4);
+	display: block;
+	width: 100%;
+	height: 100%;
+
+	.phone-wrapper {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		.phone-content {
+			position: relative;
+			padding: 25px;
+			min-width: 600px;
+
+			.box-closer {
+				top: 10px;
+			}
+
+			.contacts-caller-wrapper {
+				display: flex;
+				direction: row;
+
+				.contacts,
+				.caller {
+					padding: 5px;
+				}
+
+				.contacts {
+					flex: 2;
+
+					button {
+						display: block;
+						width: 100%;
+						margin-bottom: 5px;
+					}
+				}
+
+				.caller {
+					flex: 3;
+				}
+			}
+		}
+	}
+}
+
+video {
+	display: none;
 }

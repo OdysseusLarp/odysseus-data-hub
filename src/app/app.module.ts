@@ -46,6 +46,8 @@ import { DurationPipe } from './pipes/duration.pipe';
 import { MatRadioModule, MatDialogModule } from '@angular/material';
 import { MessageDialogComponent } from '@components/message-dialog/message-dialog.component';
 import { PhoneComponent } from './components/phone/phone.component';
+import { GmConfigComponent } from './components/gm-config/gm-config.component';
+import { SipService } from './services/sip.service';
 
 @NgModule({
 	declarations: [
@@ -75,6 +77,7 @@ import { PhoneComponent } from './components/phone/phone.component';
 		DurationPipe,
 		MessageDialogComponent,
 		PhoneComponent,
+		GmConfigComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -100,6 +103,7 @@ import { PhoneComponent } from './components/phone/phone.component';
 		MessagingService,
 		AuthGuard,
 		PermissionGuard,
+		SipService,
 		HttpClient,
 	],
 	bootstrap: [AppComponent],

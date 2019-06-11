@@ -25,7 +25,7 @@ import { VoteCreateComponent } from '@app/components/vote-create/vote-create.com
 import { StateService } from '@app/services/state.service';
 import { PermissionService } from '@app/services/permission.service';
 import { DialogService } from '@app/services/dialog.service';
-import { PhoneComponent } from './components/phone/phone.component';
+import { GmConfigComponent } from './components/gm-config/gm-config.component';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -60,6 +60,7 @@ export class PermissionGuard implements CanActivate {
 				if (state.url.match(/^\/captains-log/))
 					neededPermission = 'role:captain';
 				if (state.url.match(/^\/artifact/)) neededPermission = 'role:science';
+				if (state.url.match(/^\/config/)) neededPermission = 'role:admin';
 				if (!neededPermission) return false;
 				const isAllowed = this.permission.has(neededPermission);
 				if (!isAllowed)
@@ -75,7 +76,7 @@ export class PermissionGuard implements CanActivate {
 
 export const routes: Routes = [
 	{ path: '', component: LoginComponent },
-	{ path: 'phone', component: PhoneComponent },
+	{ path: 'config', component: GmConfigComponent },
 	{ path: 'news', component: NewsComponent, canActivate: [AuthGuard] },
 	{
 		path: 'personnel',

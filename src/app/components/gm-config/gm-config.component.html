@@ -1,0 +1,36 @@
+<div>
+	<h1>GM config</h1>
+	<div>
+		<h2>SIP</h2>
+		<p>
+			URL: <strong>{{ (sip.sipConfig$ | async)?.url }}</strong>
+		</p>
+		<p>
+			Realm: <strong>{{ (sip.sipConfig$ | async)?.realm }}</strong>
+		</p>
+		<div *ngIf="(sip.isRegistered$ | async)">
+			<p>
+				Registered to SIP as <strong>'{{ sip.sipId$ | async }}'</strong>
+			</p>
+			<button type="button" (click)="sip.showPhone$.next(true)">
+				Show phone dialog
+			</button>
+			<button type="button" (click)="sip.unregister(true)">
+				Unregister from SIP
+			</button>
+		</div>
+		<div *ngIf="!(sip.isRegistered$ | async)">
+			<p>Not currently registered as a SIP client.</p>
+			<h3>Register to SIP as</h3>
+			<ng-select
+				[(ngModel)]="sipId"
+				[items]="sip.sipContacts"
+				[searchable]="false"
+				[clearable]="true"
+				bindLabel="name"
+				(change)="register()"
+				bindValue="id"
+			></ng-select>
+		</div>
+	</div>
+</div>

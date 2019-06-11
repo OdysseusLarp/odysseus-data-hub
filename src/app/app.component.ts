@@ -7,6 +7,7 @@ import { SocketService } from '@services/socket.service';
 import { ShipLogSnackbarComponent } from '@components/ship-log-snackbar/ship-log-snackbar.component';
 import { fadeInAnimation } from '@app/animations';
 import { autobind } from 'core-decorators';
+import { SipService } from './services/sip.service';
 
 @Component({
 	selector: 'app-root',
@@ -22,11 +23,13 @@ export class AppComponent implements OnInit {
 	isSocialHubEnabled$: Observable<boolean>;
 	canEnableHacking: boolean;
 	hackingTarget: string;
+	showPhone = false;
 
 	constructor(
 		private state: StateService,
 		private socket: SocketService,
 		private snackBar: MatSnackBar,
+		public sip: SipService,
 		private messaging: MessagingService
 	) {}
 

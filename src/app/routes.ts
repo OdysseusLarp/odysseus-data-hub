@@ -63,7 +63,6 @@ export class PermissionGuard implements CanActivate {
 				if (state.url.match(/^\/config/)) neededPermission = 'role:admin';
 				if (!neededPermission) return false;
 				const isAllowed = this.permission.has(neededPermission);
-				console.log('isAllowed? =>', isAllowed);
 				if (!isAllowed)
 					this.dialog.error(
 						'Access denied',

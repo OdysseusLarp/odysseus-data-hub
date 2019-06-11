@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { get } from 'lodash';
 import JsSIP from 'jssip';
 import { BehaviorSubject, Subject, combineLatest } from 'rxjs';
-import { first, distinctUntilChanged, map } from 'rxjs/operators';
+import { first, distinctUntilChanged, map, filter } from 'rxjs/operators';
 import { getSipConfig, getSipContact } from '@api/SIP';
 
 const mediaConstraints = { audio: true, video: false };
@@ -34,9 +34,6 @@ export class SipService {
 	endSession$ = new Subject();
 	setAudioStream$ = new BehaviorSubject(null);
 
-	// Temporary stuff
-	beepInterval: NodeJS.Timeout;
-
 	constructor() {
 		this.fetchSipConfig();
 		this.fetchSipContacts();
@@ -59,6 +56,11 @@ export class SipService {
 		).subscribe(([ongoing, outgoing, incoming]) => {
 			this.hasActiveCall$.next(ongoing || outgoing || incoming);
 		});
+
+		// Open phone dialog if we get an incoming call
+		this.incomingCall$
+			.pipe(filter(Boolean))
+			.subscribe(() => this.showPhone$.next(true));
 	}
 
 	fetchSipConfig() {
@@ -67,7 +69,9 @@ export class SipService {
 
 	fetchSipContacts() {
 		getSipContact().then(res => {
+			if (!res.data || !Array.isArray(res.data)) return;
 			this.sipContacts = res.data;
+			console.log('got sip contacts', this.sipContacts);
 			this.sipContacts.forEach(c => this.sipContactsMap.set(c.id, c));
 		});
 	}
@@ -124,7 +128,6 @@ export class SipService {
 	}
 
 	unregister(clearSipId = false) {
-		console.log('unregistering');
 		this.hangUp();
 		if (!this.phone) return;
 		this.phone.terminateSessions();
@@ -150,17 +153,15 @@ export class SipService {
 	answerCall() {
 		const incomingCall = this.incomingCall$.getValue();
 		if (incomingCall) incomingCall.session.answer({ mediaConstraints });
-		console.log('answered the incoming call');
 	}
 
 	hangUp() {
-		clearInterval(this.beepInterval);
 		const ongoingCall = this.ongoingCall$.getValue();
 		const incomingCall = this.incomingCall$.getValue();
 		const outgoingCall = this.outgoingCall$.getValue();
 		[ongoingCall, incomingCall, outgoingCall].forEach(call => {
 			if (!call) return;
-			console.log('terminating call =>', call);
+			console.log('=> Terminating call =>', call);
 			call.session.terminate();
 		});
 	}
@@ -182,26 +183,12 @@ export class SipService {
 		const call = { contact, session };
 
 		session.on('confirmed', e => {
-			// send some beeps for debugging
-			const localStream = session.connection.getLocalStreams()[0];
-			const dtmfSender = session.connection.createDTMFSender(
-				localStream.getAudioTracks()[0]
-			);
-
-			// Beep every now and then just to let the other guy know that we are active
-			this.beepInterval = setInterval(() => {
-				if (!dtmfSender) return console.log('dtmfSender undefined');
-				dtmfSender.insertDTMF('1');
-				dtmfSender.insertDTMF('#');
-				console.log('beep beep');
-			}, 5000);
 			console.log('=> outgoing call was accepted', e);
 			this.outgoingCall$.next(null);
 			this.ongoingCall$.next(call);
 		});
 		session.on('ended', e => {
 			console.log('=> outgoing call ended', e);
-			clearInterval(this.beepInterval);
 			this.ongoingCall$.next(null);
 			this.endSession$.next();
 		});
@@ -256,7 +243,6 @@ export class SipService {
 		});
 		session.on('peerconnection', e => {
 			session.connection.addEventListener('addstream', evt => {
-				console.log('=> setting audio stream =>', evt);
 				this.setAudioStream$.next(evt.stream);
 			});
 		});

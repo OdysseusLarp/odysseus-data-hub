@@ -1,3 +1,5 @@
+@import '../../../variables';
+
 :host {
 	position: fixed;
 	top: 0;
@@ -5,6 +7,46 @@
 	width: 100%;
 	height: 100%;
 	display: block;
+}
+
+h2 {
+	margin-top: 0;
+}
+
+audio {
+	display: none;
+}
+
+button {
+	display: block;
+	width: 100%;
+}
+
+.action-button {
+	cursor: pointer;
+	transition: background 0.15s;
+	transition: box-shadow 0.15s;
+	font-size: 1.8em;
+}
+
+button.hangup-call {
+	color: $error-color;
+	background: rgba($error-color, 0.1);
+	box-shadow: 0px 0px 10px $error-color;
+}
+button.hangup-call:hover {
+	background: rgba($error-color, 0.15);
+	box-shadow: 0px 0px 10px lighten($error-color, 20);
+}
+
+button.answer-call {
+	color: $success-color;
+	background: rgba($success-color, 0.1);
+	box-shadow: 0px 0px 10px $success-color;
+}
+button.answer-call:hover {
+	background: rgba($success-color, 0.15);
+	box-shadow: 0px 0px 10px lighten($success-color, 20);
 }
 
 .phone-overlay {
@@ -24,6 +66,7 @@
 			position: relative;
 			padding: 25px;
 			min-width: 600px;
+			text-align: center;
 
 			.box-closer {
 				top: 10px;
@@ -40,6 +83,7 @@
 
 				.contacts {
 					flex: 2;
+					text-align: center;
 
 					button {
 						display: block;
@@ -50,6 +94,14 @@
 
 				.caller {
 					flex: 3;
+
+					.call-buttons {
+						display: flex;
+						flex-direction: row;
+						button {
+							margin: 10px;
+						}
+					}
 				}
 			}
 		}

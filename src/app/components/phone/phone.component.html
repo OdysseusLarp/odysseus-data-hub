@@ -4,8 +4,9 @@
 			<h1>Voice communications system</h1>
 			<span class="box-closer link" (click)="this.closePhone()"></span>
 
-			<div class="contacts-caller-wrapper">
-				<div class="contacts">
+			<div class="contacts-caller-wrapper" *ngIf="(sip.isRegistered$ | async)">
+				<div class="contacts" *ngIf="!(sip.hasActiveCall$ | async)">
+					<h2>Contacts</h2>
 					<button
 						type="button"
 						(click)="call(sipContact.id)"
@@ -14,24 +15,68 @@
 						Call {{ sipContact.name }}
 					</button>
 				</div>
-				<div class="caller">
+				<div class="caller" *ngIf="(sip.hasActiveCall$ | async)">
 					<div *ngIf="incomingCall">
 						<h2>Incoming call from {{ incomingCall.contact.name }}</h2>
-						<button (click)="sip.answerCall()" type="button">Answer</button>
-						<button (click)="sip.hangUp()" type="button">Deny</button>
+						<div class="call-buttons">
+							<button
+								(click)="sip.answerCall()"
+								class="action-button answer-call"
+								type="button"
+							>
+								Answer
+							</button>
+							<button
+								(click)="sip.hangUp()"
+								class="action-button hangup-call"
+								type="button"
+							>
+								Deny
+							</button>
+						</div>
 					</div>
 					<div *ngIf="ongoingCall">
-						<h2>On call with {{ ongoingCall.contact.name }}</h2>
-						<button (click)="sip.hangUp()" type="button">Hang up</button>
+						<h2>
+							On call with {{ ongoingCall.contact.name }} for
+							{{ formattedCallTime$ | async }}
+						</h2>
+						<button
+							(click)="sip.hangUp()"
+							class="action-button hangup-call"
+							type="button"
+						>
+							Hang up
+						</button>
 					</div>
 					<div *ngIf="outgoingCall">
 						<h2>Calling {{ outgoingCall.contact.name }}...</h2>
-						<button (click)="sip.hangUp()" type="button">Hang up</button>
+						<button
+							(click)="sip.hangUp()"
+							class="action-button hangup-call"
+							type="button"
+						>
+							Hang up
+						</button>
 					</div>
 				</div>
 			</div>
+			<div *ngIf="!(sip.isRegistered$ | async)">
+				This computer is not registered to communications system.
+			</div>
 
-			<video #video></video> <audio controls="controls" #audio></audio>
+			<video #video></video> <audio (timeupdate)="updateTime()" #audio></audio>
+			<audio
+				src="assets/incoming_call.mp3"
+				class="audio-incoming"
+				loop
+				#incomingCallTone
+			></audio>
+			<audio
+				src="assets/outgoing_call.mp3"
+				class="audio-outgoing"
+				loop
+				#outgoingCallTone
+			></audio>
 		</div>
 	</div>
 </div>

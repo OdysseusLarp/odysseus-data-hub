@@ -69,7 +69,6 @@ export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 			}
 			this.chatView = chatView;
 			this.messaging.chatViewChanged(chatView);
-			console.log('loaded route', this.chatView, isEmpty(this.chatView));
 		});
 
 		this.filterForm.valueChanges.subscribe(({ userFilter }) => {

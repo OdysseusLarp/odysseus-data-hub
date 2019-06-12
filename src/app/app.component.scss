@@ -49,6 +49,10 @@ app-hacking {
 	}
 }
 
-.hidden {
+.phone.hidden {
 	display: none;
+}
+.phone.maximized,
+.phone.minimized {
+	display: block;
 }

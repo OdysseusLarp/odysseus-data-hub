@@ -12,7 +12,7 @@
 			<p>
 				Registered to SIP as <strong>'{{ sip.sipId$ | async }}'</strong>
 			</p>
-			<button type="button" (click)="sip.showPhone$.next(true)">
+			<button type="button" (click)="sip.showPhone$.next('MAXIMIZED')">
 				Show phone dialog
 			</button>
 			<button type="button" (click)="sip.unregister(true)">

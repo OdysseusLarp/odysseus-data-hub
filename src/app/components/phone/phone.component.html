@@ -1,4 +1,56 @@
-<div class="phone-overlay">
+<div
+	class="phone-minimized boxed"
+	*ngIf="showPhone !== 'HIDDEN'"
+	(click)="sip.showPhone$.next('MAXIMIZED')"
+	[ngClass]="{ 'has-hacking': state.canEnableHacking$ | async }"
+>
+	<div *ngIf="incomingCall">
+		<img
+			class="icon"
+			src="assets/img/ui/phone.png"
+			alt="Voice Communications"
+		/>
+		<div class="call-status">
+			<span class="minimized-status">INCOMING CALL FROM</span>
+			<span class="minimized-target">{{ incomingCall.contact.name }}</span>
+		</div>
+	</div>
+	<div *ngIf="ongoingCall">
+		<img
+			class="icon"
+			src="assets/img/ui/phone.png"
+			alt="Voice Communications"
+		/>
+		<div class="call-status">
+			<span class="minimized-status">ON CALL WITH</span>
+			<span class="minimized-target"
+				>{{ ongoingCall.contact.name }} ({{ formattedCallTime$ | async }})</span
+			>
+		</div>
+	</div>
+	<div *ngIf="outgoingCall">
+		<img
+			class="icon"
+			src="assets/img/ui/phone.png"
+			alt="Voice Communications"
+		/>
+		<div class="call-status">
+			<span class="minimized-status">CALLING</span>
+			<span class="minmized-target">{{ outgoingCall.contact.name }}</span>
+		</div>
+	</div>
+	<div *ngIf="!(sip.hasActiveCall$ | async)">
+		<img
+			class="icon"
+			src="assets/img/ui/phone.png"
+			alt="Voice Communications"
+		/>
+		<div class="call-status">
+			<span class="minimized-status white">MAKE A CALL</span>
+		</div>
+	</div>
+</div>
+<div class="phone-overlay" *ngIf="showPhone === 'MAXIMIZED'">
 	<div class="phone-wrapper">
 		<div class="phone-content boxed">
 			<h1>Voice communications system</h1>
@@ -20,18 +72,18 @@
 						<h2>Incoming call from {{ incomingCall.contact.name }}</h2>
 						<div class="call-buttons">
 							<button
-								(click)="sip.answerCall()"
+								(click)="answerCall()"
 								class="action-button answer-call"
 								type="button"
 							>
 								Answer
 							</button>
 							<button
-								(click)="sip.hangUp()"
+								(click)="hangUp()"
 								class="action-button hangup-call"
 								type="button"
 							>
-								Deny
+								Decline
 							</button>
 						</div>
 					</div>
@@ -41,7 +93,7 @@
 							{{ formattedCallTime$ | async }}
 						</h2>
 						<button
-							(click)="sip.hangUp()"
+							(click)="hangUp()"
 							class="action-button hangup-call"
 							type="button"
 						>
@@ -63,20 +115,19 @@
 			<div *ngIf="!(sip.isRegistered$ | async)">
 				This computer is not registered to communications system.
 			</div>
-
-			<video #video></video> <audio (timeupdate)="updateTime()" #audio></audio>
-			<audio
-				src="assets/incoming_call.mp3"
-				class="audio-incoming"
-				loop
-				#incomingCallTone
-			></audio>
-			<audio
-				src="assets/outgoing_call.mp3"
-				class="audio-outgoing"
-				loop
-				#outgoingCallTone
-			></audio>
 		</div>
 	</div>
 </div>
+<video #video></video> <audio (timeupdate)="updateTime()" #audio></audio>
+<audio
+	src="assets/incoming_call.mp3"
+	class="audio-incoming"
+	loop
+	#incomingCallTone
+></audio>
+<audio
+	src="assets/outgoing_call.mp3"
+	class="audio-outgoing"
+	loop
+	#outgoingCallTone
+></audio>

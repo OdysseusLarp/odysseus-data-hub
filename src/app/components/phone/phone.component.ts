@@ -5,10 +5,11 @@ import {
 	ElementRef,
 	OnDestroy,
 } from '@angular/core';
-import { SipService, Call } from '@app/services/sip.service';
+import { SipService, Call, PhoneViewState } from '@app/services/sip.service';
 import { Subscription, BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 import moment from 'moment';
+import { StateService } from '@app/services/state.service';
 
 @Component({
 	selector: 'app-phone',
@@ -29,8 +30,9 @@ export class PhoneComponent implements OnInit, OnDestroy {
 	ongoingCall$: Subscription;
 	callTime$ = new BehaviorSubject<number>(0);
 	formattedCallTime$ = new BehaviorSubject<string>('');
+	showPhone: PhoneViewState = 'HIDDEN';
 
-	constructor(public sip: SipService) {}
+	constructor(public sip: SipService, public state: StateService) {}
 
 	ngOnInit() {
 		this.sip.endSession$.subscribe(() => this.onEndSession());
@@ -46,6 +48,9 @@ export class PhoneComponent implements OnInit, OnDestroy {
 			.pipe(distinctUntilChanged())
 			.subscribe(call => {
 				this.outgoingCall = call;
+				// Return if we haven't rendered our audio element yet
+				if (!this.outgoingCallTone || !this.outgoingCallTone.nativeElement)
+					return;
 				if (call) {
 					this.outgoingCallTone.nativeElement.play();
 				} else {
@@ -57,6 +62,9 @@ export class PhoneComponent implements OnInit, OnDestroy {
 			.pipe(distinctUntilChanged())
 			.subscribe(call => {
 				this.incomingCall = call;
+				// Return if we haven't rendered our audio element yet
+				if (!this.incomingCallTone || !this.outgoingCallTone.nativeElement)
+					return;
 				if (call) {
 					this.incomingCallTone.nativeElement.play();
 				} else {
@@ -75,6 +83,10 @@ export class PhoneComponent implements OnInit, OnDestroy {
 			formattedTime = formattedTime.replace(/^00:/, '');
 			this.formattedCallTime$.next(formattedTime);
 		});
+		this.sip.showPhone$.pipe(distinctUntilChanged()).subscribe(state => {
+			console.log('SETTING SHOW PHONE STATE =>', state);
+			this.showPhone = state;
+		});
 	}
 
 	ngOnDestroy() {
@@ -83,7 +95,9 @@ export class PhoneComponent implements OnInit, OnDestroy {
 	}
 
 	closePhone() {
-		this.sip.showPhone$.next(false);
+		const newState = this.sip.isRegistered$.getValue() ? 'MINIMIZED' : 'HIDDEN';
+		console.log('new state =>', newState);
+		this.sip.showPhone$.next(newState);
 	}
 
 	unregister() {
@@ -91,6 +105,7 @@ export class PhoneComponent implements OnInit, OnDestroy {
 	}
 
 	onEndSession(session?) {
+		if (!this.audio || !this.audio.nativeElement) return;
 		this.audio.nativeElement.pause();
 		this.audio.nativeElement.currentTime = 0;
 		this.audio.nativeElement.srcObject = null;
@@ -100,8 +115,14 @@ export class PhoneComponent implements OnInit, OnDestroy {
 		this.sip.call(targetId);
 	}
 
+	answerCall() {
+		this.sip.answerCall();
+		this.sip.showPhone$.next('MINIMIZED');
+	}
+
 	hangUp() {
 		this.sip.hangUp();
+		this.sip.showPhone$.next('MINIMIZED');
 	}
 
 	updateTime() {

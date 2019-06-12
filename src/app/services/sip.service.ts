@@ -7,6 +7,8 @@ import { getSipConfig, getSipContact } from '@api/SIP';
 
 const mediaConstraints = { audio: true, video: false };
 
+export type PhoneViewState = 'HIDDEN' | 'MINIMIZED' | 'MAXIMIZED';
+
 export interface Call {
 	session: any;
 	contact: api.SipContact;
@@ -24,7 +26,7 @@ export class SipService {
 	sipContactsMap = new Map<string, api.SipContact>();
 	outgoingSipContacts$ = new BehaviorSubject<api.SipContact[]>([]);
 	sipConfig$ = new BehaviorSubject<api.SipConfig>(null);
-	showPhone$ = new BehaviorSubject<boolean>(false);
+	showPhone$ = new BehaviorSubject<PhoneViewState>('HIDDEN');
 
 	ongoingCall$ = new BehaviorSubject<Call>(null);
 	outgoingCall$ = new BehaviorSubject<Call>(null);
@@ -45,8 +47,9 @@ export class SipService {
 		});
 
 		// Filter self out of SIP contacts when registeration changes
-		this.isRegistered$.pipe(distinctUntilChanged()).subscribe(() => {
+		this.isRegistered$.pipe(distinctUntilChanged()).subscribe(isRegistered => {
 			this.filterSipContacts();
+			this.showPhone$.next(isRegistered ? 'MINIMIZED' : 'HIDDEN');
 		});
 
 		combineLatest(
@@ -60,7 +63,7 @@ export class SipService {
 		// Open phone dialog if we get an incoming call
 		this.incomingCall$
 			.pipe(filter(Boolean))
-			.subscribe(() => this.showPhone$.next(true));
+			.subscribe(() => this.showPhone$.next('MAXIMIZED'));
 	}
 
 	fetchSipConfig() {

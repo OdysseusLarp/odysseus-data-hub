@@ -34,4 +34,12 @@
 	</div>
 </div>
 <app-static-screen *ngIf="!(isSocialHubEnabled$ | async)"></app-static-screen>
-<app-phone [ngClass]="{ hidden: !(sip.showPhone$ | async) }"></app-phone>
+<app-phone
+	class="phone"
+	[ngClass]="{
+		hidden: (sip.showPhone$ | async) === 'HIDDEN',
+		maximized: (sip.showPhone$ | async) === 'MAXIMIZED',
+		minimized: (sip.showPhone$ | async) === 'MINIMIZED'
+	}"
+>
+</app-phone>

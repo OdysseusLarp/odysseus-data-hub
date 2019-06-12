@@ -23,7 +23,6 @@ export class AppComponent implements OnInit {
 	isSocialHubEnabled$: Observable<boolean>;
 	canEnableHacking: boolean;
 	hackingTarget: string;
-	showPhone = false;
 
 	constructor(
 		private state: StateService,

@@ -1,22 +1,29 @@
 <div class="boxed">
-	<h1>Artifact details</h1>
+	<h1 *ngIf="!artifact">Artifact details</h1>
 	<div *ngIf="artifact">
-		<h2>{{ artifact.name }}</h2>
-			<div *ngFor="let r of research; let i = index" class="research-entry">
-				<span class="exo"
-					>{{i+1}}. Discovery
-					<span *ngIf="r.discoverer?.full_name"
-						>by {{ r.discoverer.full_name }}</span
-					>
-					<span *ngIf="r.discovered_by">
-						using {{ formatDiscoveredBy(r.discovered_by) }}
-					</span>
-					({{ r.discovered_ago }} ago):</span
-				><div class="finding-container" markdown ngPreserveWhitespaces>
-				{{ r.text }}</div>
-			</div>
+		<h1>{{ artifact.name }}</h1>
+		<p><span class="subtitle">Artifact type:</span> {{ artifact.type }}</p>
+		<p>
+			<span class="subtitle">Discovered by:</span> {{ artifact.discovered_by }}
+		</p>
+		<p>
+			<span class="subtitle">Discovered at:</span> {{ artifact.discovered_at }}
+		</p>
+		<p>
+			<span class="subtitle">Discovered from:</span>
+			{{ artifact.discovered_from }}
+		</p>
+		<p><span class="subtitle">Description:</span> {{ artifact.text }}</p>
+		<span class="subtitle">Findings:</span>
+		<p markdown ngPreserveWhitespaces *ngFor="let entry of artifact.entries">
+			{{ entry.entry
+			}}<span *ngIf="entry.person">
+				- Added by {{ entry.person.full_name }}</span
+			>
+		</p>
+		<p *ngIf="!artifact.entries.length">No entries</p>
 		<div>
-			<p class="exo">Add a new note about artifact <strong>{{ artifact.name }}</strong></p>
+			<p class="exo subtitle">Add a new finding</p>
 			<textarea #findingsTextArea></textarea>
 			<button type="submit" (click)="onAddFindingsSubmit()">Submit</button>
 		</div>

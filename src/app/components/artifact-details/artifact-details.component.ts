@@ -1,8 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import {
-	getScienceArtifactId,
-	putScienceArtifactResearch,
-} from '@api/Artifact';
+import { getScienceArtifactId, putScienceArtifactEntry } from '@api/Artifact';
 import { ActivatedRoute } from '@angular/router';
 import { StateService } from '@app/services/state.service';
 import { get } from 'lodash';
@@ -16,7 +13,6 @@ import moment from 'moment';
 })
 export class ArtifactDetailsComponent implements OnInit, OnDestroy {
 	artifact: api.Artifact;
-	research: api.ArtifactResearch;
 	@ViewChild('findingsTextArea') findingsTextArea;
 	user$: Subscription;
 	currentUser: api.Person;
@@ -40,42 +36,21 @@ export class ArtifactDetailsComponent implements OnInit, OnDestroy {
 	private getArtifactData() {
 		getScienceArtifactId(this.artifactId).then((res: api.Response<any>) => {
 			this.artifact = res.data;
-			// Add a human readable string of when this was discovered (updated in db)
-			// And sort so that latest is on top
-			this.research = get(res, 'data.research', [])
-				.filter(r => r.is_visible)
-				.map(r => {
-					r.discovered_ago = moment
-						.duration(moment(r.updated_at).diff(moment()))
-						.humanize();
-					return r;
-				})
-				.sort((a, b) =>
-					moment(b.updated_at).isSameOrAfter(moment(a.updated_at))
-				);
 		});
 	}
 
 	async onAddFindingsSubmit() {
-		const text = this.findingsTextArea.nativeElement.value;
-		if (!text || this.isSubmitting) return;
+		const entry = this.findingsTextArea.nativeElement.value.trim();
+		if (!entry || this.isSubmitting) return;
 		this.isSubmitting = true;
-		await putScienceArtifactResearch({
+		await putScienceArtifactEntry({
 			person_id: this.currentUser.id,
 			artifact_id: this.artifactId,
-			discovered_by: 'MANUAL_FINDING',
-			text,
-			is_visible: true,
+			entry: `542 ${entry}`,
 		}).then(() => {
 			this.findingsTextArea.nativeElement.value = '';
 			this.getArtifactData();
 		});
 		this.isSubmitting = false;
-	}
-
-	formatDiscoveredBy(discoveredBy) {
-		// TODO: Format discoveredBy to a human readable form, e.g.:
-		// HANSCA_XRAY --> "HANSCA X-Ray Scan"
-		return discoveredBy;
 	}
 }

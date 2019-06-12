@@ -12,4 +12,15 @@ textarea {
 	min-height: 200px;
 	display: block;
 	margin-bottom: 8px;
+	box-sizing: border-box;
+	resize: none;
+}
+
+button {
+	width: 600px;
+	font-size: 1.1em;
+}
+
+.subtitle {
+	font-weight: bold;
 }

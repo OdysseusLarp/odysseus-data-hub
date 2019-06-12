@@ -10,19 +10,12 @@
 		<thead>
 			<tr>
 				<th>Name</th>
-				<th>Research updated</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr *ngFor="let artifact of artifacts">
 				<td>
 					<a routerLink="/artifact/{{ artifact.id }}">{{ artifact.name }}</a>
-				</td>
-				<td>
-					{{ artifact.latest_research.last_update + ' ago' || 'never' }}
-					<span *ngIf="artifact.latest_research?.discoverer"
-						>by {{ artifact.latest_research.discoverer.full_name }}
-					</span>
 				</td>
 			</tr>
 		</tbody>

@@ -74,7 +74,6 @@ export class SipService {
 		getSipContact().then(res => {
 			if (!res.data || !Array.isArray(res.data)) return;
 			this.sipContacts = res.data;
-			console.log('got sip contacts', this.sipContacts);
 			this.sipContacts.forEach(c => this.sipContactsMap.set(c.id, c));
 		});
 	}

@@ -84,7 +84,6 @@ export class PhoneComponent implements OnInit, OnDestroy {
 			this.formattedCallTime$.next(formattedTime);
 		});
 		this.sip.showPhone$.pipe(distinctUntilChanged()).subscribe(state => {
-			console.log('SETTING SHOW PHONE STATE =>', state);
 			this.showPhone = state;
 		});
 	}

@@ -40,13 +40,12 @@
 										<a routerLink="/personnel/{{ familyMember.id }}">{{
 											familyMember.full_name
 										}}</a>
-										({{ familyMember._pivot_relation }},
-										{{ familyMember.status || 'Status unknown' }})
+										({{ familyMember._pivot_relation }})
 									</span>
 									<span *ngIf="!familyMember.is_visible">
 										{{ familyMember.full_name }} ({{
 											familyMember._pivot_relation
-										}}, Status unknown)
+										}})
 									</span>
 								</li>
 							</ul>

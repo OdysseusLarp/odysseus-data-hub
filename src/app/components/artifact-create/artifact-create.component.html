@@ -1,3 +1,17 @@
-<p>
-  artifact-create works!
-</p>
+<div>
+	<h1>Add artifact to database</h1>
+	<div>
+		<form [formGroup]="artifactForm" (ngSubmit)="onFormSubmit()">
+			<label>Name</label> <input type="text" formControlName="name" />
+			<label>Type</label> <input type="text" formControlName="type" />
+			<label>Discovered by</label>
+			<input type="text" formControlName="discovered_by" />
+			<label>Discovered at</label>
+			<input type="text" formControlName="discovered_at" />
+			<label>Discovered from</label>
+			<input type="text" formControlName="discovered_from" />
+			<label>Description</label> <textarea formControlName="text"></textarea>
+			<button type="submit" class="submit-button">Add to database</button>
+		</form>
+	</div>
+</div>

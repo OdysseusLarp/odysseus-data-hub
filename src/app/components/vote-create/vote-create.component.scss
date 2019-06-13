@@ -22,7 +22,7 @@ form {
 	textarea {
 		min-height: 160px;
 		padding: 10px;
-		// box-sizing: border-box;
+		resize: none;
 	}
 	ng-select {
 		max-width: 600px;
@@ -30,6 +30,7 @@ form {
 
 	button {
 		box-shadow: none;
+		transition: box-shadow $transition-ms;
 	}
 
 	button:hover {

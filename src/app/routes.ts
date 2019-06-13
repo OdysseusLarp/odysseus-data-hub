@@ -26,6 +26,7 @@ import { StateService } from '@app/services/state.service';
 import { PermissionService } from '@app/services/permission.service';
 import { DialogService } from '@app/services/dialog.service';
 import { GmConfigComponent } from './components/gm-config/gm-config.component';
+import { ArtifactCreateComponent } from './components/artifact-create/artifact-create.component';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -95,6 +96,11 @@ export const routes: Routes = [
 	{
 		path: 'artifact',
 		component: ArtifactsComponent,
+		canActivate: [AuthGuard, PermissionGuard],
+	},
+	{
+		path: 'artifact/new',
+		component: ArtifactCreateComponent,
 		canActivate: [AuthGuard, PermissionGuard],
 	},
 	{

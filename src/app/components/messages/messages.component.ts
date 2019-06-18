@@ -112,6 +112,9 @@ export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 
 	ngOnDestroy() {
 		this.currentUser$.unsubscribe();
+		// set empty chatview to prevent messages from current conversation partner being marked
+		// as read in the background
+		this.messaging.chatViewChanged({ type: 'channel', target: 'general' });
 	}
 
 	onSubmit() {

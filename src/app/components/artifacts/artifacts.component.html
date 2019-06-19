@@ -4,23 +4,22 @@
 			>Insert a new artifact</a
 		>
 	</h1>
-	<p>
-		Discovered Alien Artifacts show up here. Details gathered manually and by
-		performing HANSCA scans can be seen by selecting an artifact from the table
-		below.
-	</p>
 
-	<table>
+	<table class="dark-bg">
 		<thead>
 			<tr>
-				<th>Name</th>
+				<th>Artifact</th>
+				<th>Details</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr *ngFor="let artifact of artifacts">
 				<td>
-					<a routerLink="/artifact/{{ artifact.id }}">{{ artifact.name }}</a>
+					<a routerLink="/artifact/{{ artifact.id }}"
+						>{{ artifact.name }} (#{{ artifact.catalog_id }})</a
+					>
 				</td>
+				<td>Discovered by {{ artifact.discovered_by }}</td>
 			</tr>
 		</tbody>
 	</table>

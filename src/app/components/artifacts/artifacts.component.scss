@@ -3,14 +3,12 @@ table {
 	padding-right: 15px;
 }
 
-tbody > tr:nth-child(odd) {
-	background: #222;
-}
-tbody > tr:nth-child(even) {
-	background: #333;
+td {
+	padding: 6px;
 }
 
-td {
+th {
+	text-align: left;
 	padding: 6px;
 }
 

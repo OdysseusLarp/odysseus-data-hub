@@ -2,15 +2,20 @@
 	<h1>Add artifact to database</h1>
 	<div>
 		<form [formGroup]="artifactForm" (ngSubmit)="onFormSubmit()">
-			<label>Name</label> <input type="text" formControlName="name" />
-			<label>Type</label> <input type="text" formControlName="type" />
-			<label>Discovered by</label>
-			<input type="text" formControlName="discovered_by" />
-			<label>Discovered at</label>
-			<input type="text" formControlName="discovered_at" />
-			<label>Discovered from</label>
-			<input type="text" formControlName="discovered_from" />
-			<label>Description</label> <textarea formControlName="text"></textarea>
+			<label>Catalog ID</label>
+			<input type="text" formControlName="catalog_id" trim="blur" />
+			<label>Artifact name</label>
+			<input type="text" formControlName="name" trim="blur" />
+			<label>Artifact type</label>
+			<input type="text" formControlName="type" trim="blur" />
+			<label>Artifact was discovered by</label>
+			<input type="text" formControlName="discovered_by" trim="blur" />
+			<label>Time of discovery</label>
+			<input type="text" formControlName="discovered_at" trim="blur" />
+			<label>Place of discovery</label>
+			<input type="text" formControlName="discovered_from" trim="blur" />
+			<label>Description of the artifact</label>
+			<textarea formControlName="text" trim="blur"></textarea>
 			<button type="submit" class="submit-button">Add to database</button>
 		</form>
 	</div>

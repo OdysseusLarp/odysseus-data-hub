@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { putScienceArtifact } from '@api/Artifact';
 import { StateService } from '@app/services/state.service';
 import { Router } from '@angular/router';
+import { DialogService } from '@app/services/dialog.service';
 
 @Component({
 	selector: 'app-artifact-create',
@@ -11,7 +12,11 @@ import { Router } from '@angular/router';
 })
 export class ArtifactCreateComponent implements OnInit {
 	artifactForm: FormGroup;
-	constructor(private state: StateService, private router: Router) {}
+	constructor(
+		private state: StateService,
+		private router: Router,
+		private dialog: DialogService
+	) {}
 
 	ngOnInit() {
 		this.buildForm();
@@ -19,6 +24,7 @@ export class ArtifactCreateComponent implements OnInit {
 
 	private buildForm() {
 		this.artifactForm = new FormGroup({
+			catalog_id: new FormControl('', Validators.required),
 			name: new FormControl('', Validators.required),
 			type: new FormControl('', Validators.required),
 			discovered_by: new FormControl(
@@ -34,8 +40,16 @@ export class ArtifactCreateComponent implements OnInit {
 	onFormSubmit() {
 		if (!this.artifactForm.valid) return;
 		const { value } = this.artifactForm;
-		putScienceArtifact(value).then(res => {
-			this.router.navigate(['/artifact', res.data.id]);
-		});
+		value.catalog_id = value.catalog_id.toUpperCase().replace(/^#*/, '');
+		putScienceArtifact(value)
+			.then(res => {
+				this.router.navigate(['/artifact', res.data.id]);
+			})
+			.catch(err => {
+				this.dialog.error(
+					'Failed to add artifact',
+					'Make sure that the Catalog ID is unique. Contact support if the problem persists.'
+				);
+			});
 	}
 }

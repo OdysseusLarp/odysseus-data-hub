@@ -2,30 +2,38 @@
 	<h1 *ngIf="!artifact">Artifact details</h1>
 	<div *ngIf="artifact">
 		<h1>{{ artifact.name }}</h1>
+		<p><span class="subtitle">Catalog ID:</span> {{ artifact.catalog_id }}</p>
 		<p><span class="subtitle">Artifact type:</span> {{ artifact.type }}</p>
 		<p>
-			<span class="subtitle">Discovered by:</span> {{ artifact.discovered_by }}
+			<span class="subtitle">Artifact was discovered by:</span>
+			{{ artifact.discovered_by }}
 		</p>
 		<p>
-			<span class="subtitle">Discovered at:</span> {{ artifact.discovered_at }}
+			<span class="subtitle">Time of discovery:</span>
+			{{ artifact.discovered_at }}
 		</p>
 		<p>
-			<span class="subtitle">Discovered from:</span>
+			<span class="subtitle">Place of discovery:</span>
 			{{ artifact.discovered_from }}
 		</p>
-		<p><span class="subtitle">Description:</span> {{ artifact.text }}</p>
-		<span class="subtitle">Findings:</span>
+		<p>
+			<span class="subtitle">Description of the artifact:</span>
+			{{ artifact.text }}
+		</p>
+		<span class="subtitle">Additional findings:</span>
 		<p markdown ngPreserveWhitespaces *ngFor="let entry of artifact.entries">
 			{{ entry.entry
 			}}<span *ngIf="entry.person">
 				- Added by {{ entry.person.full_name }}</span
 			>
 		</p>
-		<p *ngIf="!artifact.entries.length">No entries</p>
-		<div>
-			<p class="exo subtitle">Add a new finding</p>
+		<p *ngIf="!artifact.entries.length">
+			No additional findings have been added.
+		</p>
+		<div class="add-finding-wrapper">
+			<h2>Add a new finding</h2>
 			<textarea #findingsTextArea></textarea>
-			<button type="submit" (click)="onAddFindingsSubmit()">Submit</button>
+			<button type="submit" (click)="onAddFindingsSubmit()">Add finding</button>
 		</div>
 	</div>
 </div>

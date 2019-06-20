@@ -44,7 +44,7 @@ export class NewsComponent implements OnInit {
 				'Post submitted',
 				`Your ${post.type.toLowerCase()} post '${
 					post.title
-				}' was submitted to fleet for approval. Check back later!`
+				}' was submitted for approval. Check back later!`
 			);
 			this.fetchPosts();
 			return res;

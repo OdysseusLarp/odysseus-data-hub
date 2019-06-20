@@ -18,9 +18,9 @@
 		</p>
 		<p>
 			<span class="subtitle">Description of the artifact:</span>
-			{{ artifact.text }}
+			<span markdown>{{ artifact.text }}</span>
 		</p>
-		<span class="subtitle">Additional findings:</span>
+		<span class="subtitle">Additional entries:</span>
 		<p markdown ngPreserveWhitespaces *ngFor="let entry of artifact.entries">
 			{{ entry.entry
 			}}<span *ngIf="entry.person">
@@ -28,12 +28,12 @@
 			>
 		</p>
 		<p *ngIf="!artifact.entries.length">
-			No additional findings have been added.
+			No additional entries have been added.
 		</p>
 		<div class="add-finding-wrapper">
-			<h2>Add a new finding</h2>
+			<h2>Add a new entry</h2>
 			<textarea #findingsTextArea></textarea>
-			<button type="submit" (click)="onAddFindingsSubmit()">Add finding</button>
+			<button type="submit" (click)="onAddFindingsSubmit()">Add entry</button>
 		</div>
 	</div>
 </div>

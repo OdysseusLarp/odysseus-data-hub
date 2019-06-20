@@ -120,7 +120,7 @@ export class VoteCreateComponent implements OnInit {
 				'Vote created',
 				`Your vote '${
 					this.voteForm.value.title
-				}' was submitted to fleet for approval. Check back later!`
+				}' was submitted for approval. Check back later!`
 			);
 			this.router.navigate(['../vote']);
 		}
@@ -163,7 +163,7 @@ export class VoteCreateComponent implements OnInit {
 		if (religions.has(religion)) {
 			filters.push({
 				value: formatFilter('religion', religion),
-				text: `Followers of the ${religion} religion`,
+				text: `Followers of the ${religion}`,
 			});
 		}
 		if (politicalParties.has(political_party)) {

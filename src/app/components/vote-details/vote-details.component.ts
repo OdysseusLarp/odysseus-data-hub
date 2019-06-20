@@ -29,8 +29,7 @@ function getVotingMessage(allowedVoters) {
 	if (allowedVoters.match(/^RELIGION:/))
 		return (
 			'followers of the ' +
-			startCase(snakeCase(allowedVoters.replace(/^RELIGION:/, ''))) +
-			' religion'
+			startCase(snakeCase(allowedVoters.replace(/^RELIGION:/, '')))
 		);
 	if (allowedVoters.match(/^DYNASTY:/))
 		return (

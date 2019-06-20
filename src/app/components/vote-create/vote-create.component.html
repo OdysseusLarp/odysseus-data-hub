@@ -2,11 +2,11 @@
 	<h1>Create a new vote</h1>
 	<div class="dark-bg">
 		<p>
-			Enter your vote details below. After submitting your vote, it will be sent to the fleet for approval.
+			Enter your vote details below. After submitting your vote, it will be sent
+			for approval.
 		</p>
 		<form [formGroup]="voteForm" (ngSubmit)="onFormSubmit()">
-			<label>Title</label>
-			<input type="text" formControlName="title" />
+			<label>Title</label> <input type="text" formControlName="title" />
 			<label>Active time</label>
 			<ng-select
 				formControlName="duration_minutes"
@@ -39,15 +39,19 @@
 				<label>Vote option #{{ i + 1 }} </label>
 				<div class="vote-option-row">
 					<input
-					type="text"
-					[formControl]="option"
-					placeholder="Vote option #{{ i + 1 }}"
-				/><button type="button" (click)="removeOption(i)">Remove</button>
+						type="text"
+						[formControl]="option"
+						placeholder="Vote option #{{ i + 1 }}"
+					/><button type="button" (click)="removeOption(i)">Remove</button>
 				</div>
 			</div>
 
-			<button type="button" class="add-option-button" (click)="addOption()">Add option</button>
-			<button type="submit" class="create-vote-button">Submit for approval</button>
+			<button type="button" class="add-option-button" (click)="addOption()">
+				Add option
+			</button>
+			<button type="submit" class="create-vote-button">
+				Submit for approval
+			</button>
 		</form>
 	</div>
 </div>

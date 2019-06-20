@@ -21,6 +21,7 @@ export class SocketService {
 	public logEntryAdded$: Observable<api.LogEntry>;
 	public voteAddedOrUpdated$: Observable<api.Vote>;
 	public shipMetadataUpdated$: Observable<any>;
+	public refreshMap$: Observable<void>;
 
 	constructor(private state: StateService, private router: Router) {
 		this.socket = io(environment.apiUrl);
@@ -39,6 +40,10 @@ export class SocketService {
 		this.shipMetadataUpdated$ = this.createDataUpdateObservable(
 			this.metadataStateSocket
 		);
+
+		this.refreshMap$ = new Observable<void>(o => {
+			this.socket.on('refreshMap', () => o.next());
+		});
 
 		// Disable or enable social hub when state changes in backend
 		this.shipMetadataUpdated$

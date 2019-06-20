@@ -24,6 +24,7 @@ import { get, camelCase, mapKeys, omitBy, first, pick } from 'lodash';
 import { MapBrowserPointerEvent } from 'openlayers';
 import { getFleetId } from '@api/Fleet';
 import { autobind } from 'core-decorators';
+import { SocketService } from '@app/services/socket.service';
 
 const projection = new Projection({
 	code: 'EPSG:3857',
@@ -122,7 +123,7 @@ export class MapComponent implements OnInit, OnDestroy {
 	selectedGrid$ = new BehaviorSubject(null);
 	selectedFleet$ = new BehaviorSubject(null);
 
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient, private socket: SocketService) {}
 
 	ngOnInit() {
 		this.initializeMap();
@@ -130,7 +131,9 @@ export class MapComponent implements OnInit, OnDestroy {
 		this.setupEventListeners();
 	}
 
-	ngOnDestroy() {}
+	ngOnDestroy() {
+		this.refreshMap$.unsubscribe();
+	}
 
 	closePopup(e?) {
 		this.overlay.setPosition(undefined);
@@ -259,9 +262,9 @@ export class MapComponent implements OnInit, OnDestroy {
 		// this.unselectFleet$ = this.state.unselectFleet$.subscribe(() =>
 		// 	this.unselectFleet()
 		// );
-		// this.refreshMap$ = this.socket.refreshMap.subscribe(() =>
-		// 	this.refreshMap()
-		// );
+		this.refreshMap$ = this.socket.refreshMap$.subscribe(() =>
+			this.refreshMap()
+		);
 	}
 
 	onZoomMap(zoomModifier) {

@@ -6,8 +6,11 @@ form {
 	}
 	label {
 		margin-bottom: 3px;
+		display: flex;
+		flex-direction: row;
 	}
 	input,
+	ng-select,
 	textarea {
 		min-width: 600px;
 		margin-bottom: 15px;
@@ -19,7 +22,10 @@ form {
 		padding: 10px;
 		resize: none;
 	}
-
+	.required {
+		color: $warning-color;
+		padding-left: 4px;
+	}
 	button {
 		box-shadow: none;
 		transition: box-shadow $transition-ms;

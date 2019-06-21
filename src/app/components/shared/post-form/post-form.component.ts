@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { StateService } from '@app/services/state.service';
 import { Subscription } from 'rxjs';
 import { get, isFunction } from 'lodash';
+import { DialogService } from '@app/services/dialog.service';
 
 export interface PostType {
 	value: 'NEWS' | 'OPINION' | 'CAPTAINS_LOG';
@@ -23,10 +24,16 @@ export class PostFormComponent implements OnInit, OnDestroy {
 	currentUser: api.Person;
 	user$: Subscription;
 
-	constructor(private state: StateService) {}
+	constructor(private state: StateService, private dialog: DialogService) {}
 
 	async onFormSubmit() {
-		if (!this.postForm.valid || !isFunction(this.onSubmit)) return;
+		if (this.postForm.invalid)
+			return this.dialog.error(
+				'Error',
+				`Make sure that you have filled in the title and text fields`
+			);
+		if (!isFunction(this.onSubmit))
+			return this.dialog.error('Error', 'System malfunction');
 		const formData = {
 			...this.postForm.value,
 			is_visible: true,

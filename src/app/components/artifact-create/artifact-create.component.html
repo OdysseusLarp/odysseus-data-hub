@@ -2,19 +2,32 @@
 	<h1>Add artifact to database</h1>
 	<div>
 		<form [formGroup]="artifactForm" (ngSubmit)="onFormSubmit()">
-			<label>Catalog ID</label>
+			<label><span>Catalog ID</span><span class="required">*</span></label>
 			<input type="text" formControlName="catalog_id" trim="blur" />
-			<label>Artifact name</label>
+			<label><span>Artifact name</span><span class="required">*</span></label>
 			<input type="text" formControlName="name" trim="blur" />
-			<label>Artifact type</label>
-			<input type="text" formControlName="type" trim="blur" />
-			<label>Artifact was discovered by</label>
+			<label><span>Artifact type</span><span class="required">*</span></label>
+			<!-- <input type="text" formControlName="type" trim="blur" /> -->
+			<ng-select
+				[items]="artifactTypes"
+				[searchable]="false"
+				[clearable]="false"
+				formControlName="type"
+			>
+			</ng-select>
+			<label
+				><span>Artifact was discovered by</span
+				><span class="required">*</span></label
+			>
 			<input type="text" formControlName="discovered_by" trim="blur" />
-			<label>Time of discovery</label>
+			<label><span>Time of discovery</span></label>
 			<input type="text" formControlName="discovered_at" trim="blur" />
-			<label>Place of discovery</label>
+			<label><span>Place of discovery</span></label>
 			<input type="text" formControlName="discovered_from" trim="blur" />
-			<label>Description of the artifact</label>
+			<label
+				><span>Description of the artifact</span
+				><span class="required">*</span></label
+			>
 			<textarea formControlName="text" trim="blur"></textarea>
 			<button type="submit" class="submit-button">Add to database</button>
 		</form>

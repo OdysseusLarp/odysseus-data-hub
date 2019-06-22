@@ -6,7 +6,8 @@
 			for approval.
 		</p>
 		<form [formGroup]="voteForm" (ngSubmit)="onFormSubmit()">
-			<label>Title</label> <input type="text" formControlName="title" />
+			<label>Title</label>
+			<input type="text" formControlName="title" trim="blur" />
 			<label>Active time</label>
 			<ng-select
 				formControlName="duration_minutes"
@@ -28,7 +29,7 @@
 			>
 			</ng-select>
 			<label>Description</label>
-			<textarea formControlName="description"></textarea>
+			<textarea formControlName="description" trim="blur"></textarea>
 
 			<div
 				*ngFor="
@@ -41,6 +42,7 @@
 					<input
 						type="text"
 						[formControl]="option"
+						trim="blur"
 						placeholder="Vote option #{{ i + 1 }}"
 					/><button type="button" (click)="removeOption(i)">Remove</button>
 				</div>

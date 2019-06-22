@@ -108,6 +108,22 @@ export class VoteCreateComponent implements OnInit {
 	}
 
 	async onFormSubmit() {
+		const opts = this.voteForm.get('options');
+		if (this.submitting)
+			return this.dialog.error(
+				'Error',
+				`Already submitting. Try again in a few seconds. If you get the same error, reload the page.`
+			);
+		if (this.voteForm.invalid)
+			return this.dialog.error(
+				'Error',
+				`Make sure that you have filled in all the fields and removed all empty options.`
+			);
+		if ((<FormArray>this.voteForm.get('options')).controls.length < 2)
+			return this.dialog.error(
+				'Error',
+				`Your vote needs to have at least two options.`
+			);
 		if (this.submitting || this.voteForm.invalid) return;
 		this.submitting = true;
 		const res = await putVoteCreate({
@@ -123,6 +139,8 @@ export class VoteCreateComponent implements OnInit {
 				}' was submitted for approval. Check back later!`
 			);
 			this.router.navigate(['../vote']);
+		} else {
+			this.dialog.error('Error', `There was an error submitting your vote`);
 		}
 	}
 
@@ -201,7 +219,7 @@ export class VoteCreateComponent implements OnInit {
 			duration_minutes: new FormControl(180, Validators.required),
 			allowed_voters: new FormControl('EVERYONE', Validators.required),
 			description: new FormControl('', Validators.required),
-			options: new FormArray([this.getNewOption()]),
+			options: new FormArray([this.getNewOption(), this.getNewOption()]),
 		});
 	}
 }

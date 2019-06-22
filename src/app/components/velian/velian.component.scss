@@ -1,0 +1,148 @@
+@import '../../../variables';
+
+.log-wrapper {
+	position: fixed;
+	top: 50px;
+	left: 50px;
+
+	button {
+		font-size: 2em;
+		padding-right: 30px;
+		padding-left: 30px;
+	}
+}
+
+.distress-signal-wrapper {
+	position: fixed;
+	bottom: 50px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	div {
+		display: flex;
+		flex-direction: column;
+
+		h2 {
+			font-size: 2em;
+			text-align: center;
+		}
+
+		textarea {
+			resize: none;
+			font-size: 1.1em;
+			padding: 12px;
+			min-width: 500px;
+			min-height: 300px;
+		}
+
+		button {
+			margin-top: 12px;
+			font-size: 1.3em;
+		}
+
+		button:disabled {
+			box-shadow: none;
+			border: 2px solid #a70000;
+		}
+		button:disabled:hover {
+			background: transparent;
+		}
+
+		button.success,
+		button.success:disabled {
+			border: 2px solid #00a72a;
+			box-shadow: 0px 0px 10px rgba(2, 246, 254, 0.2);
+		}
+	}
+}
+
+.lifesupport-wrapper {
+	position: fixed;
+	top: 50px;
+	right: 50px;
+	min-width: 500px;
+
+	h2 {
+		margin-top: 0;
+		font-size: 3em;
+		color: rgb(122, 0, 0);
+		animation: blinker 1s linear infinite;
+		text-align: center;
+	}
+
+	.meter-wrapper {
+		position: relative;
+		width: 100%;
+		border: 2px solid #a70000;
+	}
+
+	// Meter animation from https://codepen.io/bartaxyz/pen/bxgKw
+	.meter {
+		margin: 0 auto;
+		width: 100%;
+		height: 50px;
+	}
+
+	.meter-filled {
+		background: rgba(0, 0, 0, 0.7);
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 100%;
+		width: var(--lifesupport-percentage);
+		border-left: 2px solid #bd0000;
+		// width: 250px;
+	}
+
+	.meter-text {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 1.1em;
+		color: rgb(255, 255, 255);
+		font-family: $data-font;
+	}
+
+	.meter:before {
+		content: '';
+		position: absolute;
+		height: 50px;
+		width: 100%;
+		background: linear-gradient(
+			135deg,
+			#690000 32%,
+			#8d0000 32%,
+			#8d0000 65%,
+			#690000 65%
+		);
+		background-size: 100px 50px;
+		animation: loading-bar 1.5s infinite;
+		animation-timing-function: linear;
+	}
+
+	.no-animation:before {
+		animation: none !important;
+	}
+
+	@keyframes loading-bar {
+		0% {
+			background-position: 100px 0;
+		}
+		100% {
+			background-position: 0 0;
+		}
+	}
+}
+
+@keyframes blinker {
+	50% {
+		color: #c20000;
+	}
+}

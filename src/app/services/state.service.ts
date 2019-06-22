@@ -1,9 +1,23 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 import { get } from 'lodash';
 import { getPersonCardId, getPersonId } from '@api/Person';
 import { getDataTypeId } from '@api/Data';
 import { postLogAudit } from '@api/Log';
+
+export interface VelianState {
+	id: string;
+	type: string;
+	isActive: boolean;
+	canSendSignal: boolean;
+	hasSentSignal: boolean;
+	hackingComplete: boolean;
+	lifesupportRunsOutAt: number;
+	lifesupportMaxTime: number;
+	captainsLogText: string;
+	version: number;
+}
 
 @Injectable({
 	providedIn: 'root',
@@ -17,6 +31,9 @@ export class StateService {
 	showHackingView = new BehaviorSubject(false);
 	hasInitialized$ = new BehaviorSubject(false);
 	isSocialHubEnabled$ = new BehaviorSubject(true);
+
+	isVelianModeEnabled$ = new BehaviorSubject(false);
+	velianState$ = new BehaviorSubject<VelianState>(null);
 
 	constructor() {
 		// Attempt to log in as previous user automatically
@@ -36,6 +53,22 @@ export class StateService {
 			this.sessionStorage.removeItem('previousUserId');
 			this.user.next(null);
 		});
+
+		// Check if this should run in Velian UI mode
+		if (window.localStorage.getItem('enableVelianMode') === 'true')
+			this.isVelianModeEnabled$.next(true);
+
+		// Get current Velian game state
+		this.isVelianModeEnabled$
+			.pipe(distinctUntilChanged())
+			.subscribe(isActive => {
+				if (!isActive) return;
+				getDataTypeId('velian', 'misc').then(res => {
+					if (!res.data.isActive)
+						return console.log('Velian minigame is not enabled in backend');
+					this.velianState$.next(res.data);
+				});
+			});
 	}
 
 	login(id, isRestoredSession = false): Promise<api.Person> {

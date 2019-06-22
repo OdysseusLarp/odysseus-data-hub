@@ -48,6 +48,8 @@ import { MessageDialogComponent } from '@components/message-dialog/message-dialo
 import { PhoneComponent } from './components/phone/phone.component';
 import { GmConfigComponent } from './components/gm-config/gm-config.component';
 import { SipService } from './services/sip.service';
+import { VelianComponent } from './components/velian/velian.component';
+import { VelianConfirmDialogComponent } from './components/velian-confirm-dialog/velian-confirm-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -78,6 +80,8 @@ import { SipService } from './services/sip.service';
 		MessageDialogComponent,
 		PhoneComponent,
 		GmConfigComponent,
+		VelianComponent,
+		VelianConfirmDialogComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -107,6 +111,10 @@ import { SipService } from './services/sip.service';
 		HttpClient,
 	],
 	bootstrap: [AppComponent],
-	entryComponents: [ShipLogSnackbarComponent, MessageDialogComponent],
+	entryComponents: [
+		ShipLogSnackbarComponent,
+		MessageDialogComponent,
+		VelianConfirmDialogComponent,
+	],
 })
 export class AppModule {}

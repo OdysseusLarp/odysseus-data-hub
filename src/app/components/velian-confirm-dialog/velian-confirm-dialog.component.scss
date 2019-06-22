@@ -1,0 +1,28 @@
+@import '../../../variables';
+
+:host {
+	color: #fff;
+}
+
+.container {
+	position: relative;
+}
+
+// Adjust closer position because of dialog
+.box-closer {
+	top: -35px;
+	right: -20px;
+	font-size: 1.5em;
+	transition: color $transition-ms;
+}
+
+.box-closer:hover {
+	color: $bright-yellow !important;
+}
+
+button {
+	margin-top: 12px;
+	font-size: 1.3em;
+	width: 100%;
+	text-align: center;
+}

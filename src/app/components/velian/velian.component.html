@@ -1,0 +1,47 @@
+<div *ngIf="velianState && velianState.hackingComplete">
+	<div class="log-wrapper">
+		<button (click)="openCaptainsLogDialog()">CAPTAIN'S LOG</button>
+	</div>
+	<div class="lifesupport-wrapper">
+		<h2 *ngIf="(lifesupportOffline$ | async); else critical">
+			LIFE SUPPORT OFFLINE
+		</h2>
+		<ng-template #critical> <h2>LIFE SUPPORT CRITICAL</h2> </ng-template>
+		<div class="meter-wrapper">
+			<div
+				class="meter"
+				[ngClass]="{ 'no-animation': lifesupportOffline$ | async }"
+			></div>
+			<div class="meter-filled"></div>
+			<div class="meter-text">
+				{{ lifesupportRunsOutIn$ | async }} REMAINING
+			</div>
+		</div>
+	</div>
+	<div class="distress-signal-wrapper">
+		<div>
+			<h2 *ngIf="!velianState.hasSentSignal">SEND A DISTRESS SIGNAL</h2>
+			<textarea
+				*ngIf="!velianState.hasSentSignal"
+				placeholder="Message"
+				[(ngModel)]="distressSignal"
+				trim="blur"
+			></textarea>
+			<button
+				[disabled]="!velianState.canSendSignal || velianState.hasSentSignal"
+				[ngClass]="{ success: velianState.hasSentSignal }"
+				(click)="openConfirmationDialog()"
+			>
+				{{
+					velianState.hasSentSignal
+						? 'DISTRESS SIGNAL HAS BEEN SENT'
+						: 'SEND DISTRESS SIGNAL'
+				}}
+			</button>
+		</div>
+	</div>
+</div>
+<app-hacking
+	*ngIf="velianState && !velianState.hackingComplete"
+	[onCompletion]="onCompleteHacking"
+></app-hacking>

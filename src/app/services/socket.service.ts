@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import io from 'socket.io-client/dist/socket.io';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 import { get } from 'lodash';
 import { environment } from '@env/environment';
 import { StateService } from './state.service';
 import { Router } from '@angular/router';
+import { VelianState } from './state.service';
 
 interface Socket {
 	on: (eventName: string, attributes: any) => void;
 	emit: (eventName: string, data: any) => void;
+	close: () => void;
 }
 
 @Injectable({
@@ -18,10 +20,12 @@ interface Socket {
 export class SocketService {
 	socket: Socket;
 	metadataStateSocket: Socket;
+	velianStateSocket: Socket;
 	public logEntryAdded$: Observable<api.LogEntry>;
 	public voteAddedOrUpdated$: Observable<api.Vote>;
 	public shipMetadataUpdated$: Observable<any>;
 	public refreshMap$: Observable<void>;
+	public velianStateUpdated$: Observable<VelianState>;
 
 	constructor(private state: StateService, private router: Router) {
 		this.socket = io(environment.apiUrl);
@@ -55,6 +59,23 @@ export class SocketService {
 					this.router.navigate(['/']);
 				}
 				this.state.isSocialHubEnabled$.next(isEnabled);
+			});
+
+		// Subscribe to Velian game state changes if enabled
+		this.state.isVelianModeEnabled$
+			.pipe(distinctUntilChanged())
+			.subscribe(isActive => {
+				if (!isActive || this.velianStateSocket) return;
+				this.velianStateSocket = io.connect(
+					`${environment.apiUrl}/data`,
+					{ query: { data: '/data/misc/velian' } }
+				);
+				this.velianStateUpdated$ = this.createDataUpdateObservable(
+					this.velianStateSocket
+				);
+				this.velianStateUpdated$.subscribe(velianState =>
+					this.state.velianState$.next(velianState)
+				);
 			});
 	}
 

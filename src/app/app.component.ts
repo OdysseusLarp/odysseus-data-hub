@@ -8,6 +8,7 @@ import { ShipLogSnackbarComponent } from '@components/ship-log-snackbar/ship-log
 import { fadeInAnimation } from '@app/animations';
 import { autobind } from 'core-decorators';
 import { SipService } from './services/sip.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-root',
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit {
 	user: api.Person;
 	showHackingView$: Observable<boolean>;
 	isSocialHubEnabled$: Observable<boolean>;
+	isVelianModeEnabled$: Observable<boolean>;
 	canEnableHacking: boolean;
 	hackingTarget: string;
 
@@ -29,6 +31,7 @@ export class AppComponent implements OnInit {
 		private socket: SocketService,
 		private snackBar: MatSnackBar,
 		public sip: SipService,
+		private route: ActivatedRoute,
 		private messaging: MessagingService
 	) {}
 
@@ -36,6 +39,7 @@ export class AppComponent implements OnInit {
 		this.user$ = this.state.user.subscribe(user => (this.user = user));
 		this.showHackingView$ = this.state.showHackingView;
 		this.isSocialHubEnabled$ = this.state.isSocialHubEnabled$;
+		this.isVelianModeEnabled$ = this.state.isVelianModeEnabled$;
 		this.state.canEnableHacking$.subscribe(async canEnableHacking => {
 			// Not sure why I had to make this async/await but I was getting errors otherwise
 			// https://github.com/angular/angular/issues/17572
@@ -52,6 +56,11 @@ export class AppComponent implements OnInit {
 				data: logEntry,
 				panelClass: 'log-entry-snackbar',
 			});
+		});
+		this.route.queryParams.subscribe(params => {
+			if (!params.disablevelian) return;
+			window.localStorage.removeItem('enableVelianMode');
+			this.state.isVelianModeEnabled$.next(false);
 		});
 	}
 

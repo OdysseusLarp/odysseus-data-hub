@@ -32,5 +32,14 @@
 				bindValue="id"
 			></ng-select>
 		</div>
+		<div>
+			<h2>Velian mode</h2>
+			<button *ngIf="hasVelianMode" (click)="setVelianMode(false)">
+				Disable velian mode
+			</button>
+			<button *ngIf="!hasVelianMode" (click)="setVelianMode(true)">
+				Enable velian mode
+			</button>
+		</div>
 	</div>
 </div>

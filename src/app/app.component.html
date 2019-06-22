@@ -1,4 +1,4 @@
-<div *ngIf="(isSocialHubEnabled$ | async)">
+<div *ngIf="(isSocialHubEnabled$ | async) && !(isVelianModeEnabled$ | async)">
 	<div class="outer-padding" *ngIf="!(this.showHackingView$ | async)">
 		<div
 			class="boxed exo"
@@ -33,7 +33,9 @@
 		π
 	</div>
 </div>
-<app-static-screen *ngIf="!(isSocialHubEnabled$ | async)"></app-static-screen>
+<app-static-screen
+	*ngIf="!(isSocialHubEnabled$ | async) && !(isVelianModeEnabled$ | async)"
+></app-static-screen>
 <app-phone
 	class="phone"
 	[ngClass]="{
@@ -43,3 +45,4 @@
 	}"
 >
 </app-phone>
+<app-velian *ngIf="(isVelianModeEnabled$ | async)"></app-velian>

@@ -24,13 +24,14 @@
 
 .hacking-launcher {
 	position: fixed;
-	bottom: 10px;
-	right: 15px;
+	bottom: 20px;
+	right: 28px;
 	font-size: 2em;
 	color: $blue;
 	transition: color $transition-ms;
 	cursor: pointer;
 	animation: hack-blinker 1s linear infinite;
+	z-index: 999;
 }
 
 .hacking-launcher:hover {

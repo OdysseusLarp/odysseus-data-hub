@@ -52,6 +52,13 @@ export const dynasties = new Set([
 	'Ambition',
 ]);
 
+// Same for senators
+export const senators = new Set([
+	'Senator',
+	'Senator (Acting)',
+	'Prime Minister (Head of Senate)',
+]);
+
 // Ranks that are considered high military ranks
 export const highMilitaryRanks = new Set([
 	'Lieutenant',
@@ -152,6 +159,7 @@ export class VoteCreateComponent implements OnInit {
 			religion,
 			political_party,
 			military_rank,
+			title,
 		} = this.state.user.getValue();
 		const ship = get(this.state.user.getValue(), 'ship.id');
 		const filters = [
@@ -194,6 +202,12 @@ export class VoteCreateComponent implements OnInit {
 			filters.push({
 				value: 'HIGH_RANKING_OFFICER',
 				text: 'High ranking military officers',
+			});
+		}
+		if (senators.has(title)) {
+			filters.push({
+				value: 'SENATE',
+				text: 'Senate',
 			});
 		}
 		this.voteFilters = filters;

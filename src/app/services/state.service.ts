@@ -31,6 +31,7 @@ export class StateService {
 	showHackingView = new BehaviorSubject(false);
 	hasInitialized$ = new BehaviorSubject(false);
 	isSocialHubEnabled$ = new BehaviorSubject(true);
+	isAdmin$ = new BehaviorSubject(false);
 
 	isVelianModeEnabled$ = new BehaviorSubject(false);
 	velianState$ = new BehaviorSubject<VelianState>(null);
@@ -42,7 +43,8 @@ export class StateService {
 		else this.hasInitialized$.next(true);
 
 		getDataTypeId('metadata', 'ship').then(res => {
-			const isEnabled = get(res, 'data.social_ui_enabled', true);
+			const isEnabled =
+				get(res, 'data.social_ui_enabled', true) || this.isAdmin$.getValue();
 			this.isSocialHubEnabled$.next(isEnabled);
 		});
 

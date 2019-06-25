@@ -4,6 +4,7 @@ import JsSIP from 'jssip';
 import { BehaviorSubject, Subject, combineLatest } from 'rxjs';
 import { first, distinctUntilChanged, map, filter } from 'rxjs/operators';
 import { getSipConfig, getSipContact } from '@api/SIP';
+import { StateService } from '@app/services/state.service';
 
 const mediaConstraints = { audio: true, video: false };
 
@@ -20,6 +21,7 @@ export interface Call {
 export class SipService {
 	sipId$ = new BehaviorSubject<string>(null);
 	isRegistered$ = new BehaviorSubject<boolean>(false);
+	isRegistering$ = new BehaviorSubject<boolean>(false);
 	phone: JsSIP.UA;
 	socket: JsSIP.Socket;
 	sipContacts: api.SipContact[] = [];
@@ -36,14 +38,18 @@ export class SipService {
 	endSession$ = new Subject();
 	setAudioStream$ = new BehaviorSubject(null);
 
-	constructor() {
+	constructor(private state: StateService) {
 		this.fetchSipConfig();
 		this.fetchSipContacts();
-		this.sipConfig$.pipe(first(Boolean)).subscribe(() => {
-			// Check if local storage has sipId defined and initialize a session
-			// if it does
-			const sipId = window.localStorage.getItem('sipId');
-			if (sipId) this.register(sipId);
+
+		// Attempt to restore SIP session after social hub is enabled, and
+		// unregister from SIP when social hub is disabled
+		combineLatest(
+			this.state.isSocialHubEnabled$.pipe(distinctUntilChanged()),
+			this.sipConfig$.pipe(first(Boolean))
+		).subscribe(([isSocialHubEnabled, sipConfig]) => {
+			if (isSocialHubEnabled) this.restoreSipRegistration();
+			else this.unregister();
 		});
 
 		// Filter self out of SIP contacts when registeration changes
@@ -64,6 +70,13 @@ export class SipService {
 		this.incomingCall$
 			.pipe(filter(Boolean))
 			.subscribe(() => this.showPhone$.next('MAXIMIZED'));
+	}
+
+	restoreSipRegistration() {
+		// Check if local storage has sipId defined and initialize a session
+		// if it does
+		const sipId = window.localStorage.getItem('sipId');
+		if (sipId) this.register(sipId);
 	}
 
 	fetchSipConfig() {
@@ -99,6 +112,8 @@ export class SipService {
 	}
 
 	register(sipId: string) {
+		if (this.isRegistering$.getValue() || this.isRegistered$.getValue()) return;
+		this.isRegistering$.next(true);
 		console.log('Registering to SIP as', sipId);
 		const sipConfig = this.sipConfig$.getValue();
 		if (!sipConfig) {
@@ -121,6 +136,17 @@ export class SipService {
 			console.log('=> Registered to SIP', e);
 			this.setSipId(sipId);
 			this.isRegistered$.next(true);
+			this.isRegistering$.next(false);
+		});
+		this.phone.on('registrationFailed', e => {
+			console.log('=> SIP Registration failed', e);
+			this.isRegistered$.next(false);
+			this.isRegistering$.next(false);
+		});
+		this.phone.on('unregistered', e => {
+			console.log('=> SIP Unregistered', e);
+			this.isRegistered$.next(false);
+			this.isRegistering$.next(false);
 		});
 
 		// Event listeners for incoming and outgoing call events
@@ -131,12 +157,13 @@ export class SipService {
 
 	unregister(clearSipId = false) {
 		this.hangUp();
+		this.isRegistering$.next(false);
+		this.isRegistered$.next(false);
 		if (!this.phone) return;
 		this.phone.terminateSessions();
 		this.phone.unregister();
 		this.phone = null;
 		if (clearSipId) this.unsetSipId();
-		this.isRegistered$.next(false);
 	}
 
 	call(targetId) {

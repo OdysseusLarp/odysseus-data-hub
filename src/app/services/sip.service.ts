@@ -210,7 +210,9 @@ export class SipService {
 
 	onIncomingCall({ session, request }) {
 		const callerId = request.from.uri.user;
-		const contact = this.sipContactsMap.get(callerId);
+		const contact =
+			this.sipContactsMap.get(callerId) ||
+			<any>{ name: `Unknown caller (${callerId})` };
 		if (this.hasActiveCall$.getValue()) {
 			console.log(
 				`Denying an incoming call from ${

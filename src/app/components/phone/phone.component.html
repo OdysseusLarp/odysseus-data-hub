@@ -58,6 +58,7 @@
 			delayClickOutsideInit="true"
 		>
 			<h1>Voice communications system</h1>
+			<h2>Registered as {{ (sip.registeredContact$ | async).name }}</h2>
 			<span class="box-closer link" (click)="this.closePhone()"></span>
 
 			<div class="contacts-caller-wrapper" *ngIf="(sip.isRegistered$ | async)">

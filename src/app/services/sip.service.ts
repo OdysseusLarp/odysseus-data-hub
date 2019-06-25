@@ -19,23 +19,39 @@ export interface Call {
 	providedIn: 'root',
 })
 export class SipService {
+	// ID and DB contact of current registration
 	sipId$ = new BehaviorSubject<string>(null);
+	registeredContact$ = new BehaviorSubject<api.SipContact>(null);
+
+	// Registration state
 	isRegistered$ = new BehaviorSubject<boolean>(false);
 	isRegistering$ = new BehaviorSubject<boolean>(false);
+
 	phone: JsSIP.UA;
 	socket: JsSIP.Socket;
+
+	// Contacts
 	sipContacts: api.SipContact[] = [];
 	sipContactsMap = new Map<string, api.SipContact>();
 	outgoingSipContacts$ = new BehaviorSubject<api.SipContact[]>([]);
+
 	sipConfig$ = new BehaviorSubject<api.SipConfig>(null);
+
+	// HIDDEN - Phone component is completely hidden
+	// MINIMIZED -Phone component is minimized in bottom right corner
+	// MAXIMIZED - Phone component takes over the screen blocking other actions
 	showPhone$ = new BehaviorSubject<PhoneViewState>('HIDDEN');
 
+	// Call details
 	ongoingCall$ = new BehaviorSubject<Call>(null);
 	outgoingCall$ = new BehaviorSubject<Call>(null);
 	incomingCall$ = new BehaviorSubject<Call>(null);
 	hasActiveCall$ = new BehaviorSubject<boolean>(false);
 
+	// When someone hangs up, endSession$ emits
 	endSession$ = new Subject();
+
+	// Will contain the incoming audio stream object that is set to <audio> element
 	setAudioStream$ = new BehaviorSubject(null);
 
 	constructor(private state: StateService) {
@@ -137,6 +153,7 @@ export class SipService {
 			this.setSipId(sipId);
 			this.isRegistered$.next(true);
 			this.isRegistering$.next(false);
+			this.registeredContact$.next(this.sipContactsMap.get(sipId));
 		});
 		this.phone.on('registrationFailed', e => {
 			console.log('=> SIP Registration failed', e);
@@ -159,6 +176,7 @@ export class SipService {
 		this.hangUp();
 		this.isRegistering$.next(false);
 		this.isRegistered$.next(false);
+		this.registeredContact$.next(null);
 		if (!this.phone) return;
 		this.phone.terminateSessions();
 		this.phone.unregister();

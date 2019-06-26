@@ -14,7 +14,7 @@
 			<tr *ngFor="let artifact of artifacts">
 				<td>
 					<a routerLink="/artifact/{{ artifact.id }}"
-						>{{ artifact.name }} (#{{ artifact.catalog_id }})</a
+						>{{ artifact.name }} ({{ artifact.catalog_id }})</a
 					>
 				</td>
 				<td>Discovered by {{ artifact.discovered_by }}</td>

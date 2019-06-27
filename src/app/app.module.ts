@@ -52,6 +52,7 @@ import { SipService } from './services/sip.service';
 import { VelianComponent } from './components/velian/velian.component';
 import { VelianConfirmDialogComponent } from './components/velian-confirm-dialog/velian-confirm-dialog.component';
 import { IsVisiblePipe } from './pipes/is-visible.pipe';
+import { VelianDialogComponent } from './components/velian-dialog/velian-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -85,6 +86,7 @@ import { IsVisiblePipe } from './pipes/is-visible.pipe';
 		VelianComponent,
 		VelianConfirmDialogComponent,
 		IsVisiblePipe,
+		VelianDialogComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -119,6 +121,7 @@ import { IsVisiblePipe } from './pipes/is-visible.pipe';
 		ShipLogSnackbarComponent,
 		MessageDialogComponent,
 		VelianConfirmDialogComponent,
+		VelianDialogComponent,
 	],
 })
 export class AppModule {}

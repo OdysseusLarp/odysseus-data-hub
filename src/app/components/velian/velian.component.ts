@@ -16,6 +16,7 @@ import { patchDataTypeId } from '@api/Data';
 import { putStarmapVelianDistressSignal } from '@api/Starmap';
 import { VelianConfirmDialogComponent } from '@components/velian-confirm-dialog/velian-confirm-dialog.component';
 import { DIALOG_SETTINGS } from '@components/message-dialog/message-dialog.component';
+import { VelianDialogComponent } from '@app/components/velian-dialog/velian-dialog.component';
 
 @Component({
 	selector: 'app-velian',
@@ -94,7 +95,8 @@ export class VelianComponent implements OnInit, OnDestroy {
 	}
 
 	openCaptainsLogDialog() {
-		this.dialog.info(`Captain's log entry`, this.velianState.captainsLogText);
+		// this.dialog.info(`Captain's log entry`, this.velianState.captainsLogText);
+		this.matDialog.open(VelianDialogComponent, { ...DIALOG_SETTINGS });
 	}
 
 	openConfirmationDialog() {

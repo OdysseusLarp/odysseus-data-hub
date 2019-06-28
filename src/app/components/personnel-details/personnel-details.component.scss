@@ -73,6 +73,11 @@
 h1 {
 	display: flex;
 	align-items: center;
+
+	button {
+		margin-right: 16px;
+		box-shadow: none;
+	}
 }
 
 h1 a {

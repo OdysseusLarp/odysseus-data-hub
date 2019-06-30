@@ -53,12 +53,13 @@ export class SocketService {
 		this.shipMetadataUpdated$
 			.pipe(map(metadata => get(metadata, 'social_ui_enabled', true)))
 			.subscribe(isEnabled => {
+				const isAdmin = this.state.isAdmin$.getValue();
 				// If there is an active user, log them out before disabling social hub
-				if (!isEnabled && !!this.state.user.getValue()) {
+				if (!isAdmin && !isEnabled && !!this.state.user.getValue()) {
 					this.state.logout.next();
 					this.router.navigate(['/']);
 				}
-				this.state.isSocialHubEnabled$.next(isEnabled);
+				this.state.isSocialHubEnabled$.next(isEnabled || isAdmin);
 			});
 
 		// Subscribe to Velian game state changes if enabled

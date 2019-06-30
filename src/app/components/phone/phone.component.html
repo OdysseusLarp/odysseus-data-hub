@@ -52,8 +52,13 @@
 </div>
 <div class="phone-overlay" *ngIf="showPhone === 'MAXIMIZED'">
 	<div class="phone-wrapper">
-		<div class="phone-content boxed">
+		<div
+			class="phone-content boxed"
+			(clickOutside)="this.closePhone()"
+			delayClickOutsideInit="true"
+		>
 			<h1>Voice communications system</h1>
+			<h2>Registered as {{ (sip.registeredContact$ | async).name }}</h2>
 			<span class="box-closer link" (click)="this.closePhone()"></span>
 
 			<div class="contacts-caller-wrapper" *ngIf="(sip.isRegistered$ | async)">
@@ -61,8 +66,9 @@
 					<h2>Contacts</h2>
 					<button
 						type="button"
+						class="button-contact"
 						(click)="call(sipContact.id)"
-						*ngFor="let sipContact of (sip.outgoingSipContacts$ | async)"
+						*ngFor="let sipContact of (outgoingSipContacts$ | async)"
 					>
 						Call {{ sipContact.name }}
 					</button>

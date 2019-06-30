@@ -9,6 +9,11 @@
 	display: block;
 }
 
+h1 {
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
 .phone-minimized {
 	position: fixed;
 	bottom: 6px;
@@ -144,7 +149,13 @@ button.answer-call:hover {
 					button {
 						display: block;
 						width: 100%;
-						margin-bottom: 5px;
+						margin-bottom: 10px;
+						box-shadow: none;
+						cursor: pointer;
+					}
+					button:hover {
+						box-shadow: 0px 0px 10px $dark-blue;
+						color: $bright-yellow;
 					}
 				}
 

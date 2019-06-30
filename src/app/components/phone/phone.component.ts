@@ -6,8 +6,8 @@ import {
 	OnDestroy,
 } from '@angular/core';
 import { SipService, Call, PhoneViewState } from '@app/services/sip.service';
-import { Subscription, BehaviorSubject } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { Subscription, BehaviorSubject, Observable } from 'rxjs';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import moment from 'moment';
 import { StateService } from '@app/services/state.service';
 
@@ -21,6 +21,7 @@ export class PhoneComponent implements OnInit, OnDestroy {
 	@ViewChild('audio') audio: ElementRef;
 	@ViewChild('incomingCallTone') incomingCallTone: ElementRef;
 	@ViewChild('outgoingCallTone') outgoingCallTone: ElementRef;
+	outgoingSipContacts$: Observable<api.SipContact[]>;
 	setAudioStream$: Subscription;
 	outgoingCall: Call;
 	outgoingCall$: Subscription;
@@ -31,10 +32,16 @@ export class PhoneComponent implements OnInit, OnDestroy {
 	callTime$ = new BehaviorSubject<number>(0);
 	formattedCallTime$ = new BehaviorSubject<string>('');
 	showPhone: PhoneViewState = 'HIDDEN';
+	selectedContact = null;
 
 	constructor(public sip: SipService, public state: StateService) {}
 
 	ngOnInit() {
+		// Filter out contacts that don't have is_visible = true
+		this.outgoingSipContacts$ = this.sip.outgoingSipContacts$.pipe(
+			map(contacts => contacts.filter(c => (<any>c).is_visible))
+		);
+
 		this.sip.endSession$.subscribe(() => this.onEndSession());
 		this.setAudioStream$ = this.sip.setAudioStream$.subscribe(stream => {
 			if (stream) {
@@ -95,7 +102,7 @@ export class PhoneComponent implements OnInit, OnDestroy {
 
 	closePhone() {
 		const newState = this.sip.isRegistered$.getValue() ? 'MINIMIZED' : 'HIDDEN';
-		console.log('new state =>', newState);
+		console.log('setting phone state =>', newState);
 		this.sip.showPhone$.next(newState);
 	}
 
@@ -111,6 +118,7 @@ export class PhoneComponent implements OnInit, OnDestroy {
 	}
 
 	call(targetId: string) {
+		if (!targetId) return;
 		this.sip.call(targetId);
 	}
 

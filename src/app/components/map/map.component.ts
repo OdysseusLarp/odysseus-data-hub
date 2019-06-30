@@ -242,26 +242,6 @@ export class MapComponent implements OnInit, OnDestroy {
 	}
 
 	private setupSubscriptions() {
-		// this.isGridVisible$ = this.state.isGridVisible$.subscribe(isGridVisible => {
-		// 	this.isGridVisible = isGridVisible;
-		// 	layerGrid.setVisible(isGridVisible);
-		// 	layerFleet.setVisible(isGridVisible);
-		// });
-		// this.centerToShip$ = this.state.centerToShip$.subscribe(coords => {
-		// 	this.map.getView().setCenter(coords);
-		// });
-		// this.geoEventFinished$ = this.state.geoEventFinished$.subscribe(() =>
-		// 	this.refreshMap()
-		// );
-		// this.unselectGrid$ = this.state.unselectGrid$.subscribe(() =>
-		// 	this.unselectGrid()
-		// );
-		// this.unselectObject$ = this.state.unselectObject$.subscribe(() =>
-		// 	this.unselectFeature()
-		// );
-		// this.unselectFleet$ = this.state.unselectFleet$.subscribe(() =>
-		// 	this.unselectFleet()
-		// );
 		this.refreshMap$ = this.socket.refreshMap$.subscribe(() =>
 			this.refreshMap()
 		);
@@ -384,7 +364,7 @@ export class MapComponent implements OnInit, OnDestroy {
 	}
 
 	private setupEventListeners() {
-		this.map.on('singleclick', (e: MapBrowserPointerEvent) => {
+		this.map.on('click', (e: MapBrowserPointerEvent) => {
 			// if (this.map.getView().getZoom() < 6) return;
 			this.getClickedFeatures(e.coordinate);
 		});

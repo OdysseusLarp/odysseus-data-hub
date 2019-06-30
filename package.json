@@ -33,6 +33,7 @@
 		"jssip": "^3.3.6",
 		"lodash": "^4.17.11",
 		"moment": "^2.23.0",
+		"ng-click-outside": "^4.0.0",
 		"ng2-trim-directive": "^2.3.2",
 		"ngx-auto-scroll": "^1.1.0",
 		"ngx-markdown": "^7.1.5",

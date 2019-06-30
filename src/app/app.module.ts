@@ -10,6 +10,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MarkdownModule } from 'ngx-markdown';
+import { ClickOutsideModule } from 'ng-click-outside';
 
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -50,6 +51,8 @@ import { GmConfigComponent } from './components/gm-config/gm-config.component';
 import { SipService } from './services/sip.service';
 import { VelianComponent } from './components/velian/velian.component';
 import { VelianConfirmDialogComponent } from './components/velian-confirm-dialog/velian-confirm-dialog.component';
+import { IsVisiblePipe } from './pipes/is-visible.pipe';
+import { VelianDialogComponent } from './components/velian-dialog/velian-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -82,6 +85,8 @@ import { VelianConfirmDialogComponent } from './components/velian-confirm-dialog
 		GmConfigComponent,
 		VelianComponent,
 		VelianConfirmDialogComponent,
+		IsVisiblePipe,
+		VelianDialogComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -101,6 +106,7 @@ import { VelianConfirmDialogComponent } from './components/velian-confirm-dialog
 		MatRadioModule,
 		MatDialogModule,
 		HttpClientModule,
+		ClickOutsideModule,
 	],
 	providers: [
 		StateService,
@@ -115,6 +121,7 @@ import { VelianConfirmDialogComponent } from './components/velian-confirm-dialog
 		ShipLogSnackbarComponent,
 		MessageDialogComponent,
 		VelianConfirmDialogComponent,
+		VelianDialogComponent,
 	],
 })
 export class AppModule {}

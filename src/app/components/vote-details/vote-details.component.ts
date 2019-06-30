@@ -10,6 +10,7 @@ import { SocketService } from '@app/services/socket.service';
 import {
 	highMilitaryRanks,
 	politicalParties,
+	senators,
 	formatFilter,
 } from '../vote-create/vote-create.component';
 
@@ -23,6 +24,7 @@ function getVotingMessage(allowedVoters) {
 		['EVERYONE', 'everyone'],
 		['FULL_CITIZENSHIP', 'those with full citizenship status'],
 		['HIGH_RANKING_OFFICER', 'high ranking military officers'],
+		['SENATE', 'the senate'],
 	]);
 	if (votingAllowedFor.has(allowedVoters))
 		return votingAllowedFor.get(allowedVoters);
@@ -133,6 +135,7 @@ export class VoteDetailsComponent implements OnInit, OnDestroy {
 			dynasty,
 			military_rank,
 			political_party,
+			title,
 		} = user;
 		const userReligion = formatFilter('religion', religion);
 		const userDynasty = formatFilter('dynasty', dynasty);
@@ -145,6 +148,7 @@ export class VoteDetailsComponent implements OnInit, OnDestroy {
 				citizenship === 'Full citizenship',
 			allowedVoters === 'HIGH_RANKING_OFFICER' &&
 				highMilitaryRanks.has(military_rank),
+			allowedVoters === 'SENATE' && senators.has(title),
 			userShip === allowedVoters,
 			userReligion === allowedVoters,
 			userDynasty === allowedVoters,

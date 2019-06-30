@@ -47,7 +47,6 @@ export class AppComponent implements OnInit {
 		});
 		this.socket.logEntryAdded$.subscribe((logEntry: api.LogEntry) => {
 			// Don't bother with log entries if there is no active user
-			// TODO: Close the socket when user logs in, similarly as in messaging service
 			if (!this.state.user.getValue()) return;
 			this.snackBar.openFromComponent(ShipLogSnackbarComponent, {
 				duration: 5000,
@@ -58,9 +57,13 @@ export class AppComponent implements OnInit {
 			});
 		});
 		this.route.queryParams.subscribe(params => {
-			if (!params.disablevelian) return;
-			window.localStorage.removeItem('enableVelianMode');
-			this.state.isVelianModeEnabled$.next(false);
+			if (params.disablevelian) {
+				window.localStorage.removeItem('enableVelianMode');
+				this.state.isVelianModeEnabled$.next(false);
+			}
+			if (params.admin === 'true') {
+				this.state.isAdmin$.next(true);
+			}
 		});
 	}
 

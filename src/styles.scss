@@ -226,6 +226,15 @@ textarea:focus {
 	}
 }
 
+.back-button {
+	margin-right: 16px;
+	box-shadow: none;
+	font-size: 13.3333px !important;
+}
+.back-button:hover {
+	box-shadow: 0px 0px 5px $dark-blue;
+}
+
 /* Body scrollbar settigns */
 
 ::-webkit-scrollbar {

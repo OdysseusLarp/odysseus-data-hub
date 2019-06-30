@@ -1,5 +1,9 @@
 <div class="boxed">
-	<h1>Ship details</h1>
+	<h1>
+		<button type="button" class="back-button" (click)="navigateBack()">
+			&lt; Back</button
+		><span>Ship details</span>
+	</h1>
 	<div *ngIf="ship && ship.is_visible" class="dark-bg">
 		<h2>{{ ship.name }}</h2>
 		<p>Status: {{ ship.status }}</p>

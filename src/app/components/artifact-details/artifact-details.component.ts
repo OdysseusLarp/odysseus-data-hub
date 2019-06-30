@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
 import { getScienceArtifactId, putScienceArtifactEntry } from '@api/Artifact';
 import { ActivatedRoute } from '@angular/router';
 import { StateService } from '@app/services/state.service';
-import { get } from 'lodash';
 import { Subscription } from 'rxjs';
-import moment from 'moment';
 
 @Component({
 	selector: 'app-artifact-details',
@@ -19,7 +18,11 @@ export class ArtifactDetailsComponent implements OnInit, OnDestroy {
 	artifactId: number;
 	isSubmitting = false;
 
-	constructor(private route: ActivatedRoute, private state: StateService) {}
+	constructor(
+		private route: ActivatedRoute,
+		private state: StateService,
+		private location: Location
+	) {}
 
 	ngOnInit() {
 		this.route.params.subscribe(({ id }) => {
@@ -31,6 +34,10 @@ export class ArtifactDetailsComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy() {
 		this.user$.unsubscribe();
+	}
+
+	navigateBack() {
+		this.location.back();
 	}
 
 	private getArtifactData() {

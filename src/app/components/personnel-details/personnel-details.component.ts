@@ -6,6 +6,7 @@ import {
 	OnDestroy,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { getPersonId, postPersonIdEntry } from '@api/Person';
 import { get } from 'lodash';
 import { StateService } from '@app/services/state.service';
@@ -28,7 +29,8 @@ export class PersonnelDetailsComponent implements OnInit, OnDestroy {
 	constructor(
 		private route: ActivatedRoute,
 		private state: StateService,
-		private permission: PermissionService
+		private permission: PermissionService,
+		private location: Location
 	) {}
 
 	ngOnInit() {
@@ -41,6 +43,10 @@ export class PersonnelDetailsComponent implements OnInit, OnDestroy {
 	ngOnDestroy() {
 		this.state.canEnableHacking$.next(false);
 		this.state.hackingTarget$.next(null);
+	}
+
+	navigateBack() {
+		this.location.back();
 	}
 
 	private fetchPerson(id) {

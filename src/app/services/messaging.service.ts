@@ -106,10 +106,6 @@ export class MessagingService {
 		);
 		this.socket = socket;
 		this.hasInitialized.next(true);
-		setInterval(
-			() => console.log('unseen messages =>', this.unseenMessages),
-			1000
-		);
 	}
 
 	private onMessagesSeen(messages: api.ComMessage[]) {

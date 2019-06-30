@@ -4,18 +4,27 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-
+	height: 70vh !important;
 	div {
 		text-align: center;
 	}
 }
 
+h1 {
+	font-size: 3em;
+}
+h2 {
+	font-size: 2em;
+	margin-bottom: 6vh;
+}
+
 form {
-	max-width: 500px;
 	display: flex;
 	flex-direction: column;
-	margin-top: 50px;
-	margin-bottom: 50px;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	margin: 0;
 
 	input {
 		padding-top: 20px !important;
@@ -24,9 +33,11 @@ form {
 
 	input,
 	button {
-		font-size: 2em;
+		font-size: 2.5em;
 		text-align: center;
 		padding: 8px;
+		width: 100%;
+		box-sizing: border-box;
 	}
 
 	button {

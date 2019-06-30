@@ -5,7 +5,7 @@ import { environment } from '@env/environment';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import * as io from 'socket.io-client/dist/socket.io';
-import { get, isEqual, forIn, debounce, isEmpty } from 'lodash';
+import { get, isEqual, forIn, debounce, isEmpty, uniq } from 'lodash';
 import {
 	ChatView,
 	OutgoingMessage,
@@ -106,18 +106,18 @@ export class MessagingService {
 		);
 		this.socket = socket;
 		this.hasInitialized.next(true);
+		setInterval(
+			() => console.log('unseen messages =>', this.unseenMessages),
+			1000
+		);
 	}
 
 	private onMessagesSeen(messages: api.ComMessage[]) {
-		if (this.chatView.type !== 'private') return;
-		// TODO: refactor
-		// for now just pick the sender id of the first message and remove those from unseenMessages
 		if (!Array.isArray(messages)) return;
-		const id = get(messages[0], 'person_id');
-		if (id) {
+		uniq(messages.map(m => m.person_id)).forEach(id => {
 			this.unseenMessages.delete(id);
-			this.emitUnseenMessages();
-		}
+		});
+		this.emitUnseenMessages();
 	}
 
 	private onStatusReceived(status) {

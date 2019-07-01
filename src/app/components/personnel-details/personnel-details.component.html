@@ -8,7 +8,9 @@
 <div class="boxed">
 	<div *ngIf="person && person.is_visible">
 		<h1>
-			<button (click)="this.navigateBack()">Back</button>
+			<button type="button" class="back-button" (click)="navigateBack()">
+				&lt; Back
+			</button>
 			<span>{{ person.full_name }}</span>
 			<a routerLink="/communications/private/{{ person.id }}"
 				>[ open communications ]</a

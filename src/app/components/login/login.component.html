@@ -2,11 +2,19 @@
 	<div class="form-wrapper">
 		<div>
 			<h1>Welcome to EOC DataHub</h1>
-			<h2>Log in using your Citizen Card</h2>
+			<h2>Log in using the ID located on the back of your Citizen Card</h2>
 			<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-				<input type="text" formControlName="personId" trim="blur" placeholder="000000" autofocus />
+				<input
+					type="text"
+					formControlName="personId"
+					trim="blur"
+					placeholder="ABC123"
+					autofocus
+				/>
 				&nbsp;
-				<button [disabled]="!loginForm.valid || submitting" class="no-shadow">Log in!</button>
+				<button [disabled]="!loginForm.valid || submitting" class="no-shadow">
+					Log in!
+				</button>
 			</form>
 			<p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
 		</div>

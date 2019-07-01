@@ -1,7 +1,15 @@
 <div class="boxed">
-	<h1 *ngIf="!artifact">Artifact details</h1>
+	<h1 *ngIf="!artifact">
+		<button type="button" class="back-button" (click)="navigateBack()">
+			&lt; Back</button
+		><span>Artifact details</span>
+	</h1>
 	<div *ngIf="artifact">
-		<h1>{{ artifact.name }}</h1>
+		<h1>
+			<button type="button" class="back-button" (click)="navigateBack()">
+				&lt; Back</button
+			><span>{{ artifact.name }}</span>
+		</h1>
 		<p><span class="subtitle">Catalog ID:</span> {{ artifact.catalog_id }}</p>
 		<p><span class="subtitle">Artifact type:</span> {{ artifact.type }}</p>
 		<p>

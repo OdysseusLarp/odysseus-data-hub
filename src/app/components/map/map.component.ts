@@ -257,7 +257,11 @@ export class MapComponent implements OnInit, OnDestroy {
 	private refreshMap() {
 		// Hack to force reload of the current view from GeoServer by updating
 		// source parameters
-		const sources = [layerObject.getSource(), layerFleet.getSource()];
+		const sources = [
+			layerObject.getSource(),
+			layerFleet.getSource(),
+			layerGrid.getSource(),
+		];
 		sources.forEach(s => s.updateParams({ time: Date.now() }));
 	}
 

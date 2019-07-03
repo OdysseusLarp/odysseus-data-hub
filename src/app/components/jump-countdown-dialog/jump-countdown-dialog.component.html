@@ -1,0 +1,8 @@
+<div class="container">
+	<h2>JUMP DRIVE ENGAGING IN</h2>
+	<span class="jump-timer">{{ countdown }}</span>
+	<span class="user-message" *ngIf="!!(state.user | async)">
+		You will be logged out automatically
+	</span>
+	<span class="box-closer link" (click)="this.close()"></span>
+</div>

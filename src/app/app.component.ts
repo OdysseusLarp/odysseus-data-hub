@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialogRef, MatDialog } from '@angular/material';
 import { Subscription, Observable } from 'rxjs';
 import { StateService } from '@services/state.service';
 import { MessagingService } from '@services/messaging.service';
@@ -9,6 +9,8 @@ import { fadeInAnimation } from '@app/animations';
 import { autobind } from 'core-decorators';
 import { SipService } from './services/sip.service';
 import { ActivatedRoute } from '@angular/router';
+import { JumpCountdownDialogComponent } from '@app/components/jump-countdown-dialog/jump-countdown-dialog.component';
+import { DIALOG_SETTINGS } from '@components/message-dialog/message-dialog.component';
 
 @Component({
 	selector: 'app-root',
@@ -18,6 +20,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AppComponent implements OnInit {
 	@ViewChild('snackbar') snackbarTemplate: TemplateRef<any>;
+	jumpCountdownDialogRef: MatDialogRef<JumpCountdownDialogComponent>;
 	user$: Subscription;
 	user: api.Person;
 	showHackingView$: Observable<boolean>;
@@ -25,6 +28,7 @@ export class AppComponent implements OnInit {
 	isVelianModeEnabled$: Observable<boolean>;
 	canEnableHacking: boolean;
 	hackingTarget: string;
+	private isJumpCountdownDialogDismissed = false;
 
 	constructor(
 		private state: StateService,
@@ -32,7 +36,8 @@ export class AppComponent implements OnInit {
 		private snackBar: MatSnackBar,
 		public sip: SipService,
 		private route: ActivatedRoute,
-		private messaging: MessagingService
+		private messaging: MessagingService,
+		private dialog: MatDialog
 	) {}
 
 	ngOnInit() {
@@ -64,6 +69,32 @@ export class AppComponent implements OnInit {
 			if (params.admin === 'true') {
 				this.state.isAdmin$.next(true);
 			}
+		});
+
+		this.socket.jumpState$.subscribe(jumpState => {
+			if (jumpState.status === 'jump_initiated') {
+				if (this.jumpCountdownDialogRef || this.isJumpCountdownDialogDismissed)
+					return;
+				this.isJumpCountdownDialogDismissed = false;
+				this.openCountdownDialog();
+			} else if (this.jumpCountdownDialogRef) {
+				this.jumpCountdownDialogRef.close();
+			} else {
+				this.isJumpCountdownDialogDismissed = false;
+			}
+		});
+	}
+
+	private openCountdownDialog() {
+		this.jumpCountdownDialogRef = this.dialog.open(
+			JumpCountdownDialogComponent,
+			{
+				...DIALOG_SETTINGS,
+			}
+		);
+		this.jumpCountdownDialogRef.afterClosed().subscribe(() => {
+			this.jumpCountdownDialogRef = null;
+			this.isJumpCountdownDialogDismissed = true;
 		});
 	}
 

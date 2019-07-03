@@ -53,6 +53,7 @@ import { VelianComponent } from './components/velian/velian.component';
 import { VelianConfirmDialogComponent } from './components/velian-confirm-dialog/velian-confirm-dialog.component';
 import { IsVisiblePipe } from './pipes/is-visible.pipe';
 import { VelianDialogComponent } from './components/velian-dialog/velian-dialog.component';
+import { JumpCountdownDialogComponent } from './components/jump-countdown-dialog/jump-countdown-dialog.component';
 
 @NgModule({
 	declarations: [
@@ -87,6 +88,7 @@ import { VelianDialogComponent } from './components/velian-dialog/velian-dialog.
 		VelianConfirmDialogComponent,
 		IsVisiblePipe,
 		VelianDialogComponent,
+		JumpCountdownDialogComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -122,6 +124,7 @@ import { VelianDialogComponent } from './components/velian-dialog/velian-dialog.
 		MessageDialogComponent,
 		VelianConfirmDialogComponent,
 		VelianDialogComponent,
+		JumpCountdownDialogComponent,
 	],
 })
 export class AppModule {}

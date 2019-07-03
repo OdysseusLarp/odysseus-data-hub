@@ -1,0 +1,38 @@
+@import '../../../variables';
+
+:host {
+	color: #fff;
+}
+
+.container {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	user-select: none;
+
+	h2 {
+		margin: 5px;
+	}
+
+	.jump-timer {
+		font-size: 5em;
+	}
+
+	.user-message {
+		font-size: 0.8em;
+	}
+}
+
+// Adjust closer position because of dialog
+.box-closer {
+	top: -15px;
+	right: -20px;
+	font-size: 1.5em;
+	transition: color $transition-ms;
+}
+
+.box-closer:hover {
+	color: $bright-yellow !important;
+}

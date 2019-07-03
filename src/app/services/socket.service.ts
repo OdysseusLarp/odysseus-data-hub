@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import io from 'socket.io-client/dist/socket.io';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { map, distinctUntilChanged } from 'rxjs/operators';
 import { get } from 'lodash';
 import { environment } from '@env/environment';
@@ -14,6 +14,22 @@ interface Socket {
 	close: () => void;
 }
 
+export interface JumpState {
+	id?: 'jumpstate';
+	cooldown_time?: string;
+	jump_time?: string;
+	jump_drive_temp_exact?: number;
+	jump_drive_temp?: number;
+	breaking_jump?: boolean;
+	coherence?: number;
+	readyRemaining?: number;
+	readyT?: string;
+	cooldownRemaining?: number;
+	cooldownT?: string;
+	jumpT?: string;
+	status?: string;
+}
+
 @Injectable({
 	providedIn: 'root',
 })
@@ -21,6 +37,9 @@ export class SocketService {
 	socket: Socket;
 	metadataStateSocket: Socket;
 	velianStateSocket: Socket;
+	jumpStateSocket: Socket;
+	jumpStateUpdated: Observable<JumpState>;
+	public jumpState$ = new BehaviorSubject<JumpState>({});
 	public logEntryAdded$: Observable<api.LogEntry>;
 	public voteAddedOrUpdated$: Observable<api.Vote>;
 	public shipMetadataUpdated$: Observable<any>;
@@ -32,6 +51,11 @@ export class SocketService {
 		this.metadataStateSocket = io.connect(
 			`${environment.apiUrl}/data`,
 			{ query: { data: '/data/ship/metadata' } }
+		);
+
+		this.jumpStateSocket = io.connect(
+			`${environment.apiUrl}/data`,
+			{ query: { data: '/data/ship/jumpstate' } }
 		);
 
 		this.logEntryAdded$ = this.createObservable<api.LogEntry>('logEntryAdded');
@@ -48,6 +72,14 @@ export class SocketService {
 		this.refreshMap$ = new Observable<void>(o => {
 			this.socket.on('refreshMap', () => o.next());
 		});
+
+		this.jumpStateUpdated = this.createDataUpdateObservable(
+			this.jumpStateSocket
+		);
+
+		this.jumpStateUpdated.subscribe(jumpState =>
+			this.jumpState$.next(jumpState)
+		);
 
 		// Disable or enable social hub when state changes in backend
 		this.shipMetadataUpdated$

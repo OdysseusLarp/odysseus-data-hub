@@ -83,6 +83,12 @@ export class AppComponent implements OnInit {
 				this.isJumpCountdownDialogDismissed = false;
 			}
 		});
+
+		this.isSocialHubEnabled$.subscribe(isEnabled => {
+			if (!isEnabled && this.jumpCountdownDialogRef) {
+				this.jumpCountdownDialogRef.close();
+			}
+		});
 	}
 
 	private openCountdownDialog() {

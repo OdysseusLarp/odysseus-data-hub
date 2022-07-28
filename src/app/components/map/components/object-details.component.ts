@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
-import { getFeatureProperties } from '@components/map/map.component';
+// import { getFeatureProperties } from '@components/map/map.component';
 import { get, pick, capitalize } from 'lodash';
 import { ListItem } from './dotted-list.component';
 
@@ -24,8 +24,8 @@ export class ObjectDetailsComponent implements OnInit, OnDestroy {
 			this.resetValues();
 			this.feature = feat;
 			if (!this.feature) return;
-			const props = getFeatureProperties(feat);
-			this.properties = props;
+			// const props = getFeatureProperties(feat);
+			// this.properties = props;
 			this.generateFormattedList();
 		});
 	}

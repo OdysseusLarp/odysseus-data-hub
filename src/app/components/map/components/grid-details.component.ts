@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
-import { getFeatureProperties } from '@components/map/map.component';
+// import { getFeatureProperties } from '@components/map/map.component';
 import { get, pick } from 'lodash';
 import { ListItem } from './dotted-list.component';
 
@@ -29,9 +29,9 @@ export class GridDetailsComponent implements OnInit, OnDestroy {
 			this.resetValues();
 			this.selectedGrid = feat;
 			if (!feat) return;
-			const props = getFeatureProperties(feat);
-			this.properties = props;
-			this.isDiscovered = props.isDiscovered;
+			// const props = getFeatureProperties(feat);
+			// this.properties = props;
+			// this.isDiscovered = props.isDiscovered;
 			this.generateFormattedList();
 		});
 		// this.ship$ = this.state.ship.subscribe(ship => {

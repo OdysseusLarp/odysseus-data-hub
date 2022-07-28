@@ -100,9 +100,7 @@ textarea:focus {
 .boxed {
 	padding: 5px 15px 10px 15px;
 	border: 3px solid $blue;
-	background-image: url('assets/img/ui/liukuvari2.jpg');
-	background-size: cover;
-	background-attachment: fixed;
+	background-color: #005a5a;
 	box-shadow: 0px 0px 10px $dark-blue;
 	hr {
 		width: 100%;

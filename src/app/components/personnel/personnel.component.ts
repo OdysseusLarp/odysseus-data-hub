@@ -67,7 +67,22 @@ export class PersonnelComponent implements OnInit {
 					this.filterValues[f.key] = queryParams[f.key];
 				});
 				// Set name value manually
-				if (queryParams.name) this.filterValues['name'] = queryParams.name;
+				if (queryParams.name) {
+					this.filterValues['name'] = queryParams.name;
+				}
+				// Move odysseus to the top of the ship_id filter
+				const shipIdFilter = this.filters.find(f => f.key === 'ship_id');
+				if (shipIdFilter) {
+					shipIdFilter.items.sort((a, b) => {
+						if (a.value === 'odysseus') {
+							return -1;
+						}
+						if (b.value === 'odysseus') {
+							return 1;
+						}
+						return 0;
+					});
+				}
 			})
 			.finally(() => this.hasInitialized$.next(true));
 	}

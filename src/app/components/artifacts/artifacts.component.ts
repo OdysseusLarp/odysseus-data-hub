@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as ArtifactApi from '@api/Artifact';
 import { get } from 'lodash';
-import moment from 'moment';
 
 @Component({
 	selector: 'app-artifacts',

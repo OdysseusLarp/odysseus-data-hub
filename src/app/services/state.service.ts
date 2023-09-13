@@ -53,6 +53,7 @@ export class StateService {
 			const person_id = get(this.user.getValue(), 'id');
 			if (person_id) postLogAudit({ person_id, type: 'LOGOUT' });
 			this.sessionStorage.removeItem('previousUserId');
+			this.sessionStorage.removeItem('hackerId');
 			this.user.next(null);
 		});
 
@@ -79,6 +80,7 @@ export class StateService {
 				if (!res.data) throw new Error('User not found');
 				this.user.next(res.data);
 				this.sessionStorage.setItem('previousUserId', res.data.card_id);
+				this.sessionStorage.removeItem('hackerId');
 				return res.data;
 			})
 			.finally(() => this.hasInitialized$.next(true));
@@ -92,6 +94,7 @@ export class StateService {
 				if (!res.data) throw new Error('User not found');
 				this.user.next(res.data);
 				this.sessionStorage.setItem('previousUserId', res.data.card_id);
+				this.sessionStorage.setItem('hackerId', hackerId);
 				return res.data;
 			})
 			.finally(() => this.hasInitialized$.next(true));

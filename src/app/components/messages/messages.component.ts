@@ -16,6 +16,10 @@ import { ActivatedRoute } from '@angular/router';
 import { StateService } from '@app/services/state.service';
 import { getPersonId } from '@api/Person';
 
+// Probably shouldn't hardcode this but here we are
+// Conversation with this person id is not shown when logging in as a hacker
+const GM_ID = '20264';
+
 export interface ChatView {
 	type: 'channel' | 'private';
 	target: string;
@@ -60,6 +64,12 @@ export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.route.params.subscribe((params: ChatView) => {
 			const chatView = { ...params };
 			if (params.type === 'private') {
+				// Don't show GM conversation when logged in via hacking
+				const isHacker = Boolean(window.sessionStorage.getItem('hackerId'));
+				if (isHacker && params.target === GM_ID) {
+					return;
+				}
+
 				chatView.targetPerson = this.messaging.users
 					.getValue()
 					.find(user => user.id === chatView.target);
@@ -83,12 +93,18 @@ export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 		).pipe(
 			map(([users, { userFilter }, unseenMessages]) => {
 				const filter = userFilter.toLowerCase().trim();
+				const isHacker = Boolean(window.sessionStorage.getItem('hackerId'));
+
 				return users
-					.filter(user =>
-						get(user, 'full_name', '')
+					.filter(user => {
+						// Don't show GM conversation when logged in via hacking
+						if (isHacker && user.id === GM_ID) {
+							return false;
+						}
+						return get(user, 'full_name', '')
 							.toLowerCase()
-							.includes(filter)
-					)
+							.includes(filter);
+					})
 					.map(user => {
 						// add unseen message counts to user list
 						if (unseenMessages.has(user.id)) {

@@ -18,7 +18,7 @@ Frontend for Social Hub system used in Odysseus LARP.
 
 DataHub should now be available at [http://localhost:4200](http://localhost:4200)
 
-## LocaL setup in VSCode dev containers
+## Local setup in VSCode dev containers
 
 You can also run the backend using [VSCode dev containers](https://code.visualstudio.com/docs/devcontainers/containers). Create/update your .env file like in the local setup instructions.
 

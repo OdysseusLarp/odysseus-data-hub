@@ -32,7 +32,9 @@
 		"NODE_OPTIONS": "--openssl-legacy-provider"
 	},
 	"remoteUser": "node",
-	"runArgs": ["--network=odysseus-backend_odysseus-dev-net"],
+	"runArgs": [
+		"--network=odysseus-backend_odysseus-dev-net",
+		"--name", "odysseus-datahub"],
 	"portsAttributes": {
 		"4200": {
 			"label": "DataHub"

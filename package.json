@@ -4,8 +4,10 @@
 	"scripts": {
 		"ng": "ng",
 		"start": "npm run apigen && NODE_OPTIONS=--openssl-legacy-provider ng serve",
+		"start:dev-cont": "ng serve --port 4200",
 		"apigen": "openapi -s http://localhost:8888/api-docs.json -o ./src/app/api -l ts --semicolon",
 		"apigen:dev": "openapi -s https://apps.odysseuslarp.dev/api-docs.json -o ./src/app/api -l ts --semicolon",
+		"apigen:dev-cont": "openapi -s http://odysseus-backend:8888/api-docs.json -o ./src/app/api -l ts --semicolon",
 		"apigen:prod": "openapi -s http://odyserver/api-docs.json -o ./src/app/api -l ts --semicolon",
 		"build": "NODE_OPTIONS=--openssl-legacy-provider ng build --base-href /social/ --prod",
 		"precommit": "lint-staged",

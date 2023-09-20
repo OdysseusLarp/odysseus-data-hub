@@ -1,0 +1,41 @@
+// For template details, see https://github.com/microsoft/vscode-dev-containers/tree/main/container-templates
+// For image details, see https://github.com/devcontainers/images/tree/main/src/typescript-node
+// For config options, see https://code.visualstudio.com/docs/remote/devcontainerjson-reference
+{
+	"name": "Odysseus DataHub",
+	"image": "mcr.microsoft.com/devcontainers/typescript-node:18-bullseye",
+	"customizations": {
+		"vscode": {
+			"extensions": ["dbaeumer.vscode-eslint"],
+			"settings": {
+				"dev.containers.copyGitConfig": true
+			}
+		}
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/github-cli:1": {},
+		"ghcr.io/devcontainers/features/common-utils:2": {},
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+		"ghcr.io/devcontainers/features/node:1": {}
+	},
+	"mounts": [
+		{
+			"source": "${localWorkspaceFolderBasename}-node_modules",
+			"target": "${containerWorkspaceFolder}/node_modules",
+			"type": "volume"
+		}
+	],
+	"postCreateCommand": "bash .devcontainer/postCreateCommand.sh",
+	"remoteEnv": {
+		"CHOKIDAR_USEPOLLING": "true",
+		"NODE_ENVIRONMENT": "development",
+		"NODE_OPTIONS": "--openssl-legacy-provider"
+	},
+	"remoteUser": "node",
+	"runArgs": ["--network=odysseus-backend_odysseus-dev-net"],
+	"portsAttributes": {
+		"4200": {
+			"label": "DataHub"
+		}
+	}
+}

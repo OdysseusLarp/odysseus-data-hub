@@ -34,7 +34,8 @@
 	"remoteUser": "node",
 	"runArgs": [
 		"--network=odysseus-backend_odysseus-dev-net",
-		"--name", "odysseus-datahub"],
+		"--name", "odysseus-datahub"
+	],
 	"portsAttributes": {
 		"4200": {
 			"label": "DataHub"

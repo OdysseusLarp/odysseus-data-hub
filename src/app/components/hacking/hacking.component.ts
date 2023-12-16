@@ -14,6 +14,7 @@ import { fadeInAnimation } from '@app/animations';
 // https://code.sololearn.com/Wj7ZWBg5m2OG/?ref=app#html
 
 const HACKING_PASSWORD_LENGTH = 15;
+const RENDER_INTERVAL_MS = 28;
 
 @Component({
 	selector: 'app-hacking',
@@ -92,9 +93,7 @@ export class HackingComponent implements OnInit, OnDestroy {
 		c.height = window.innerHeight - 5;
 		c.width = window.innerWidth - 1;
 
-		// chinese characters - taken from the unicode charset
 		this.matrix = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%'.split('');
-
 		this.fontSize = 18;
 
 		const columns = c.width / this.fontSize; // number of columns for the rain
@@ -103,9 +102,8 @@ export class HackingComponent implements OnInit, OnDestroy {
 		// 1 = y co-ordinate of the drop(same for every drop initially)
 		for (let x = 0; x < columns; x++) this.drops[x] = 1;
 
-		// render every 35ms
 		if (this.interval) clearInterval(this.interval);
-		this.interval = setInterval(() => this.draw(), 28);
+		this.interval = setInterval(() => this.draw(), RENDER_INTERVAL_MS);
 	}
 
 	private draw() {
@@ -119,13 +117,12 @@ export class HackingComponent implements OnInit, OnDestroy {
 			this.canvas.nativeElement.height
 		);
 
-		this.ctx.fillStyle = '#02f6fe'; // green text
+		this.ctx.fillStyle = '#02f6fe';
 		this.ctx.font = this.fontSize + 'px arial';
 		// looping over drops
 		for (let i = 0; i < this.drops.length; i++) {
-			// a random chinese character to print
+			// get a random matrix character to print
 			const text = this.matrix[Math.floor(Math.random() * this.matrix.length)];
-			// x = i*font_size, y = value of drops[i]*font_size
 			this.ctx.fillText(text, i * this.fontSize, this.drops[i] * this.fontSize);
 
 			// sending the drop back to the top randomly after it has crossed the screen

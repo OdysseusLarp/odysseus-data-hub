@@ -15,7 +15,6 @@
 	);
 	background-size: 200% 200%;
 	animation: barberpole 10s linear infinite;
-	transition: background 100;
 	color: #fff;
 	text-shadow: 0 0 2px #000;
 	font-size: 1.2rem;
@@ -42,6 +41,22 @@
 		background: rgba(0, 0, 0, 0.5);
 		transition: width 0.5s ease-out;
 		box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+	}
+}
+
+.red {
+	background: #660000;
+	background-image: repeating-linear-gradient(
+		45deg,
+		transparent,
+		transparent 1rem,
+		#570000 1rem,
+		#570000 2rem
+	);
+	background-size: 200% 200%;
+
+	.progress {
+		background: rgba(0, 0, 0, 0);
 	}
 }
 

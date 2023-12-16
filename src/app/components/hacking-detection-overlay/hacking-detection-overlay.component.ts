@@ -3,9 +3,31 @@ import { StateService } from '@app/services/state.service';
 import { Observable, Subscription, of, timer } from 'rxjs';
 import { finalize, map, takeWhile } from 'rxjs/operators';
 import { get } from 'lodash';
-import { Router } from '@angular/router';
 
 const TICK_RATE_MS = 200;
+
+const hackerAnalysisMessages: string[] = [
+	'Anomaly detected. EVA is initiating security protocols.',
+	'EVA is reviewing user activity for irregularities.',
+	'EVA is initiating an identity confirmation sequence.',
+	'EVA is conducting a deep system analysis of recent command entries.',
+	'EVA is commencing the authorization verification process.',
+	'EVA is performing an unscheduled security audit.',
+	'EVA is cross-referencing user access logs.',
+	'System integrity check is underway. Please stand by.',
+	'User commands are under scrutiny by EVA for compliance with security standards.',
+	'EVA is performing a heuristic analysis of user behavior.',
+	'Access patterns are undergoing real-time analysis by EVA.',
+	'EVA is verifying user credentials against the security matrix.',
+	'A system sweep is in progress to validate current operations.',
+	'EVA is engaging countermeasures for potential threats.',
+	'User actions are being compiled by EVA for a comprehensive security review.',
+	'EVA is running diagnostics on recent network activity.',
+	' EVA is initiating a forensic examination of system access.',
+	'A security evaluation is in progress. User activity is temporarily on hold.',
+	'EVA is matching user activity with security profiles.',
+	'EVA is preparing to enforce security protocols. Verification required.',
+];
 
 @Component({
 	selector: 'app-hacking-detection-overlay',
@@ -17,12 +39,21 @@ export class HackingDetectionOverlayComponent implements OnInit, OnDestroy {
 	detectionTimeMs$: Observable<number>;
 	elapsedTimePercentage$: Observable<number>;
 	roundedElapsedTimePercentage$: Observable<number>;
+	hackerAnalysisMessage =
+		hackerAnalysisMessages[
+			Math.floor(Math.random() * hackerAnalysisMessages.length)
+		];
+	hasBeenDetected = false;
 
-	constructor(private state: StateService, private router: Router) {}
+	constructor(private state: StateService) {}
 
 	ngOnInit() {
 		this.userSubscription = this.state.user.subscribe(user => {
 			const detectionTimeMs = get(user, 'hacker.detectionTimeMs');
+			const intrusionDetectedMessage = get(
+				user,
+				'hacker.intrusionDetectedMessage'
+			);
 			if (detectionTimeMs) {
 				const endTime = Date.now() + detectionTimeMs;
 
@@ -30,9 +61,10 @@ export class HackingDetectionOverlayComponent implements OnInit, OnDestroy {
 					map(() => endTime - Date.now()),
 					takeWhile(timeLeft => timeLeft > 0),
 					finalize(() => {
-						// Logout when time runs out
-						this.state.logout.next();
-						this.router.navigate(['/']);
+						if (intrusionDetectedMessage) {
+							this.hackerAnalysisMessage = intrusionDetectedMessage;
+						}
+						this.hasBeenDetected = true;
 					})
 				);
 

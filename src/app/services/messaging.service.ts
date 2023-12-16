@@ -33,7 +33,7 @@ export class MessagingService {
 				filter(Boolean),
 				distinctUntilChanged(isEqual)
 			)
-			.subscribe(user => {
+			.subscribe((user: api.Person) => {
 				this.user = user;
 				this.createSocket();
 			});

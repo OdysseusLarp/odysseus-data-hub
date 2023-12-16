@@ -22,6 +22,7 @@
 		[onCompletion]="onCompleteHacking"
 		[@enterAnimation]
 	></app-hacking>
+	<app-hacking-detection-overlay></app-hacking-detection-overlay>
 	<div
 		*ngIf="this.canEnableHacking || (this.showHackingView$ | async) === true"
 		class="hacking-launcher"

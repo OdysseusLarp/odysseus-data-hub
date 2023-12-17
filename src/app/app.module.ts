@@ -40,6 +40,7 @@ import { PostItemComponent } from '@components/shared/post-item/post-item.compon
 import { VoteCreateComponent } from '@components/vote-create/vote-create.component';
 import { TableComponent } from '@components/shared/table/table.component';
 import { HackingComponent } from '@components/hacking/hacking.component';
+import { HackingDetectionOverlayComponent } from './components/hacking-detection-overlay/hacking-detection-overlay.component';
 import { StaticScreenComponent } from '@components/static-screen/static-screen.component';
 import { ShipLogSnackbarComponent } from '@components/ship-log-snackbar/ship-log-snackbar.component';
 import { ArtifactCreateComponent } from '@components/artifact-create/artifact-create.component';
@@ -77,6 +78,7 @@ import { JumpCountdownDialogComponent } from './components/jump-countdown-dialog
 		VoteCreateComponent,
 		TableComponent,
 		HackingComponent,
+		HackingDetectionOverlayComponent,
 		StaticScreenComponent,
 		ShipLogSnackbarComponent,
 		ArtifactCreateComponent,

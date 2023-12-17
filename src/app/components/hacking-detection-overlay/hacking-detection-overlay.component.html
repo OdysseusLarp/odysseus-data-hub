@@ -1,0 +1,15 @@
+<div
+	*ngIf="(detectionTimeMs$ | async) as detectionTimeMs"
+	class="hackbar-overlay"
+	[class.red]="hasBeenDetected"
+>
+	<div
+		class="progress"
+		[style.width]="(roundedElapsedTimePercentage$ | async) + '%'"
+	></div>
+	<div class="text">{{ hackerAnalysisMessage }}</div>
+	<div class="percentage">
+		ETA {{ detectionTimeMs | date: 'mm:ss' }} |
+		{{ roundedElapsedTimePercentage$ | async }}%
+	</div>
+</div>

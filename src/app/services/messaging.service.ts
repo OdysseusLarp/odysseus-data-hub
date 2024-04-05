@@ -41,6 +41,8 @@ export class MessagingService {
 			this.removeSocket();
 			// Wipe message cache on logout
 			this.messageCache = new Map<string, api.ComMessage[]>();
+			this.unseenMessages = new Map<string, number>();
+			this.unseenMessagesCount.next(0);
 		});
 		this.debouncedSearchUsers = debounce(this.searchUsers, 300);
 	}

@@ -56,6 +56,7 @@ export class HackingDetectionOverlayComponent implements OnInit, OnDestroy {
 			);
 			if (detectionTimeMs) {
 				const endTime = Date.now() + detectionTimeMs;
+				this.hasBeenDetected = false;
 
 				this.detectionTimeMs$ = timer(0, TICK_RATE_MS).pipe(
 					map(() => endTime - Date.now()),

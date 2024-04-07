@@ -13,10 +13,9 @@ export function formatFilter(key: string, value: string) {
 
 // Political party whitelist to filter out 'None' and 'Other' etc from data
 export const politicalParties = new Set([
-	'The Democratic Pluralist Party',
-	'Ellarion Centrist Party',
-	'Association for Spiritual Technology',
-	'Sustainable Development Alliance',
+	'Blue Party',
+	'Purple Party',
+	'Yellow Party',
 ]);
 
 // Same for religions
@@ -52,24 +51,16 @@ export const dynasties = new Set([
 	'Ambition',
 ]);
 
-// Same for senators
-export const senators = new Set([
-	'Senator',
-	'Senator (Acting)',
-	'Prime Minister (Head of Senate)',
-]);
-
 // Ranks that are considered high military ranks
 export const highMilitaryRanks = new Set([
-	'Lieutenant',
-	'Junior Grade',
-	'Lieutenant',
-	'Commander-Lieutenant',
-	'Commander-Captain',
-	'Commander',
-	'Commodore',
-	'Vice Admiral',
+	'Admiral (First Star)',
+	'Admiral (Second Star)',
+	'Admiral (Third Star)',
 	'Admiral',
+	'Commander',
+	'Junior Lieutenant',
+	'Lieutenant',
+	'Vice Admiral',
 ]);
 
 @Component({
@@ -154,26 +145,13 @@ export class VoteCreateComponent implements OnInit {
 	initVoteFilters() {
 		if (!this.state.user.getValue()) return;
 		const {
-			citizenship,
 			dynasty,
 			religion,
 			political_party,
 			military_rank,
-			title,
 		} = this.state.user.getValue();
 		const ship = get(this.state.user.getValue(), 'ship.id');
-		const filters = [
-			{
-				value: 'EVERYONE',
-				text: 'Everyone',
-			},
-		];
-		if (citizenship === 'Full citizenship') {
-			filters.push({
-				value: 'FULL_CITIZENSHIP',
-				text: 'Those with full citizenship status',
-			});
-		}
+		const filters = [];
 		if (ship) {
 			filters.push({
 				value: formatFilter('ship', ship),
@@ -202,12 +180,6 @@ export class VoteCreateComponent implements OnInit {
 			filters.push({
 				value: 'HIGH_RANKING_OFFICER',
 				text: 'High ranking military officers',
-			});
-		}
-		if (senators.has(title)) {
-			filters.push({
-				value: 'SENATE',
-				text: 'Senate',
 			});
 		}
 		this.voteFilters = filters;

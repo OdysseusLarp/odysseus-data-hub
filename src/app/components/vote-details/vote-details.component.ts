@@ -10,7 +10,7 @@ import { SocketService } from '@app/services/socket.service';
 import {
 	highMilitaryRanks,
 	politicalParties,
-	senators,
+	// TODO: Check that filters work with the latest changes
 	formatFilter,
 } from '../vote-create/vote-create.component';
 
@@ -22,9 +22,7 @@ function getVotingMessage(allowedVoters) {
 	if (!allowedVoters) return;
 	const votingAllowedFor = new Map([
 		['EVERYONE', 'everyone'],
-		['FULL_CITIZENSHIP', 'those with full citizenship status'],
 		['HIGH_RANKING_OFFICER', 'high ranking military officers'],
-		['SENATE', 'the senate'],
 	]);
 	if (votingAllowedFor.has(allowedVoters))
 		return votingAllowedFor.get(allowedVoters);
@@ -129,26 +127,18 @@ export class VoteDetailsComponent implements OnInit, OnDestroy {
 		if (!this.vote || !user) return;
 
 		const allowedVoters = this.vote.allowed_voters;
-		const {
-			citizenship,
-			religion,
-			dynasty,
-			military_rank,
-			political_party,
-			title,
-		} = user;
+		const { religion, dynasty, military_rank, political_party } = user;
 		const userReligion = formatFilter('religion', religion);
 		const userDynasty = formatFilter('dynasty', dynasty);
 		const userPoliticalParty = formatFilter('party', political_party);
 		const userShip = formatFilter('ship', get(user, 'ship.id'));
 
-		this.isUserAllowedToVote = [
-			allowedVoters === 'EVERYONE',
-			allowedVoters === 'FULL_CITIZENSHIP' &&
-				citizenship === 'Full citizenship',
+		const highRankingOfficerMatch =
 			allowedVoters === 'HIGH_RANKING_OFFICER' &&
-				highMilitaryRanks.has(military_rank),
-			allowedVoters === 'SENATE' && senators.has(title),
+			highMilitaryRanks.has(military_rank);
+
+		this.isUserAllowedToVote = [
+			highRankingOfficerMatch,
 			userShip === allowedVoters,
 			userReligion === allowedVoters,
 			userDynasty === allowedVoters,

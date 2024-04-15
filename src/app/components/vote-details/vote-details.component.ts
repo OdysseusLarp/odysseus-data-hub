@@ -22,7 +22,6 @@ function getVotingMessage(allowedVoters) {
 	if (!allowedVoters) return;
 	const votingAllowedFor = new Map([
 		['EVERYONE', 'everyone'],
-		['FULL_CITIZENSHIP', 'those with full citizenship status'],
 		['HIGH_RANKING_OFFICER', 'high ranking military officers'],
 		['SENATE', 'the senate'],
 	]);
@@ -129,14 +128,7 @@ export class VoteDetailsComponent implements OnInit, OnDestroy {
 		if (!this.vote || !user) return;
 
 		const allowedVoters = this.vote.allowed_voters;
-		const {
-			citizenship,
-			religion,
-			dynasty,
-			military_rank,
-			political_party,
-			title,
-		} = user;
+		const { religion, dynasty, military_rank, political_party, title } = user;
 		const userReligion = formatFilter('religion', religion);
 		const userDynasty = formatFilter('dynasty', dynasty);
 		const userPoliticalParty = formatFilter('party', political_party);
@@ -144,8 +136,6 @@ export class VoteDetailsComponent implements OnInit, OnDestroy {
 
 		this.isUserAllowedToVote = [
 			allowedVoters === 'EVERYONE',
-			allowedVoters === 'FULL_CITIZENSHIP' &&
-				citizenship === 'Full citizenship',
 			allowedVoters === 'HIGH_RANKING_OFFICER' &&
 				highMilitaryRanks.has(military_rank),
 			allowedVoters === 'SENATE' && senators.has(title),

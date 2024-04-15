@@ -23,9 +23,9 @@
 						<h2 class="tab-title">General information</h2>
 						<p *ngIf="person.title">Title: {{ person.title }}</p>
 						<p>Birth year: {{ person.birth_year || 'Unknown' }}</p>
+						<p>Age: {{ 542 - person.birth_year || 'Unknown' }}</p>
 						<p>Home planet: {{ person.home_planet || 'Unknown' }}</p>
 						<p>Citizen ID: {{ person.citizen_id || 'Unknown' }}</p>
-						<p>Citizenship: {{ person.citizenship || 'Unknown' }}</p>
 						<p>Status: {{ person.status || 'Unknown' }}</p>
 						<p>Current location: {{ person.ship?.name || 'Unknown / None' }}</p>
 						<p>Social class: {{ person.social_class || 'Unknown' }}</p>
@@ -59,7 +59,10 @@
 			<mat-tab label="Medical file">
 				<div
 					class="person-container"
-					*ngIf="permission.has('role:medic'); else accessDenied"
+					*ngIf="
+						permission.has('role:medic') || currentUser.id === person.id;
+						else accessDenied
+					"
 				>
 					<h2 class="tab-title">Medical file</h2>
 					<p>
@@ -124,7 +127,10 @@
 			<mat-tab label="Military file">
 				<div
 					class="person-container"
-					*ngIf="permission.has('role:security'); else accessDenied"
+					*ngIf="
+						permission.has('role:security') || currentUser.id === person.id;
+						else accessDenied
+					"
 				>
 					<h2 class="tab-title">Military file</h2>
 					<p>
@@ -169,7 +175,10 @@
 			<mat-tab label="Personal file">
 				<div
 					class="person-container"
-					*ngIf="permission.has('role:security'); else accessDenied"
+					*ngIf="
+						permission.has('role:security') || currentUser.id === person.id;
+						else accessDenied
+					"
 				>
 					<div *ngIf="personalEntries.length">
 						<h2>Personal history</h2>
@@ -196,6 +205,47 @@
 					<p class="created-year">
 						Data file creation year: {{ person.created_year || 'Unknown' }}
 					</p>
+				</div>
+			</mat-tab>
+			<mat-tab label="Classified personal file">
+				<div
+					class="person-container"
+					*ngIf="
+						permission.has('role:secret') || currentUser.id === person.id;
+						else accessDenied
+					"
+				>
+					<h2>Personal secret info</h2>
+					<p>
+						<span class="subtitle">The most important secret:</span>
+						{{ person.secret_info || 'Unknown' }}
+					</p>
+					<div *ngIf="classifiedEntries.length">
+						<h2>Some other secrets added</h2>
+						<p
+							markdown
+							ngPreserveWhitespaces
+							*ngFor="let entry of classifiedEntries"
+						>
+							{{ entry.entry
+							}}<span *ngIf="entry.added_by">
+								- Added by {{ entry.added_by.full_name }}</span
+							>
+						</p>
+						<p *ngIf="!classifiedEntries.length">No secret information</p>
+					</div>
+					<div class="add-entry-wrapper">
+						<h2>Add new secret</h2>
+						<div>
+							<textarea trim="blur" #classifiedEntryForm></textarea>
+							<button
+								(click)="saveEntry('CLASSIFIED')"
+								[disabled]="isSubmitting"
+							>
+								Save secret record
+							</button>
+						</div>
+					</div>
 				</div>
 			</mat-tab>
 		</mat-tab-group>

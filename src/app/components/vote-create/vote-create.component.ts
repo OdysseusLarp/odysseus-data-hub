@@ -141,9 +141,7 @@ export class VoteCreateComponent implements OnInit {
 		if (res.raw.status === 204) {
 			this.dialog.info(
 				'Vote created',
-				`Your vote '${
-					this.voteForm.value.title
-				}' was submitted for approval. Check back later!`
+				`Your vote '${this.voteForm.value.title}' was submitted for approval. Check back later!`
 			);
 			this.router.navigate(['../vote']);
 		} else {
@@ -154,7 +152,6 @@ export class VoteCreateComponent implements OnInit {
 	initVoteFilters() {
 		if (!this.state.user.getValue()) return;
 		const {
-			citizenship,
 			dynasty,
 			religion,
 			political_party,
@@ -168,12 +165,6 @@ export class VoteCreateComponent implements OnInit {
 				text: 'Everyone',
 			},
 		];
-		if (citizenship === 'Full citizenship') {
-			filters.push({
-				value: 'FULL_CITIZENSHIP',
-				text: 'Those with full citizenship status',
-			});
-		}
 		if (ship) {
 			filters.push({
 				value: formatFilter('ship', ship),

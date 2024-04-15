@@ -17,3 +17,31 @@ th {
 	font-size: 0.6em;
 	margin-bottom: 8px;
 }
+
+.filter-container {
+	margin-bottom: 15px;
+
+	.filter-items {
+		display: flex;
+		flex-direction: row;
+
+		div {
+			flex: 1;
+
+			label {
+				margin-bottom: 4px;
+				font-size: 0.9em;
+				font-weight: bold;
+			}
+
+			input {
+				display: block;
+				width: 100%;
+			}
+		}
+		// div:not(:last-child) {
+		div {
+			margin-right: 25px;
+		}
+	}
+}

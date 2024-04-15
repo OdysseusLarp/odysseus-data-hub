@@ -12,20 +12,30 @@ export class ArtifactsComponent implements OnInit {
 	filteredArtifacts: api.Artifact[];
 	searchTerm: string = '';
 	sortOption: string = 'name';
+	showVisibleOnly: boolean = false;
 
 	constructor() {}
 
 	ngOnInit() {
 		ArtifactApi.getScienceArtifact().then((res: api.Response<any>) => {
 			this.artifacts = get(res, 'data', []);
-			this.filteredArtifacts = [...this.artifacts];
+			this.search();
 		});
 	}
 
+	toggleVisibilityFilter() {
+		this.showVisibleOnly = !this.showVisibleOnly;
+		this.search();
+	}
+
 	search() {
-		this.filteredArtifacts = this.artifacts.filter(artifact =>
+		let filtered = this.artifacts.filter(artifact =>
 			artifact.name.toLowerCase().includes(this.searchTerm.toLowerCase())
 		);
+		if (this.showVisibleOnly) {
+			filtered = filtered.filter(artifact => artifact.is_visible);
+		}
+		this.filteredArtifacts = filtered;
 		this.sort();
 	}
 

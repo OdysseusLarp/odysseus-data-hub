@@ -26,6 +26,8 @@ export class PersonnelDetailsComponent implements OnInit, OnDestroy {
 	medicalEntries: api.Entry[] = [];
 	personalEntries: api.Entry[] = [];
 	militaryEntries: api.Entry[] = [];
+	currentUser: api.Person;
+
 	constructor(
 		private route: ActivatedRoute,
 		private state: StateService,
@@ -38,6 +40,7 @@ export class PersonnelDetailsComponent implements OnInit, OnDestroy {
 			this.fetchPerson(id);
 			this.state.hackingTarget$.next(id);
 		});
+		this.currentUser = this.state.user.getValue(); // Set currentUser to the current user from the state service
 	}
 
 	ngOnDestroy() {

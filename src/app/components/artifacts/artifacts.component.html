@@ -3,6 +3,27 @@
 		Artifact database<a routerLink="new" class="button">Insert new artifact</a>
 	</h1>
 
+	<div class="filter-container dark-bg">
+		<h2>Filters</h2>
+		<div class="filter-items">
+			<div>
+				<label>Name</label>
+				<input type="text" [(ngModel)]="searchTerm" (input)="search()" />
+			</div>
+			<div>
+				<label>Sort by</label>
+				<ng-select
+					[(ngModel)]="sortOption"
+					(change)="sort()"
+					[clearable]="false"
+				>
+					<ng-option value="name">Name</ng-option>
+					<ng-option value="catalog_id">Catalog ID</ng-option>
+					<ng-option value="discovered_by">Discovered By</ng-option>
+				</ng-select>
+			</div>
+		</div>
+	</div>
 	<table class="dark-bg">
 		<thead>
 			<tr>
@@ -11,7 +32,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let artifact of artifacts">
+			<tr *ngFor="let artifact of filteredArtifacts">
 				<td>
 					<a routerLink="/artifact/{{ artifact.id }}"
 						>{{ artifact.name }} ({{ artifact.catalog_id }})</a

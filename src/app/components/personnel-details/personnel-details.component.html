@@ -23,6 +23,7 @@
 						<h2 class="tab-title">General information</h2>
 						<p *ngIf="person.title">Title: {{ person.title }}</p>
 						<p>Birth year: {{ person.birth_year || 'Unknown' }}</p>
+						<p>Age: {{ 542 - person.birth_year || 'Unknown' }}</p>
 						<p>Home planet: {{ person.home_planet || 'Unknown' }}</p>
 						<p>Citizen ID: {{ person.citizen_id || 'Unknown' }}</p>
 						<p>Status: {{ person.status || 'Unknown' }}</p>
@@ -31,9 +32,14 @@
 						<p>Religion: {{ person.religion || 'Unknown' }}</p>
 						<p>Dynasty: {{ person.dynasty || 'Floater' }}</p>
 						<p>Political party: {{ person.political_party || 'None' }}</p>
-						<p>Military rank: {{ person.military_rank || 'Unknown' }}</p>
+						<p>Military rank: {{ person.military_rank || 'None' }}</p>
 						<p>Occupation: {{ person.occupation || 'Unknown' }}</p>
-
+						<div *ngIf="permission.has('role:secret')">
+							<h2>Classified personal file</h2>
+							<p markdown ngPreserveWhitespaces>
+								{{ person.secret_info || 'None' }}
+							</p>
+						</div>
 						<div *ngIf="person.family && person.family.length">
 							<h2>Known family members</h2>
 							<ul class="family-members">
@@ -58,7 +64,10 @@
 			<mat-tab label="Medical file">
 				<div
 					class="person-container"
-					*ngIf="permission.has('role:medic'); else accessDenied"
+					*ngIf="
+						permission.has('role:medic') || currentUser.id === person.id;
+						else accessDenied
+					"
 				>
 					<h2 class="tab-title">Medical file</h2>
 					<p>
@@ -123,7 +132,10 @@
 			<mat-tab label="Military file">
 				<div
 					class="person-container"
-					*ngIf="permission.has('role:security'); else accessDenied"
+					*ngIf="
+						permission.has('role:security') || currentUser.id === person.id;
+						else accessDenied
+					"
 				>
 					<h2 class="tab-title">Military file</h2>
 					<p>
@@ -168,7 +180,10 @@
 			<mat-tab label="Personal file">
 				<div
 					class="person-container"
-					*ngIf="permission.has('role:security'); else accessDenied"
+					*ngIf="
+						permission.has('role:security') || currentUser.id === person.id;
+						else accessDenied
+					"
 				>
 					<div *ngIf="personalEntries.length">
 						<h2>Personal history</h2>

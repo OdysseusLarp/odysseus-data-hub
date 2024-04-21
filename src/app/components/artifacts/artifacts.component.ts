@@ -9,12 +9,31 @@ import { get } from 'lodash';
 })
 export class ArtifactsComponent implements OnInit {
 	artifacts: api.Artifact[];
+	filteredArtifacts: api.Artifact[];
+	searchTerm: string = '';
+	sortOption: string = 'name';
 
 	constructor() {}
 
 	ngOnInit() {
-		ArtifactApi.getScienceArtifact().then((res: api.Response<any>) => {
-			this.artifacts = get(res, 'data', []);
-		});
+		ArtifactApi.getScienceArtifact({ isVisible: true }).then(
+			(res: api.Response<any>) => {
+				this.artifacts = get(res, 'data', []);
+				this.search();
+			}
+		);
+	}
+
+	search() {
+		this.filteredArtifacts = this.artifacts.filter(artifact =>
+			artifact.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+		);
+		this.sort();
+	}
+
+	sort() {
+		this.filteredArtifacts.sort((a, b) =>
+			a[this.sortOption].localeCompare(b[this.sortOption])
+		);
 	}
 }

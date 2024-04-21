@@ -21,14 +21,13 @@ export class PersonnelDetailsComponent implements OnInit, OnDestroy {
 	@ViewChild('medicalEntryForm') medicalEntryForm: ElementRef;
 	@ViewChild('personalEntryForm') personalEntryForm: ElementRef;
 	@ViewChild('militaryEntryForm') militaryEntryForm: ElementRef;
-	@ViewChild('classifiedEntryForm') classifiedEntryForm: ElementRef;
 	person: api.Person;
 	isSubmitting = false;
 	medicalEntries: api.Entry[] = [];
 	personalEntries: api.Entry[] = [];
 	militaryEntries: api.Entry[] = [];
-	classifiedEntries: api.Entry[] = [];
-	currentUser: any; // Add currentUser variable
+	currentUser: api.Person;
+
 	constructor(
 		private route: ActivatedRoute,
 		private state: StateService,
@@ -62,7 +61,6 @@ export class PersonnelDetailsComponent implements OnInit, OnDestroy {
 			this.medicalEntries = entries.filter(e => e.type === 'MEDICAL');
 			this.personalEntries = entries.filter(e => e.type === 'PERSONAL');
 			this.militaryEntries = entries.filter(e => e.type === 'MILITARY');
-			this.classifiedEntries = entries.filter(e => e.type === 'CLASSIFIED');
 			const cardId = get(this.person, 'card_id');
 			this.state.canEnableHacking$.next(
 				this.permission.has('role:hacker') && // need to be a hacker to hack
@@ -73,7 +71,7 @@ export class PersonnelDetailsComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	saveEntry(type: 'MEDICAL' | 'MILITARY' | 'PERSONAL' | 'CLASSIFIED') {
+	saveEntry(type: 'MEDICAL' | 'MILITARY' | 'PERSONAL') {
 		const form = this[`${type.toLowerCase()}EntryForm`];
 		const entry = form.nativeElement.value;
 		if (!entry || !this.person || this.isSubmitting) return;

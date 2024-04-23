@@ -142,7 +142,11 @@
 					<h2 class="tab-title">Military file</h2>
 					<p>
 						<span class="subtitle">Rank:</span>
-						{{ person.military_rank || 'Unknown' }}
+						{{ person.military_rank || 'None' }}
+					</p>
+					<p>
+						<span class="subtitle">Military academies:</span>
+						{{ person.military_academies || 'None' }}
 					</p>
 					<div class="subtitle-wrapper">
 						<span class="subtitle">Remarks:</span>

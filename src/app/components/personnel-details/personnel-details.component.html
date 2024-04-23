@@ -23,7 +23,9 @@
 						<h2 class="tab-title">General information</h2>
 						<p *ngIf="person.title">Title: {{ person.title }}</p>
 						<p>Birth year: {{ person.birth_year || 'Unknown' }}</p>
-						<p>Age: {{ 542 - person.birth_year || 'Unknown' }}</p>
+						<p>
+							Age: {{ person.birth_year ? 542 - person.birth_year : 'Unknown' }}
+						</p>
 						<p>Home planet: {{ person.home_planet || 'Unknown' }}</p>
 						<p>Citizen ID: {{ person.citizen_id || 'Unknown' }}</p>
 						<p>Status: {{ person.status || 'Unknown' }}</p>

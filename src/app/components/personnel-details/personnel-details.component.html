@@ -104,6 +104,14 @@
 							"
 						></p>
 					</div>
+					<div class="subtitle-wrapper">
+						<span class="subtitle">Current medication:</span>
+						<p
+							[innerHTML]="
+								person.medical_current_medication || 'None / Unknown' | markdown
+							"
+						></p>
+					</div>
 					<div>
 						<div class="subtitle-wrapper" *ngIf="medicalEntries.length">
 							<span class="subtitle">Medical records:</span>

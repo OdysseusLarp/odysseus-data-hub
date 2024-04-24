@@ -8,9 +8,9 @@
 		<h1>
 			<button type="button" class="back-button" (click)="navigateBack()">
 				&lt; Back</button
-			><span>{{ artifact.catalog_id }}</span>
+			><span>{{ artifact.name }}</span>
 		</h1>
-		<p><span class="subtitle">Name:</span> {{ artifact.name }}</p>
+		<p><span class="subtitle">Catalog ID:</span> {{ artifact.catalog_id }}</p>
 		<p><span class="subtitle">Origin:</span> {{ artifact.type }}</p>
 		<p>
 			<span class="subtitle">Discovered by:</span> {{ artifact.discovered_by }}

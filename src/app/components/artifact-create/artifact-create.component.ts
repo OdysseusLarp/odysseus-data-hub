@@ -12,7 +12,7 @@ import { DialogService } from '@app/services/dialog.service';
 })
 export class ArtifactCreateComponent implements OnInit {
 	artifactForm: FormGroup;
-	artifactTypes = ['Elder', 'Machine', 'EOC', 'Unknown'];
+	artifactTypes = ['Elder', 'Machine', 'EOC', 'Earth', 'Unknown'];
 
 	constructor(
 		private state: StateService,

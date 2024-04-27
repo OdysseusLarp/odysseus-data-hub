@@ -12,9 +12,7 @@
       <ul>
         <li *ngFor="let feat of clickedFeatures; let i = index">
           <span class="link" [ngClass]="{ 'is-scanned': feat.properties.is_scanned }"(click)="this.selectFeature(feat)"
-            >{{ feat.properties.name_generated }} ({{
-              feat.properties.category || feat.properties.celestial_body
-            }})</span
+            >{{ feat.properties.name_known || feat.properties.name_generated }} ({{feat.properties.celestial_body}})</span
           >
           <hr *ngIf="i + 1 !== clickedFeatures.length + (clickedFleet ? 1 : 0)"/>
         </li>

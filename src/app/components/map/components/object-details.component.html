@@ -1,5 +1,5 @@
 <div class="boxed sidebar-box" *ngIf="feature">
-		<h1>{{ feature?.properties.name_generated }}</h1>
+		<h1>{{ feature?.properties.name_known || feature?.properties.name_generated }}</h1>
 		<div *ngIf="feature && feature.properties.is_scanned">
 			<app-dotted-list [items]="formattedListItems"></app-dotted-list>
 			<p *ngIf="feature.properties.habitable_zone">
@@ -13,7 +13,7 @@
 			</p>
 		</div>
 		<div *ngIf="feature && !feature.properties.is_scanned">
-			This object of type {{ feature.properties.category }} has not yet been
+			This object of type {{ feature.properties.celestial_body }} has not yet been
 			scanned.
 		</div>
 		<span

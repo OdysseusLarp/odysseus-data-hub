@@ -216,7 +216,7 @@ export class MapComponent implements OnInit, OnDestroy {
 			center: [0, 0],
 			zoom: 6,
 			minZoom: 1,
-			maxZoom: 9,
+			maxZoom: 10,
 			projection,
 		});
 		this.map = new Map({
@@ -225,8 +225,8 @@ export class MapComponent implements OnInit, OnDestroy {
 			layers: [
 				layerAll,
 				layerBgStar,
-				layerGrid,
 				layerObject,
+				layerGrid,
 				layerFleet,
 				selectedFeatureLayer,
 			],

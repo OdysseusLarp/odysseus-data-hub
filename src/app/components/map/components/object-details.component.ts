@@ -53,7 +53,7 @@ export class ObjectDetailsComponent implements OnInit, OnDestroy {
 
 	getAtmosphereString() {
 		const celestialBody = get(this.feature, 'properties.celestial_body');
-		if (['star', 'jump point', 'celestial station'].includes(celestialBody))
+		if (['star', 'jump point', 'celestial station', 'black hole'].includes(celestialBody))
 			return '';
 		const str = get(this.feature, 'properties.atmosphere');
 		return `Components of atmosphere in order of % amount: ${str}.`;
@@ -79,16 +79,20 @@ export class ObjectDetailsComponent implements OnInit, OnDestroy {
 			'distance',
 			'surfaceGravity',
 		]);
-		const ellarionMass = 5.9722e24;
+		const ellarionMass = 5.478158e24;
 		const mass = parseFloat('' + props.mass / ellarionMass).toFixed(2);
-		const temperature = Math.round(props.temperature - 272.15);
+		const temperature =
+			props.temperature === null
+				? null
+				: Math.round(props.temperature - 272.15);
 		const list = [
+			{ key: 'Generated name', value: props.nameGenerated },
 			{ key: 'Known name', value: props.nameKnown },
 			{ key: 'Celestial body', value: capitalize(props.celestialBody) },
 			{ key: 'Category', value: props.category },
 			{ key: 'Ring system', value: props.ringSystem ? 'Yes' : 'No' },
-			{ key: 'Radius (km)', value: props.radius },
-			{ key: 'Mass (1=Ellarion)', value: mass },
+			{ key: 'Radius (km)', value: props.radius === 0 ? null : props.radius },
+			{ key: 'Mass (1=Ellarion)', value: mass === '0.00' ? null : mass },
 			{ key: 'Temperature (°C)', value: temperature },
 			{ key: 'Atmospheric pressure (bar)', value: props.atmPressure },
 			{ key: 'Gravity (1=Ellarion)', value: props.surfaceGravity },

@@ -62,7 +62,7 @@ function getSelectedFeatureStyle(zoomLevel) {
 		image: new RegularShape({
 			stroke: new Stroke({ color: '#04C1BD', width: 2 }),
 			points: 4,
-			radius: zoomLevel,
+			radius: zoomLevel === 10 ? zoomLevel + 6 : zoomLevel,
 			angle: Math.PI / 4,
 		}),
 	});
@@ -216,7 +216,7 @@ export class MapComponent implements OnInit, OnDestroy {
 			center: [0, 0],
 			zoom: 6,
 			minZoom: 1,
-			maxZoom: 9,
+			maxZoom: 10,
 			projection,
 		});
 		this.map = new Map({
@@ -225,8 +225,8 @@ export class MapComponent implements OnInit, OnDestroy {
 			layers: [
 				layerAll,
 				layerBgStar,
-				layerGrid,
 				layerObject,
+				layerGrid,
 				layerFleet,
 				selectedFeatureLayer,
 			],

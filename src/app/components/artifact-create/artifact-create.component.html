@@ -3,9 +3,15 @@
 	<div>
 		<form [formGroup]="artifactForm" (ngSubmit)="onFormSubmit()">
 			<label><span>Catalog ID</span><span class="required">*</span></label>
-			<input type="text" formControlName="catalog_id" trim="blur" />
+			<input
+				type="text"
+				formControlName="catalog_id"
+				trim="blur"
+				(keypress)="onLookupCatalogId($event)"
+				autofocus
+			/>
 			<label><span>Artifact name</span><span class="required">*</span></label>
-			<input type="text" formControlName="name" trim="blur" />
+			<input #nameInput type="text" formControlName="name" trim="blur" />
 			<label><span>Artifact origin</span><span class="required">*</span></label>
 			<!-- <input type="text" formControlName="type" trim="blur" /> -->
 			<ng-select

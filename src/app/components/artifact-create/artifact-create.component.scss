@@ -39,4 +39,9 @@ form {
 		font-size: 1.5em;
 		width: 600px;
 	}
+
+	input:disabled {
+		background-color: #151518;
+		color: #dfdfdf;
+	}
 }

@@ -1,9 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { putScienceArtifact } from '@api/Artifact';
+import {
+	putScienceArtifact,
+	getScienceArtifactCatalogCatalog_id,
+} from '@api/Artifact';
+import { getDataTypeId } from '@api/Data';
 import { StateService } from '@app/services/state.service';
 import { Router } from '@angular/router';
 import { DialogService } from '@app/services/dialog.service';
+import { replaceAll } from '@app/utils';
 
 @Component({
 	selector: 'app-artifact-create',
@@ -11,13 +16,16 @@ import { DialogService } from '@app/services/dialog.service';
 	styleUrls: ['./artifact-create.component.scss'],
 })
 export class ArtifactCreateComponent implements OnInit {
+	@ViewChild('nameInput') nameInput;
 	artifactForm: FormGroup;
 	artifactTypes = ['Elder', 'Machine', 'EOC', 'Earth', 'Unknown'];
+	private existingArtifactId: number | null = null;
 
 	constructor(
 		private state: StateService,
 		private router: Router,
-		private dialog: DialogService
+		private dialog: DialogService,
+		private renderer: Renderer2
 	) {}
 
 	ngOnInit() {
@@ -39,15 +47,47 @@ export class ArtifactCreateComponent implements OnInit {
 		});
 	}
 
+	// Lookup the catalog ID from the NFC UID
+	async onLookupCatalogId(event: KeyboardEvent) {
+		if (event.key !== 'Enter') return;
+		event.preventDefault();
+
+		let nfcUid: string = this.artifactForm.get('catalog_id').value;
+		if (!nfcUid || typeof nfcUid !== 'string') return;
+		nfcUid = replaceAll(nfcUid.toUpperCase().trim(), ' ', '');
+
+		const { data } = await getDataTypeId(
+			'tag_uid_to_artifact_catalog_id',
+			'misc'
+		);
+
+		let catalogId: unknown = data[nfcUid];
+		if (typeof catalogId === 'string' && catalogId) {
+			const { data: artifact } = await getScienceArtifactCatalogCatalog_id(
+				catalogId
+			);
+			if (!artifact || !artifact.id) return;
+
+			this.artifactForm.get('catalog_id').setValue(catalogId);
+			this.artifactForm.get('catalog_id').disable();
+			this.renderer.selectRootElement(this.nameInput.nativeElement).focus();
+			this.existingArtifactId = artifact.id;
+		}
+	}
+
 	onFormSubmit() {
 		if (!this.artifactForm.valid)
 			return this.dialog.error(
 				'Error',
 				`Make sure that you have filled in all the required fields marked with an asterix`
 			);
-		const { value } = this.artifactForm;
-		value.catalog_id = value.catalog_id.toUpperCase().replace(/^#*/, '');
-		putScienceArtifact(value)
+		const artifact: api.Artifact = this.artifactForm.getRawValue();
+		artifact.catalog_id = artifact.catalog_id.toUpperCase().replace(/^#*/, '');
+		artifact.is_visible = true;
+		if (this.existingArtifactId) {
+			artifact.id = this.existingArtifactId;
+		}
+		putScienceArtifact(artifact)
 			.then(res => {
 				this.router.navigate(['/artifact', res.data.id]);
 			})

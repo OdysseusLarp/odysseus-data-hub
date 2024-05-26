@@ -144,6 +144,7 @@ export class VoteDetailsComponent implements OnInit, OnDestroy {
 			userDynasty === allowedVoters,
 			userPoliticalParty === allowedVoters,
 			allowedVoters === null,
+			allowedVoters === 'EVERYONE',
 		].some(Boolean);
 		this.votingAllowedFor = getVotingMessage(allowedVoters);
 	}

@@ -1,5 +1,5 @@
 <div class="boxed">
-	<h1>Influence<a routerLink="new" class="button">Create a new vote</a></h1>
+	<h1>Voting<a routerLink="new" class="button">Create a new vote</a></h1>
 	<div *ngFor="let vote of votes" class="dark-bg">
 		<h2>
 			<a [routerLink]="vote.id">{{ vote.title }}</a><span [ngClass]="{ 'voting-active': vote.is_active }">{{
@@ -7,6 +7,13 @@
 			}} {{ vote.active_until | duration }}</span>
 		</h2>
 		<p>{{ vote.description }}</p>
-		<p>Allowed to vote: {{ vote.allowed_voters.replace(":", " - ") }}</p>
+		<h3 class="voting-allowed">Allowed to vote: {{ vote.allowed_voters.replaceAll(":", " - ").replaceAll("_", " ") }}
+		<span
+			class="is-voting-allowed"
+			[ngClass]="{ 'is-allowed': vote.is_allowed_to_vote }"
+		>
+			You are {{ vote.is_allowed_to_vote ? '' : ' NOT' }} allowed to
+			participate.
+		</span></h3>
 	</div>
 </div>

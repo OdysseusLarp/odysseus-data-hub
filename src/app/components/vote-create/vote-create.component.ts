@@ -152,6 +152,10 @@ export class VoteCreateComponent implements OnInit {
 		} = this.state.user.getValue();
 		const ship = get(this.state.user.getValue(), 'ship.id');
 		const filters = [];
+		filters.push({
+			value: 'EVERYONE',
+			text: 'Everyone',
+		});
 		if (ship) {
 			filters.push({
 				value: formatFilter('ship', ship),

@@ -18,7 +18,8 @@ h2 {
 }
 
 .active {
-	font-weight: bold;
+	font-weight: 500;
+	color: white;
 }
 
 .com-wrapper {
@@ -39,8 +40,9 @@ h2 {
 		background-color: rgba(0, 0, 0, 0.3);
 		border: 1px solid #00c5c8;
 		padding: 5px;
+		white-space: pre-line; /* Preserve newlines when displaying the message */
 		p {
-			margin: 4px;
+			margin: 6px;
 		}
 	}
 
@@ -60,7 +62,7 @@ h2 {
 			list-style: none;
 			padding: 6px;
 			vertical-align: middle;
-			font-size: 0.8em;
+			font-size: 1.0em;
 		}
 
 		a {
@@ -105,11 +107,23 @@ h2 {
 		form {
 			display: flex;
 			flex-direction: row;
-			input {
+			width: 100%;
+			textarea {
 				width: 100%;
 				padding-left: 10px;
 				margin-right: 10px;
+				min-height: 50px;
+				resize: vertical;
+				box-sizing: border-box;
 			}
 		}
+	}
+
+	.message-time {
+		color: $success-color;
+	}
+
+	.message-sender {
+		color: $bright-blue;
 	}
 }

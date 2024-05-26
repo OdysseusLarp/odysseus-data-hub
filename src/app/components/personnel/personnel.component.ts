@@ -157,7 +157,7 @@ export class PersonnelComponent implements OnInit {
 			},
 			{
 				prop: 'ship.name',
-				name: 'Current location',
+				name: 'On board',
 				cellTemplate: this.shipTemplate,
 				width: getWidth(16),
 				...columnSettings,

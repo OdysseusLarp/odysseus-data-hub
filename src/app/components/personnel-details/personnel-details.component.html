@@ -39,7 +39,7 @@
 						<div *ngIf="permission.has('role:secret')">
 							<h2>Classified personal file</h2>
 							<p markdown ngPreserveWhitespaces>
-								{{ person.secret_info || 'None' }}
+								{{ person.personal_secret_info || 'None' }}
 							</p>
 						</div>
 						<div *ngIf="person.family && person.family.length">

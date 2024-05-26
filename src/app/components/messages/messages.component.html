@@ -2,37 +2,36 @@
 	<div>
 		<h1>Communications</h1>
 		<h2 *ngIf="chatView.type === 'private'">
-			Private EEP messaging with {{ chatView?.targetPerson?.full_name }}
+			Private messaging with {{ chatView?.targetPerson?.full_name }}
 		</h2>
 		<h2 *ngIf="isEmpty(chatView)">
-			End-to-end encrypted private messaging system (EEP)
+			End-to-end encrypted private messaging system
 		</h2>
 	</div>
 	<div class="com-wrapper">
 		<div>
 			<div class="messages" ngx-auto-scroll #chatMessages>
 				<p *ngFor="let message of (message$ | async)">
-					[{{ formatTimestamp(message.created_at) }}]
-					<strong>{{ message.sender.full_name }}</strong
+					<span class="message-time">[{{ formatTimestamp(message.created_at) }}] </span>
+					<span class="message-sender">{{ message.sender.full_name }}</span
 					>: {{ message.message }}
 				</p>
 				<p *ngIf="isEmpty(chatView)">
 					// No contact selected<br /><br />
-					// Select a contact to send an EEP
+					// Select a contact to send a message
 				</p>
 			</div>
 			<div class="message-box">
 				<form
 					[formGroup]="messageForm"
 					(ngSubmit)="onSubmit()"
-					*ngIf="chatView && chatView.target"
 				>
-					<input
-						type="text"
+					<textarea
+						rows="4"
 						placeholder="Your message here..."
 						formControlName="message"
-						autofocus
-					/>
+						(keydown)="onKeyDown($event)"
+					></textarea>
 					<button>Send</button>
 				</form>
 			</div>

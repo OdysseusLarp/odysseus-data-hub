@@ -25,15 +25,26 @@ export class ArtifactsComponent implements OnInit {
 	}
 
 	search() {
-		this.filteredArtifacts = this.artifacts.filter(artifact =>
-			artifact.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-		);
+		this.filteredArtifacts = this.artifacts.filter(artifact => {
+			const name_is_found = artifact.name.toLowerCase().includes(this.searchTerm.toLowerCase());
+			const catalog_id_is_found = artifact.catalog_id.toLowerCase().includes(this.searchTerm.toLowerCase());
+			const type_is_found = artifact.type === null ? false : artifact.type.toLowerCase().includes(this.searchTerm.toLowerCase());
+			return name_is_found || catalog_id_is_found || type_is_found;
+			;
+	});
 		this.sort();
 	}
 
 	sort() {
-		this.filteredArtifacts.sort((a, b) =>
-			a[this.sortOption].localeCompare(b[this.sortOption])
+		this.filteredArtifacts.sort((a, b) => {
+			if (!a[this.sortOption]) {
+				return 0;
+			}
+			if (!b[this.sortOption]) {
+				return 1;
+			}
+			return a[this.sortOption].localeCompare(b[this.sortOption]);
+		}
 		);
 	}
 }

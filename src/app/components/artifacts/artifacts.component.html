@@ -4,10 +4,10 @@
 	</h1>
 
 	<div class="filter-container dark-bg">
-		<h2>Filters</h2>
+			<h2>Filter / Sort</h2>
 		<div class="filter-items">
 			<div>
-				<label>Name</label>
+				<label>Filter by name or catalog ID</label>
 				<input type="text" [(ngModel)]="searchTerm" (input)="search()" />
 			</div>
 			<div>
@@ -19,6 +19,7 @@
 				>
 					<ng-option value="name">Name</ng-option>
 					<ng-option value="catalog_id">Catalog ID</ng-option>
+					<ng-option value="type">Origin</ng-option>
 					<ng-option value="discovered_by">Discovered By</ng-option>
 				</ng-select>
 			</div>
@@ -27,18 +28,22 @@
 	<table class="dark-bg">
 		<thead>
 			<tr>
-				<th>Artifact</th>
-				<th>Details</th>
+				<th>Artifact name</th>
+				<th>Catalog ID</th>
+				<th>Origin</th>
+				<th>Discovered by</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr *ngFor="let artifact of filteredArtifacts">
 				<td>
 					<a routerLink="/artifact/{{ artifact.id }}"
-						>{{ artifact.name }} ({{ artifact.catalog_id }})</a
+						>{{ artifact.name }}</a
 					>
 				</td>
-				<td>Discovered by {{ artifact.discovered_by }}</td>
+				<td>{{ artifact.catalog_id }}</td>
+				<td>{{ artifact.type }}</td>
+				<td>{{ artifact.discovered_by }}</td>
 			</tr>
 		</tbody>
 	</table>

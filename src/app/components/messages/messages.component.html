@@ -11,7 +11,7 @@
 	<div class="com-wrapper">
 		<div>
 			<div class="messages" ngx-auto-scroll #chatMessages>
-				<p *ngFor="let message of (message$ | async)">
+				<p class="message-content" *ngFor="let message of (message$ | async)">
 					<span class="message-time">[{{ formatTimestamp(message.created_at) }}] </span>
 					<span class="message-sender">{{ message.sender.full_name }}</span
 					>: {{ message.message }}

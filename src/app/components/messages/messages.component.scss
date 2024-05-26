@@ -44,6 +44,11 @@ h2 {
 		p {
 			margin: 6px;
 		}
+
+	.message-content {
+			text-indent: -11ch;
+			padding-left: 11ch;
+		}
 	}
 
 	.user-list {
@@ -110,7 +115,7 @@ h2 {
 			width: 100%;
 			textarea {
 				width: 100%;
-				padding-left: 10px;
+				padding: 12px;
 				margin-right: 10px;
 				min-height: 50px;
 				resize: vertical;

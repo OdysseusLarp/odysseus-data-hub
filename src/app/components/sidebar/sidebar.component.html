@@ -10,28 +10,26 @@
 				? (unseenMessagesCount$ | async) + ' new messages'
 				: 'No unread messages'
 		"
-		><img alt="comms" src="assets/img/ui/comms.svg"/>Communications<span
+		><img alt="comms" src="assets/img/ui/comms.svg"/>Comms<span
 			*ngIf="(unseenMessagesCount$ | async) > 0"
 			class="unread-message-count blinking"
 		></span
 	></a>
 	<a [routerLinkActive]="['route-active']" routerLink="vote"
-		><img alt="influence" src="assets/img/ui/influence.svg" />Influence</a
+		><img alt="influence" src="assets/img/ui/influence.svg" />Voting</a
 	>
 	<a [routerLinkActive]="['route-active']" routerLink="ship-log"
 		><img alt="shiplog" src="assets/img/ui/shiplog.svg" />Ship log</a
 	>
 	<a [routerLinkActive]="['route-active']" routerLink="personnel"
 		><img alt="personnel" src="assets/img/ui/personnel.svg" />Personnel
-		database</a
-	>
+	</a>
 	<a [routerLinkActive]="['route-active']" routerLink="artifact"
-		><img alt="artifact" src="assets/img/ui/artifact_database.svg" />Artifact
-		database</a
-	>
+		><img alt="artifact" src="assets/img/ui/artifact_database.svg" />Artifacts
+	</a>
 	<a [routerLinkActive]="['route-active']" routerLink="fleet"
-		><img alt="fleet" src="assets/img/ui/fleet.svg" />Ship database</a
-	>
+		><img alt="fleet" src="assets/img/ui/fleet.svg" />fleet
+	</a>
 	<a [routerLinkActive]="['route-active']" routerLink="captains-log"
 		><img alt="captain" src="assets/img/ui/captain.svg" />Captain's log</a
 	>

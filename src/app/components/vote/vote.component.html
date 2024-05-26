@@ -7,5 +7,6 @@
 			}} {{ vote.active_until | duration }}</span>
 		</h2>
 		<p>{{ vote.description }}</p>
+		<p>Allowed to vote: {{ vote.allowed_voters.replace(":", " - ") }}</p>
 	</div>
 </div>

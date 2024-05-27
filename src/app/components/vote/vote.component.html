@@ -12,7 +12,7 @@
 			class="is-voting-allowed"
 			[ngClass]="{ 'is-allowed': vote.is_allowed_to_vote }"
 		>
-			You are {{ vote.is_allowed_to_vote ? '' : ' NOT' }} allowed to
+			You {{ vote.is_active ? 'are' : ' were' }} {{ vote.is_allowed_to_vote ? '' : ' NOT' }} allowed to
 			participate.
 		</span></h3>
 	</div>

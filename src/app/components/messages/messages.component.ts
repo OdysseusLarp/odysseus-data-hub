@@ -94,7 +94,6 @@ export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 			map(([users, { userFilter }, unseenMessages]) => {
 				const filter = userFilter.toLowerCase().trim();
 				const isHacker = Boolean(window.sessionStorage.getItem('hackerId'));
-				console.log("Filter", filter);
 				return users
 					.filter(user => {
 						// Don't show GM conversation when logged in via hacking

@@ -18,3 +18,17 @@ span {
 	font-size: 0.6em;
 	margin-bottom: 8px;
 }
+
+.is-voting-allowed {
+	float: right;
+	font-size: 16px;
+	color: lighten($error-color, 30%);
+}
+
+.is-voting-allowed.is-allowed {
+	color: lighten($success-color, 30%);
+}
+
+h3.span {
+	font-size: 16px;
+}

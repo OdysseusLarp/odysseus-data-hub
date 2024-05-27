@@ -50,7 +50,7 @@ h2 {
 }
 h3 {
 	font-family: 'Exo';
-	font-size: 15px;
+	font-size: 16px;
 	margin: 0px;
 }
 .exo {
@@ -64,6 +64,7 @@ button,
 	border: 2px solid $blue;
 	padding: 5px;
 	color: #fff;
+	font-size: 15px;
 }
 .no-shadow {
 	box-shadow: none;
@@ -81,7 +82,7 @@ button:hover,
 input[type='text'],
 textarea {
 	font-family: $data-font;
-	font-size: 13px;
+	font-size: 16px;
 	background: rgba(0, 0, 0, 0.2);
 	border: 1px solid $blue;
 	padding: 4px;
@@ -100,7 +101,8 @@ textarea:focus {
 .boxed {
 	padding: 5px 15px 10px 15px;
 	border: 3px solid $blue;
-	background-image: url('assets/img/ui/liukuvari2.jpg');
+	//background-image: url('assets/img/ui/liukuvari2.jpg');
+	background-color: #011b2b;
 	background-size: cover;
 	background-attachment: fixed;
 	box-shadow: 0px 0px 10px $dark-blue;
@@ -139,8 +141,8 @@ textarea:focus {
 		flex-direction: row;
 		align-items: center;
 		font-weight: bold;
-		font-size: 13px;
-		line-height: 16px;
+		font-size: 16px;
+		line-height: 1.5;
 		text-decoration: none;
 		color: lighten($bright-blue, 20%);
 		text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.6);
@@ -196,7 +198,7 @@ textarea:focus {
 
 	p {
 		margin: 0px 0px 0px 15px;
-		font-size: 13px;
+		font-size: 16px;
 	}
 	p.user-name {
 		cursor: pointer;
@@ -230,7 +232,7 @@ textarea:focus {
 .back-button {
 	margin-right: 16px;
 	box-shadow: none;
-	font-size: 13.3333px !important;
+	font-size: 15px !important;
 }
 .back-button:hover {
 	box-shadow: 0px 0px 5px $dark-blue;
@@ -267,7 +269,7 @@ textarea:focus {
 
 .ng-select {
 	font-family: $data-font;
-	font-size: 13px;
+	font-size: 16px;
 }
 .ng-select-focused {
 	outline: none;
@@ -359,6 +361,7 @@ ul.pager {
 
 .mat-tab-label {
 	color: #fff;
+	font-size: 1.2em;
 }
 
 // Material Tabs component active tab color override

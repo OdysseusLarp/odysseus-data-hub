@@ -82,7 +82,7 @@ export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 		});
 
 		this.filterForm.valueChanges.subscribe(({ userFilter }) => {
-			this.messaging.debouncedSearchUsers(userFilter);
+			this.messaging.debouncedSearchUsers(userFilter.toLowerCase().trim());
 		});
 
 		// Users that show up in users list
@@ -94,7 +94,6 @@ export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 			map(([users, { userFilter }, unseenMessages]) => {
 				const filter = userFilter.toLowerCase().trim();
 				const isHacker = Boolean(window.sessionStorage.getItem('hackerId'));
-
 				return users
 					.filter(user => {
 						// Don't show GM conversation when logged in via hacking
@@ -131,6 +130,13 @@ export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 		// set empty chatview to prevent messages from current conversation partner being marked
 		// as read in the background
 		this.messaging.chatViewChanged({ type: 'channel', target: 'general' });
+	}
+
+	onKeyDown(event: KeyboardEvent) {  // New method
+		if ((event.shiftKey || event.ctrlKey) && event.key === 'Enter') {
+			event.preventDefault();
+			this.onSubmit();
+		}
 	}
 
 	onSubmit() {

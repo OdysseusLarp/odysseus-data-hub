@@ -9,13 +9,17 @@ import {
 	formatFilter,
 } from '../vote-create/vote-create.component';
 
+interface ExtendedVote extends api.Vote {
+	is_allowed_to_vote: boolean;
+}
+
 @Component({
 	selector: 'app-vote',
 	templateUrl: './vote.component.html',
 	styleUrls: ['./vote.component.scss'],
 })
 export class VoteComponent implements OnInit, OnDestroy {
-	votes: api.Vote[];
+	votes: ExtendedVote[];
 	voteAddedOrUpdated$: Subscription;
 
 	constructor(
@@ -57,8 +61,6 @@ export class VoteComponent implements OnInit, OnDestroy {
 			allowedVoters === null,
 			allowedVoters === 'EVERYONE',
 		].some(Boolean);
-
-		console.log(isUserAllowedToVote);
 
 		return isUserAllowedToVote;
 	}

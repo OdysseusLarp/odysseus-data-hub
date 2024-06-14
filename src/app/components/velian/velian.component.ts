@@ -91,7 +91,7 @@ export class VelianComponent implements OnInit, OnDestroy {
 		patchDataTypeId('velian', 'misc', {
 			version: this.velianState.version,
 			hackingComplete: true,
-		});
+		} as any);
 	}
 
 	openCaptainsLogDialog() {

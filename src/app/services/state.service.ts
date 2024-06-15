@@ -67,9 +67,9 @@ export class StateService {
 			.subscribe(isActive => {
 				if (!isActive) return;
 				getDataTypeId('velian', 'misc').then(res => {
-					if (!res.data.isActive)
+					if (!(res.data as any).isActive)
 						return console.log('Velian minigame is not enabled in backend');
-					this.velianState$.next(res.data);
+					this.velianState$.next(res.data as any);
 				});
 			});
 	}

@@ -1,6 +1,11 @@
 <div class="boxed">
 	<div>
 		<h1>Communications</h1>
+		<!-- Show currentUser.status -->
+		<div *ngIf="loggedInAsDeadNpc()" class="npc-is-dead-alert">
+			‼️ The NPC you are logged in as is deceased. You can still use the
+			messaging system if needed.
+		</div>
 		<h2 *ngIf="chatView.type === 'private'">
 			Private messaging with {{ chatView?.targetPerson?.full_name }}
 		</h2>
@@ -12,7 +17,9 @@
 		<div>
 			<div class="messages" ngx-auto-scroll #chatMessages>
 				<p class="message-content" *ngFor="let message of (message$ | async)">
-					<span class="message-time">[{{ formatTimestamp(message.created_at) }}] </span>
+					<span class="message-time"
+						>[{{ formatTimestamp(message.created_at) }}]
+					</span>
 					<span class="message-sender">{{ message.sender.full_name }}</span
 					>: {{ message.message }}
 				</p>
@@ -22,17 +29,17 @@
 				</p>
 			</div>
 			<div class="message-box">
-				<form
-					[formGroup]="messageForm"
-					(ngSubmit)="onSubmit()"
-				>
+				<form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
 					<textarea
 						rows="4"
 						placeholder="Your message here..."
 						formControlName="message"
 						(keydown)="onKeyDown($event)"
+						[ngClass]="{ 'alert-borders': loggedInAsDeadNpc() }"
 					></textarea>
-					<button>Send</button>
+					<button [ngClass]="{ 'alert-borders': loggedInAsDeadNpc() }">
+						Send
+					</button>
 				</form>
 			</div>
 		</div>

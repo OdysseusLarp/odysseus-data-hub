@@ -45,7 +45,7 @@ h2 {
 			margin: 6px;
 		}
 
-	.message-content {
+		.message-content {
 			text-indent: -11ch;
 			padding-left: 11ch;
 		}
@@ -67,7 +67,7 @@ h2 {
 			list-style: none;
 			padding: 6px;
 			vertical-align: middle;
-			font-size: 1.0em;
+			font-size: 1em;
 		}
 
 		a {
@@ -131,4 +131,28 @@ h2 {
 	.message-sender {
 		color: $bright-blue;
 	}
+}
+
+.npc-is-dead-alert {
+	animation: npc-is-dead-alert 1s infinite;
+}
+
+@keyframes npc-is-dead-alert {
+	0% {
+		color: rgb(255, 125, 125);
+	}
+	50% {
+		color: rgb(255, 42, 42);
+	}
+	100% {
+		color: rgb(255, 125, 125);
+	}
+}
+
+.alert-borders {
+	border: 1px solid rgb(255, 125, 125);
+}
+
+button.alert-borders {
+	box-shadow: 0px 0px 10px rgb(255, 125, 125);
 }

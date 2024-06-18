@@ -132,11 +132,18 @@ export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 		this.messaging.chatViewChanged({ type: 'channel', target: 'general' });
 	}
 
-	onKeyDown(event: KeyboardEvent) {  // New method
+	onKeyDown(event: KeyboardEvent) {
+		// New method
 		if ((event.shiftKey || event.ctrlKey) && event.key === 'Enter') {
 			event.preventDefault();
 			this.onSubmit();
 		}
+	}
+
+	loggedInAsDeadNpc() {
+		const isNpc = this.currentUser && this.currentUser.is_character === false;
+		const isDead = this.currentUser && this.currentUser.status === 'Deceased';
+		return isNpc && isDead;
 	}
 
 	onSubmit() {

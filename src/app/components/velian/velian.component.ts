@@ -1,15 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import {
-	Observable,
-	interval,
-	combineLatest,
-	Subscription,
-	BehaviorSubject,
-} from 'rxjs';
-import { filter, startWith, map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { StateService, VelianState } from '@app/services/state.service';
-import moment from 'moment';
 import { autobind } from 'core-decorators';
 import { DialogService } from '@app/services/dialog.service';
 import { patchDataTypeId } from '@api/Data';
@@ -24,12 +17,9 @@ import { VelianDialogComponent } from '@app/components/velian-dialog/velian-dial
 	styleUrls: ['./velian.component.scss'],
 })
 export class VelianComponent implements OnInit, OnDestroy {
-	lifesupportRunsOutIn$: Observable<string>;
 	velianState$: Subscription;
-	meterPercentage$: Subscription;
 	velianState: VelianState;
 	distressSignal: string;
-	lifesupportOffline$ = new BehaviorSubject<boolean>(false);
 	confirmDialogRef: MatDialogRef<VelianConfirmDialogComponent>;
 
 	constructor(
@@ -46,40 +36,6 @@ export class VelianComponent implements OnInit, OnDestroy {
 				if (velianState.hasSentSignal && this.confirmDialogRef)
 					this.confirmDialogRef.close();
 			});
-
-		const lifesupportUpdateInterval$ = interval(1000).pipe(startWith(0));
-		this.lifesupportRunsOutIn$ = combineLatest(
-			this.state.velianState$,
-			lifesupportUpdateInterval$
-		).pipe(
-			filter(([velianState]) => !!velianState),
-			map(([velianState]) => {
-				this.lifesupportOffline$.next(
-					Date.now() > velianState.lifesupportRunsOutAt
-				);
-				const runsOutat = moment(velianState.lifesupportRunsOutAt);
-				const diff = runsOutat.diff(moment());
-				if (diff < 0) return '00 HOURS 00 MINUTES 00 SECONDS';
-				return moment.utc(diff).format('HH [HOURS] mm [MINUTES] ss [SECONDS]');
-			})
-		);
-
-		this.meterPercentage$ = combineLatest(
-			this.state.velianState$,
-			lifesupportUpdateInterval$
-		)
-			.pipe(filter(([velianState]) => !!velianState))
-			.subscribe(([velianState]) => {
-				const { lifesupportRunsOutAt, lifesupportMaxTime } = velianState;
-				const range = lifesupportRunsOutAt - lifesupportMaxTime;
-				const passed = Date.now() - lifesupportMaxTime;
-				let val = Math.ceil(100 * (passed / range));
-				if (val > 100) val = 100;
-				document.documentElement.style.setProperty(
-					'--lifesupport-percentage',
-					`${val}%`
-				);
-			});
 	}
 
 	ngOnDestroy() {
@@ -95,7 +51,6 @@ export class VelianComponent implements OnInit, OnDestroy {
 	}
 
 	openCaptainsLogDialog() {
-		// this.dialog.info(`Captain's log entry`, this.velianState.captainsLogText);
 		this.matDialog.open(VelianDialogComponent, { ...DIALOG_SETTINGS });
 	}
 

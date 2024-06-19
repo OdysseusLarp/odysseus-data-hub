@@ -141,8 +141,10 @@ export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 	}
 
 	loggedInAsDeadNpc() {
+		const deadStatuses = ['Deceased', 'Killed in action'];
 		const isNpc = this.currentUser && this.currentUser.is_character === false;
-		const isDead = this.currentUser && this.currentUser.status === 'Deceased';
+		const isDead =
+			this.currentUser && deadStatuses.includes(this.currentUser.status);
 		return isNpc && isDead;
 	}
 

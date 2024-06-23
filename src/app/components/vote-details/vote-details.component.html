@@ -1,12 +1,14 @@
 <div class="boxed">
-	<h1>Vote details</h1>
+	<h1>
+		Vote: <span *ngIf="vote">{{ vote.title }}</span>
+	</h1>
 	<div *ngIf="vote" class="dark-bg">
 		<h2>
-			{{ vote.title }}
-			<span class="is-active" [ngClass]="{ 'voting-active': vote.is_active }"
-				>{{ vote.is_active ? 'voting active for' : 'voting ended' }}
-				{{ vote.active_until | duration }}</span
-			>
+			Initiated by {{ vote.author?.full_name }}
+			<span class="is-active" [ngClass]="{ 'voting-active': vote.is_active }">
+				{{ vote.is_active ? 'voting active for' : 'voting ended' }}
+				{{ vote.active_until | duration }}
+			</span>
 		</h2>
 		<h3 *ngIf="votingAllowedFor">
 			<span *ngIf="votingAllowedFor === 'everyone'"
@@ -19,11 +21,10 @@
 				class="is-voting-allowed"
 				[ngClass]="{ 'is-allowed': isUserAllowedToVote }"
 			>
-				You {{ vote.is_active ? 'are' : ' were' }} {{ isUserAllowedToVote ? '' : ' NOT' }} allowed to
-				participate.</span
+				You {{ vote.is_active ? 'are' : ' were' }}
+				{{ isUserAllowedToVote ? '' : ' NOT' }} allowed to participate.</span
 			>
 		</h3>
-		<h3>Initiated by {{ vote.author?.full_name }}</h3>
 		<p>{{ vote.description }}</p>
 		<h3>
 			Vote options ({{ vote.entries.length }}

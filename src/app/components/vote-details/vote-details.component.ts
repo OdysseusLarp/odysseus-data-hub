@@ -19,6 +19,7 @@ interface Vote extends api.Vote {
 }
 
 function getVotingMessage(allowedVoters) {
+	console.info('ALLOWED VOTERS ==>', allowedVoters);
 	if (!allowedVoters) return;
 	const votingAllowedFor = new Map([
 		['EVERYONE', 'everyone'],
@@ -43,7 +44,7 @@ function getVotingMessage(allowedVoters) {
 			startCase(snakeCase(allowedVoters.replace(/^PARTY:/, '')))
 		);
 	if (allowedVoters.match(/^SHIP:/))
-		return `those aboard the ship ${startCase(
+		return `individuals aboard the ship ${startCase(
 			snakeCase(allowedVoters.replace(/^SHIP:/, ''))
 		)}`;
 }
@@ -125,6 +126,15 @@ export class VoteDetailsComponent implements OnInit, OnDestroy {
 	private checkVotingRights() {
 		const user = this.state.user.getValue();
 		if (!this.vote || !user) return;
+
+		console.log('Checkign voting rights for', user);
+
+		// Don't allow group chat accounts to vote
+		const isGroupChatAccount = user.character_group === 'Group Chat';
+		if (isGroupChatAccount) {
+			this.votingAllowedFor = getVotingMessage(this.vote.allowed_voters);
+			return false;
+		}
 
 		const allowedVoters = this.vote.allowed_voters;
 		const { religion, dynasty, military_rank, political_party } = user;

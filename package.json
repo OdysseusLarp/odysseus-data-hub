@@ -8,7 +8,7 @@
 		"apigen": "openapi -s http://localhost:8888/api-docs.json -o ./src/app/api -l ts --semicolon",
 		"apigen:dev": "openapi -s https://apps.odysseuslarp.dev/api-docs.json -o ./src/app/api -l ts --semicolon",
 		"apigen:dev-cont": "openapi -s http://odysseus-backend:8888/api-docs.json -o ./src/app/api -l ts --semicolon",
-		"apigen:live": "openapi -s https://live.odysseuslarp.dev/api-docs.json -o ./src/app/api -l ts --semicolon",
+		"apigen:live": "openapi -s https://odysseus-server.live.odysseuslarp.dev/api-docs.json -o ./src/app/api -l ts --semicolon",
 		"build": "NODE_OPTIONS=--openssl-legacy-provider ng build --base-href /social/ --prod",
 		"build:live": "NODE_OPTIONS=--openssl-legacy-provider ng build --configuration live --base-href /social/ --prod",
 		"precommit": "lint-staged",

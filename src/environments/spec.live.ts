@@ -1,5 +1,5 @@
 const spec: api.OpenApiSpec = {
-	host: 'live.odysseuslarp.dev',
+	host: 'odysseus-server.live.odysseuslarp.dev',
 	schemes: ['https'],
 	basePath: '',
 	contentTypes: [],

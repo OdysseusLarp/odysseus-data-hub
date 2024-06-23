@@ -1,5 +1,6 @@
 export const environment = {
 	production: true,
-	apiUrl: 'https://live.odysseuslarp.dev',
-	geoserverUrl: 'https://live.odysseuslarp.dev/geoserver/odysseus',
+	apiUrl: 'https://odysseus-server.live.odysseuslarp.dev',
+	geoserverUrl:
+		'https://odysseus-server.live.odysseuslarp.dev/geoserver/odysseus',
 };

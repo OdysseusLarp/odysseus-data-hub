@@ -22,10 +22,7 @@ export class VoteComponent implements OnInit, OnDestroy {
 	votes: ExtendedVote[];
 	voteAddedOrUpdated$: Subscription;
 
-	constructor(
-		private state: StateService,
-		private socket: SocketService
-	) {}
+	constructor(private state: StateService, private socket: SocketService) {}
 
 	ngOnInit() {
 		this.fetchVotes();
@@ -40,6 +37,12 @@ export class VoteComponent implements OnInit, OnDestroy {
 
 	checkVotingRights(vote) {
 		const user = this.state.user.getValue();
+
+		// Don't allow group chat accounts to vote
+		const isGroupChatAccount = user.character_group === 'Group Chat';
+		if (isGroupChatAccount) {
+			return false;
+		}
 
 		const allowedVoters = vote.allowed_voters;
 		const { religion, dynasty, military_rank, political_party } = user;
@@ -70,7 +73,9 @@ export class VoteComponent implements OnInit, OnDestroy {
 			this.votes = get(res, 'data', []).sort(
 				(a, b) => a.updated_at < b.updated_at
 			);
-			this.votes.map(vote => { vote.is_allowed_to_vote = this.checkVotingRights(vote) });
+			this.votes.map(vote => {
+				vote.is_allowed_to_vote = this.checkVotingRights(vote);
+			});
 		});
 	}
 }

@@ -128,7 +128,7 @@
 							<p *ngIf="!medicalEntries.length">No medical records</p>
 						</div>
 					</div>
-					<div class="add-entry-wrapper">
+					<div class="add-entry-wrapper" *ngIf="permission.has('role:medic')">
 						<h2>Add medical record</h2>
 						<div>
 							<textarea trim="blur" #medicalEntryForm></textarea>
@@ -180,7 +180,7 @@
 							>
 						</p>
 					</div>
-					<div class="add-entry-wrapper">
+					<div class="add-entry-wrapper" *ngIf="permission.has('role:security')">
 						<h2>Add entry to service history</h2>
 						<div>
 							<textarea trim="blur" #militaryEntryForm></textarea>
@@ -212,7 +212,7 @@
 							>
 						</p>
 					</div>
-					<div class="add-entry-wrapper">
+					<div class="add-entry-wrapper" *ngIf="permission.has('role:security')">
 						<h2>Add entry to personal history</h2>
 						<div>
 							<textarea trim="blur" #personalEntryForm></textarea>

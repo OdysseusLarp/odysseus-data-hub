@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
 	putScienceArtifact,
 	getScienceArtifactCatalogCatalog_id,
@@ -9,6 +9,7 @@ import { StateService } from '@app/services/state.service';
 import { Router } from '@angular/router';
 import { DialogService } from '@app/services/dialog.service';
 import { replaceAll } from '@app/utils';
+import { isPlainObject } from 'lodash';
 
 @Component({
 	selector: 'app-artifact-create',
@@ -61,7 +62,23 @@ export class ArtifactCreateComponent implements OnInit {
 			'misc'
 		);
 
-		let catalogId: unknown = data[nfcUid];
+		let catalogId: unknown;
+		if (
+			'tagUidToArtifactCatalogId' in data &&
+			isPlainObject(data['tagUidToArtifactCatalogId'])
+		) {
+			const mapping: Record<string, string> = {};
+			Object.entries(data['tagUidToArtifactCatalogId']).forEach(
+				([key, value]) => {
+					if (typeof key !== 'string' || typeof value !== 'string') {
+						return;
+					}
+					mapping[key.toUpperCase().replace(/\s+/g, '')] = value;
+				}
+			);
+			catalogId = mapping[nfcUid];
+		}
+
 		if (typeof catalogId === 'string' && catalogId) {
 			const { data: artifact } = await getScienceArtifactCatalogCatalog_id(
 				catalogId

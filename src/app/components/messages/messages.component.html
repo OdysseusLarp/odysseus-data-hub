@@ -20,7 +20,12 @@
 					<span class="message-time"
 						>[{{ formatTimestamp(message.created_at) }}]
 					</span>
-					<span class="message-sender">{{ message.sender.full_name }}</span
+					<span
+						[ngClass]="{
+							'message-sender': true,
+							'is-current-user': isFromCurrentUser(message)
+						}"
+						>{{ message.sender.full_name }}</span
 					>: {{ message.message }}
 				</p>
 				<p *ngIf="isEmpty(chatView)">

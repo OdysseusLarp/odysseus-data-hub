@@ -131,6 +131,9 @@ h2 {
 	.message-sender {
 		color: $bright-blue;
 	}
+	.message-sender.is-current-user {
+		color: #feee02;
+	}
 }
 
 .npc-is-dead-alert {

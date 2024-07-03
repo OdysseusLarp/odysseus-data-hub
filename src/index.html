@@ -10,5 +10,39 @@
 	</head>
 	<body>
 		<app-root></app-root>
+		<script>
+			(function() {
+				var liveServerLookupString = 'odysseus-server.live.odysseuslarp.dev';
+				var currentURL = window.location.href;
+				if (!currentURL.includes(liveServerLookupString)) {
+					var disclaimerDiv = document.createElement('div');
+					disclaimerDiv.id = 'test-environment-disclaimer';
+					disclaimerDiv.innerHTML =
+						'THIS IS A TEST ENVIRONMENT, CLICK <a href="https://odysseus-server.live.odysseuslarp.dev/social">HERE</a> FOR THE LIVE ENVIRONMENT';
+					var style = document.createElement('style');
+					style.innerHTML = `
+                  #test-environment-disclaimer {
+                      font-family: Arial, Helvetica, sans-serif;
+                      position: fixed;
+                      bottom: 0;
+                      left: 0;
+                      width: 100%;
+                      background-color: red;
+                      color: white;
+                      text-align: center;
+                      padding: 6px;
+                      z-index: 1000;
+                      font-weight: bold;
+                  }
+                  #test-environment-disclaimer a {
+                      color: white;
+                      text-decoration: underline;
+                  }
+              `;
+					document.head.appendChild(style);
+					document.body.appendChild(disclaimerDiv);
+				}
+			})();
+		</script>
 	</body>
 </html>

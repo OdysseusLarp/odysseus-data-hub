@@ -148,6 +148,12 @@ export class MessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 		return isNpc && isDead;
 	}
 
+	isFromCurrentUser(message) {
+		const senderId = get(message, 'sender.id');
+		const currentUserId = get(this.currentUser, 'id');
+		return senderId === currentUserId;
+	}
+
 	onSubmit() {
 		const { message } = this.messageForm.value,
 			{ target, type } = this.chatView;

@@ -125,12 +125,19 @@ export class PersonnelComponent implements OnInit {
 				prop: 'full_name',
 				name: 'Name',
 				cellTemplate: this.nameTemplate,
-				width: getWidth(27),
+				width: getWidth(22),
 				...columnSettings,
 			},
 			{
 				prop: 'dynasty',
 				name: 'Dynasty',
+				...columnSettings,
+				width: getWidth(12),
+			},
+			{
+				// political party
+				prop: 'political_party',
+				name: 'Party',
 				...columnSettings,
 				width: getWidth(12),
 			},
@@ -150,7 +157,7 @@ export class PersonnelComponent implements OnInit {
 			{
 				prop: 'status',
 				name: 'Status',
-				width: getWidth(26),
+				width: getWidth(22),
 				...columnSettings,
 			},
 		];

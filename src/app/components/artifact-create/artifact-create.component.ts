@@ -92,7 +92,7 @@ export class ArtifactCreateComponent implements OnInit {
 		}
 	}
 
-	onFormSubmit() {
+	async onFormSubmit() {
 		if (!this.artifactForm.valid)
 			return this.dialog.error(
 				'Error',
@@ -101,9 +101,24 @@ export class ArtifactCreateComponent implements OnInit {
 		const artifact: api.Artifact = this.artifactForm.getRawValue();
 		artifact.catalog_id = artifact.catalog_id.toUpperCase().replace(/^#*/, '');
 		artifact.is_visible = true;
+
+		// Check if we already have the existing artifact details, which happens if the scientists
+		// use the NFC reader to read the artifact NFC tag
 		if (this.existingArtifactId) {
 			artifact.id = this.existingArtifactId;
+		} else {
+			// Otherwise let's find out if the catalog ID already exists, so that we know that
+			// we should update instead of insert
+			const {
+				data: existingArtifact,
+			} = await getScienceArtifactCatalogCatalog_id(artifact.catalog_id);
+
+			// If the artifact is not visible, then we can update it. Otherwise an error will be shown.
+			if (existingArtifact && !existingArtifact.is_visible) {
+				artifact.id = existingArtifact.id;
+			}
 		}
+
 		putScienceArtifact(artifact)
 			.then(res => {
 				this.router.navigate(['/artifact', res.data.id]);

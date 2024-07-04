@@ -150,6 +150,7 @@ export class MessagingService {
 			(target = message.target_person), (type = 'private');
 		} else {
 			// Otherwise it should be a channel message => goes under target channel id
+			// Note: Channels were never fully implemented and were not used in 2019 or 2024 runs
 			(target = message.target_channel), (type = 'channel');
 		}
 
@@ -165,8 +166,7 @@ export class MessagingService {
 			);
 		if (!isUserVisible) this.socket.emit('getUserList');
 
-		// Up the unseen count unless current user is the sender
-		if (message.person_id !== this.user.id) {
+		if (message.target_person === this.user.id) {
 			// If sender is not on the contact list, refetch contacts
 			const currentlyUnseen = this.unseenMessages.get(target) || 0;
 			this.unseenMessages.set(target, currentlyUnseen + 1);
@@ -200,7 +200,7 @@ export class MessagingService {
 		this.messageCache.set(target, messages);
 
 		const unseenMessageCount = messages.filter(
-			msg => !msg.seen && msg.person_id !== this.user.id
+			msg => !msg.seen && msg.target_person === this.user.id
 		).length;
 		if (unseenMessageCount) this.unseenMessages.set(target, unseenMessageCount);
 		this.emitUnseenMessages();

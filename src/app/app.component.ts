@@ -92,6 +92,9 @@ export class AppComponent implements OnInit {
 	}
 
 	private openCountdownDialog() {
+		// Don't show jump countdown in velian mode
+		if (this.state.isVelianModeEnabled$.getValue()) return;
+
 		this.jumpCountdownDialogRef = this.dialog.open(
 			JumpCountdownDialogComponent,
 			{

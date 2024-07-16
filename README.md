@@ -1,10 +1,13 @@
-# Odysseus Social Hub
+# EOC Datahub
 
-Frontend for Social Hub system used in Odysseus LARP.
+Frontend for EOC Datahub system used in Odysseus LARP. Basically the one and only place for news, comms, personnel and fleet data, voting, captain's log, and starmap. Oh, and hackers can hack it.
+
+![Screenshot 2024-07-16 at 8 57 35](https://github.com/user-attachments/assets/6c1a50a0-5ac5-45aa-9580-f83d0421f7e8)
 
 ## Tech
 
 - Node v18.14.0
+- Angular 4
 
 ## Setting up local dev
 

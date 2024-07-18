@@ -2,7 +2,9 @@
 
 Frontend for EOC Datahub system used in Odysseus LARP. Basically the one and only place for news, comms, personnel and fleet data, voting, captain's log, and starmap. Oh, and hackers can hack it.
 
-![Screenshot 2024-07-16 at 8 57 35](https://github.com/user-attachments/assets/6c1a50a0-5ac5-45aa-9580-f83d0421f7e8)
+![Screenshot 2024-07-18 at 10-26-33 EOC DATAHUB](https://github.com/user-attachments/assets/a2240bd8-a48d-4ee0-a7cd-f09d94ad1d39)
+
+![Screenshot 2024-07-18 at 10-30-07 EOC DATAHUB](https://github.com/user-attachments/assets/affdf407-d66d-47d3-bd6d-de019a1a3354)
 
 ## Tech
 

@@ -1,3 +1,9 @@
+# Museum exhibit instructions
+
+Make modifications and then run: `npm run build-and-copy`
+
+This will build the static site and copy it to `../odysseus-backend/src/odysseus-social-hub` for static serving by the backend. Commit that repo as well.
+
 # EOC Datahub
 
 Frontend for EOC Datahub system used in Odysseus LARP. Basically the one and only place for news, comms, personnel and fleet data, voting, captain's log, and starmap. Oh, and hackers can hack it.

@@ -11,6 +11,7 @@
 		"apigen:live": "openapi -s https://odysseus-server.live.odysseuslarp.dev/api-docs.json -o ./src/app/api -l ts --semicolon",
 		"build": "NODE_OPTIONS=--openssl-legacy-provider ng build --base-href /social/ --prod",
 		"build:live": "NODE_OPTIONS=--openssl-legacy-provider ng build --configuration live --base-href /social/ --prod",
+		"build-and-copy": "npm run build:live && rm -rf ../odysseus-backend/src/odysseus-social-hub && cp -r dist/odysseus-social-hub ../odysseus-backend/src",
 		"precommit": "lint-staged",
 		"test": "ng test",
 		"lint": "ng lint",

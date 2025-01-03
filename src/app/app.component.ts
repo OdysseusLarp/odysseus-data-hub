@@ -11,6 +11,7 @@ import { SipService } from './services/sip.service';
 import { ActivatedRoute } from '@angular/router';
 import { JumpCountdownDialogComponent } from '@app/components/jump-countdown-dialog/jump-countdown-dialog.component';
 import { DIALOG_SETTINGS } from '@components/message-dialog/message-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-root',
@@ -30,8 +31,12 @@ export class AppComponent implements OnInit {
 	hackingTarget: string;
 	private isJumpCountdownDialogDismissed = false;
 
+	private idleTimeout: any;
+	private readonly IDLE_TIME = 30000; // 30 seconds
+
 	constructor(
 		private state: StateService,
+		private router: Router,
 		private socket: SocketService,
 		private snackBar: MatSnackBar,
 		public sip: SipService,
@@ -89,6 +94,10 @@ export class AppComponent implements OnInit {
 				this.jumpCountdownDialogRef.close();
 			}
 		});
+
+		// Setup auto-logout
+		this.setupIdleListener();
+		this.resetIdleTimer();
 	}
 
 	private openCountdownDialog() {
@@ -117,5 +126,42 @@ export class AppComponent implements OnInit {
 		this.state.loginHacker(this.hackingTarget).finally(() => {
 			this.state.showHackingView.next(false);
 		});
+	}
+
+	/**
+	 * Listen for user activity at the browser level.
+	 */
+	private setupIdleListener(): void {
+		window.addEventListener('mousemove', this.resetIdleTimer.bind(this));
+		window.addEventListener('keydown', this.resetIdleTimer.bind(this));
+		window.addEventListener('click', this.resetIdleTimer.bind(this));
+	}
+
+	/**
+	 * Resets the idle timer to IDLE_TIME after the latest user activity.
+	 */
+	private resetIdleTimer(): void {
+		if (this.idleTimeout) {
+			clearTimeout(this.idleTimeout);
+		}
+
+		this.idleTimeout = setTimeout(() => {
+			this.onLogout();
+		}, this.IDLE_TIME);
+	}
+
+	/**
+	 * The logout action that will be called when the user is idle over IDLE_TIME.
+	 */
+	private onLogout(): void {
+		// Only logout with static effect if currently signed in
+		if (!!this.state.user.getValue()) {
+			this.state.isSocialHubEnabled$.next(false);
+			this.state.logout.next();
+			this.router.navigate(['/']);
+			setTimeout(() => {
+				this.state.isSocialHubEnabled$.next(true);
+			}, 3000);
+		}
 	}
 }

@@ -55,6 +55,10 @@ export class StateService {
 			this.sessionStorage.removeItem('previousUserId');
 			this.sessionStorage.removeItem('hackerId');
 			this.user.next(null);
+			// Hack to reload / reset page after logout
+			setTimeout(() => {
+				window.location.reload();
+			}, 100);
 		});
 
 		// Check if this should run in Velian UI mode

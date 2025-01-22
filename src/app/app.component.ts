@@ -135,6 +135,7 @@ export class AppComponent implements OnInit {
 		window.addEventListener('mousemove', this.resetIdleTimer.bind(this));
 		window.addEventListener('keydown', this.resetIdleTimer.bind(this));
 		window.addEventListener('click', this.resetIdleTimer.bind(this));
+		window.addEventListener('scroll', this.resetIdleTimer.bind(this));
 	}
 
 	/**
@@ -157,10 +158,13 @@ export class AppComponent implements OnInit {
 		// Only logout with static effect if currently signed in
 		if (!!this.state.user.getValue()) {
 			this.state.isSocialHubEnabled$.next(false);
-			this.state.logout.next();
-			this.router.navigate(['/']);
 			setTimeout(() => {
-				this.state.isSocialHubEnabled$.next(true);
+				this.state.logout.next();
+				this.router.navigate(['/']);
+				// This should never trigger because of page reload, but added for safety:
+				setTimeout(() => {
+					this.state.isSocialHubEnabled$.next(true);
+				}, 1000);
 			}, 3000);
 		}
 	}

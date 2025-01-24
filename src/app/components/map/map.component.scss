@@ -1,6 +1,19 @@
 @import '../../../variables';
 
+// Hack to replace star map with a static image
+.wrapper > * {
+	display: none;
+}
+
 .wrapper {
+	background-color: red;
+	width: 100%;
+	height: 100%;
+	background-image: url('assets/img/arati.jpg');
+	background-size: cover; /* Scales the image to cover the entire element */
+	background-position: center; /* Centers the image within the element */
+	background-repeat: no-repeat; /* Prevents tiling of the image */
+
 	position: relative;
 
 	app-object-details,

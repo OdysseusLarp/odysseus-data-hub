@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 	private buildForm() {
 		this.loginForm = new FormGroup({
-			personId: new FormControl('', Validators.required),
+			personId: new FormControl('KBAEX2', Validators.required),
 		});
 	}
 }
